@@ -1,0 +1,3350 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IPT Research Admin CMS | Manajemen Konten & Google Spreadsheets</title>
+  <meta name="description" content="Panel Administrasi Konten IPT Research (imanparyudi.com/research) terintegrasi dengan Google Spreadsheets System." />
+
+  <!-- Google Fonts: Plus Jakarta Sans & Inter (Identical to Public Portal) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+          },
+          colors: {
+            ipt: {
+              blue: '#0077B6',
+              cerulean: '#0082C8',
+              banner: '#007EC6',
+              dark: '#005F94',
+              light: '#F0F9FF',
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+      background-color: #F8FAFC;
+      color: #1F2937;
+      overflow-x: hidden;
+    }
+
+    /* Exact Dotted Blue Matrix Pattern from imanparyudi.com/research */
+    .ipt-hero-matrix {
+      background-color: #007EC6;
+      background-image:
+        radial-gradient(rgba(255, 255, 255, 0.28) 1.25px, transparent 1.25px),
+        linear-gradient(135deg, #0084CE 0%, #0072B5 100%);
+      background-size: 16px 16px, 100% 100%;
+      background-position: 0 0, 0 0;
+    }
+
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-panel {
+      animation: fadeSlideIn 0.2s ease-out forwards;
+    }
+
+    /* Custom subtle scrollbar for code viewer and wide tables */
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: #F1F5F9;
+      border-radius: 9999px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 9999px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb:hover {
+      background: #94A3B8;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-[#F8FAFC] text-[#1F2937] antialiased selection:bg-[#0077B6] selection:text-white">
+
+  <!-- =====================================================================
+       1. ADMIN LOGIN GATE (Institutional Security Screen)
+       ===================================================================== -->
+  <div id="login-gate" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#F3F4F6]">
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden animate-panel">
+      <!-- Top Dotted Cerulean Header Strip -->
+      <div class="ipt-hero-matrix px-6 py-6 text-white">
+        <div class="flex items-center gap-3.5">
+          <!-- Exact 44px x 44px #0077B6 / White Framed IPT Monogram -->
+          <div class="w-[44px] h-[44px] rounded-xl bg-white/15 border border-white/30 flex items-center justify-center shrink-0">
+            <svg class="w-7 h-7" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+              <circle cx="9" cy="9" r="1.8" fill="#BAE6FD"/>
+              <circle cx="27" cy="9" r="1.8" fill="#BAE6FD"/>
+              <circle cx="27" cy="27" r="1.8" fill="#BAE6FD"/>
+              <path d="M10.5 9H25.5" stroke="#7DD3FC" stroke-width="1" stroke-dasharray="2 2"/>
+              <path d="M27 10.5V25.5" stroke="#7DD3FC" stroke-width="1" stroke-dasharray="2 2"/>
+              <rect x="8.5" y="14.5" width="2.6" height="11" rx="0.8" fill="#FFFFFF"/>
+              <path d="M13.5 14.5H17.6C19.4 14.5 20.6 15.6 20.6 17.3C20.6 19.0 19.4 20.1 17.6 20.1H16.0V25.5H13.5V14.5ZM16.0 16.5V18.2H17.3C17.9 18.2 18.3 17.85 18.3 17.35C18.3 16.85 17.9 16.5 17.3 16.5H16.0Z" fill="#FFFFFF"/>
+              <path d="M21.8 14.5H28.5V16.6H26.4V25.5H23.9V16.6H21.8V14.5Z" fill="#FFFFFF"/>
+            </svg>
+          </div>
+          <div>
+            <h1 class="text-lg font-bold tracking-tight leading-tight">IPT Research — Admin CMS</h1>
+            <p class="text-xs text-blue-100 mt-0.5">Iman Paryudi Team • Content &amp; Spreadsheets Portal</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Login Form -->
+      <form onsubmit="handleAdminLogin(event)" class="p-6 sm:p-7 space-y-5">
+        <div>
+          <label for="login-pin-input" class="block text-xs font-semibold text-[#1F2937] mb-1.5">
+            PIN / Kata Sandi Administrator
+          </label>
+          <div class="relative">
+            <input
+              type="password"
+              id="login-pin-input"
+              required
+              autocomplete="current-password"
+              placeholder="Masukkan PIN akses admin..."
+              class="w-full px-3.5 py-2.5 pr-16 rounded-xl border border-gray-300 text-sm text-[#1F2937] focus:outline-none focus:border-[#0077B6] focus:ring-2 focus:ring-[#0077B6]/15 transition-all"
+            />
+            <button
+              type="button"
+              onclick="togglePinVisibility()"
+              id="toggle-pin-btn"
+              class="absolute right-2.5 top-1/2 -translate-y-1/2 px-2 py-1 text-[11px] font-semibold text-gray-500 hover:text-[#0077B6]"
+            >
+              Lihat
+            </button>
+          </div>
+          <p id="login-error-msg" class="hidden text-xs text-red-600 font-medium mt-1.5">
+            PIN administrator tidak sesuai. Silakan periksa kembali.
+          </p>
+          <p class="text-[11.5px] text-[#6B7280] mt-2 bg-blue-50/70 border border-blue-100 rounded-lg px-3 py-2">
+            Info Pratinjau: PIN default adalah <strong class="text-[#0077B6] font-mono">2026</strong> (dapat diubah kapan saja pada tab <em>Koneksi Google Sheets</em>).
+          </p>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <label class="inline-flex items-center gap-2 cursor-pointer select-none">
+            <input type="checkbox" id="remember-session-checkbox" checked class="w-4 h-4 rounded border-gray-300 text-[#0077B6] focus:ring-[#0077B6]" />
+            <span class="text-xs text-[#4B5563] font-medium">Ingat Sesi di Perangkat Ini</span>
+          </label>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full py-2.5 px-4 rounded-xl bg-[#0077B6] hover:bg-[#0082C8] text-white text-sm font-semibold shadow-sm transition-colors flex items-center justify-center gap-2"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+          </svg>
+          <span>Masuk ke Dashboard CMS</span>
+        </button>
+
+        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
+          <a href="index.html" class="inline-flex items-center gap-1.5 text-[#0077B6] hover:underline font-medium">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+            </svg>
+            <span>Kembali ke Website Publik</span>
+          </a>
+          <span class="text-[#6B7280]">imanparyudi.com</span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       2. MAIN CMS APPLICATION SHELL (Hidden until authenticated)
+       ===================================================================== -->
+  <div id="cms-app-shell" class="hidden min-h-screen flex flex-col">
+
+    <!-- Top Utility Strip -->
+    <div class="bg-white border-b border-gray-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 h-8 flex items-center justify-between text-[11px] text-[#6B7280]">
+        <div class="truncate">
+          Jakarta – lantai 2, 12640 Indonesia • <span class="text-[#0077B6] font-medium">imanparyudi.com/research</span>
+        </div>
+        <div class="flex items-center gap-3 shrink-0">
+          <span class="hidden sm:inline">Database Engine: <strong>Google Spreadsheets System</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sticky Main Header & Connection Status Bar -->
+    <header class="sticky top-0 z-30 bg-white border-b border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
+        <!-- Brand Lockup -->
+        <div class="flex items-center gap-3">
+          <div class="w-[44px] h-[44px] rounded-xl bg-[#0077B6] flex items-center justify-center shadow-xs shrink-0">
+            <svg class="w-7 h-7" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+              <circle cx="9" cy="9" r="1.8" fill="#BAE6FD"/>
+              <circle cx="27" cy="9" r="1.8" fill="#BAE6FD"/>
+              <circle cx="27" cy="27" r="1.8" fill="#BAE6FD"/>
+              <path d="M10.5 9H25.5" stroke="#7DD3FC" stroke-width="1" stroke-dasharray="2 2"/>
+              <path d="M27 10.5V25.5" stroke="#7DD3FC" stroke-width="1" stroke-dasharray="2 2"/>
+              <rect x="8.5" y="14.5" width="2.6" height="11" rx="0.8" fill="#FFFFFF"/>
+              <path d="M13.5 14.5H17.6C19.4 14.5 20.6 15.6 20.6 17.3C20.6 19.0 19.4 20.1 17.6 20.1H16.0V25.5H13.5V14.5ZM16.0 16.5V18.2H17.3C17.9 18.2 18.3 17.85 18.3 17.35C18.3 16.85 17.9 16.5 17.3 16.5H16.0Z" fill="#FFFFFF"/>
+              <path d="M21.8 14.5H28.5V16.6H26.4V25.5H23.9V16.6H21.8V14.5Z" fill="#FFFFFF"/>
+            </svg>
+          </div>
+          <div class="flex flex-col leading-tight">
+            <span class="text-[16px] sm:text-[17px] font-bold text-[#0077B6] tracking-tight">
+              Iman Paryudi Team
+            </span>
+            <span class="text-[11.5px] font-semibold text-[#4B5563]">
+              Research Admin CMS
+            </span>
+          </div>
+        </div>
+
+        <!-- Right Action Controls & Live Spreadsheet Connection Pill -->
+        <div class="flex flex-wrap items-center gap-2 sm:gap-2.5">
+          <!-- Connection Status Pill -->
+          <button
+            type="button"
+            id="connection-status-pill"
+            onclick="switchAdminTab('koneksi')"
+            title="Klik untuk mengatur koneksi Google Spreadsheets"
+            class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors bg-amber-50 text-amber-800 border-amber-200 hover:bg-amber-100"
+          >
+            <span id="connection-status-dot" class="w-2 h-2 rounded-full bg-amber-500"></span>
+            <span id="connection-status-text">Mode Sandbox Lokal</span>
+          </button>
+
+          <!-- Pull / Sync Button -->
+          <button
+            type="button"
+            id="btn-pull-sync"
+            onclick="pullFromSheets()"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 text-xs font-semibold text-[#1F2937] transition-colors"
+            title="Tarik data terbaru dari Google Spreadsheets"
+          >
+            <svg id="pull-sync-icon" class="w-3.5 h-3.5 text-[#0077B6]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+            <span class="hidden sm:inline">Sinkronkan Data (Pull)</span>
+            <span class="sm:hidden">Sync</span>
+          </button>
+
+          <!-- Live Public Homepage Preview Button -->
+          <button
+            type="button"
+            onclick="openPublicPreviewModal()"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold shadow-xs transition-colors"
+          >
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            </svg>
+            <span>Pratinjau Halaman Publik</span>
+          </button>
+
+          <!-- Logout Button -->
+          <button
+            type="button"
+            onclick="handleAdminLogout()"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-gray-200 bg-gray-50 hover:bg-red-50 hover:text-red-700 hover:border-red-200 text-xs font-semibold text-gray-600 transition-colors"
+            title="Keluar dari Admin CMS"
+          >
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+            </svg>
+            <span class="hidden md:inline">Keluar</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Dashboard Container -->
+    <div class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+
+      <!-- =====================================================================
+           3. KPI SUMMARY CARDS (4 Institutional Metric Cards)
+           ===================================================================== -->
+      <section aria-label="Ringkasan Data CMS" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- KPI 1 -->
+        <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-2xs flex items-start justify-between">
+          <div>
+            <p class="text-xs font-medium text-[#6B7280]">Total Berita Terkini</p>
+            <p id="kpi-berita-count" class="text-2xl font-bold text-[#1F2937] mt-1">2</p>
+            <p id="kpi-berita-sub" class="text-[11px] text-emerald-600 font-medium mt-1">2 artikel dipublikasikan</p>
+          </div>
+          <div class="w-10 h-10 rounded-lg bg-blue-50 text-[#0077B6] flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- KPI 2 -->
+        <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-2xs flex items-start justify-between">
+          <div>
+            <p class="text-xs font-medium text-[#6B7280]">Acara Mendatang @ IPT</p>
+            <p id="kpi-acara-count" class="text-2xl font-bold text-[#1F2937] mt-1">1</p>
+            <p id="kpi-acara-sub" class="text-[11px] text-[#0077B6] font-medium mt-1">1 jadwal konferensi aktif</p>
+          </div>
+          <div class="w-10 h-10 rounded-lg bg-blue-50 text-[#0077B6] flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- KPI 3 -->
+        <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-2xs flex items-start justify-between">
+          <div>
+            <p class="text-xs font-medium text-[#6B7280]">Total Tim &amp; Peneliti</p>
+            <p id="kpi-tim-count" class="text-2xl font-bold text-[#1F2937] mt-1">11</p>
+            <p id="kpi-tim-sub" class="text-[11px] text-[#0077B6] font-medium mt-1">11 peneliti aktif di 4 divisi</p>
+          </div>
+          <div class="w-10 h-10 rounded-lg bg-blue-50 text-[#0077B6] flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- KPI 4 -->
+        <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-2xs flex items-start justify-between">
+          <div class="min-w-0 pr-2">
+            <p class="text-xs font-medium text-[#6B7280]">Status Sinkronisasi Terakhir</p>
+            <p id="kpi-sync-time" class="text-sm font-bold text-[#1F2937] mt-1.5 truncate">Baru saja (Lokal)</p>
+            <p id="kpi-sync-source" class="text-[11px] text-[#6B7280] mt-1 truncate">Penyimpanan Browser + Siap Sheets</p>
+          </div>
+          <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           4. WORKSPACE: SIDEBAR NAVIGATION (5 MODULES) + ACTIVE MODULE PANEL
+           ===================================================================== -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+        <!-- Left Sidebar Navigation (Desktop Vertical / Mobile Scrollable Tabs) -->
+        <aside class="lg:col-span-3 bg-white rounded-xl border border-gray-200 p-2.5 shadow-2xs">
+          <div class="px-3 py-2 hidden lg:block">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-[#6B7280]">Modul Database Sheets</span>
+          </div>
+          <nav class="flex lg:flex-col gap-1.5 overflow-x-auto custom-scroll pb-1 lg:pb-0" aria-label="Navigasi Modul CMS">
+            <button
+              type="button"
+              data-admin-tab="berita"
+              onclick="switchAdminTab('berita')"
+              class="admin-nav-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors bg-[#0077B6] text-white"
+            >
+              <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+              </svg>
+              <span>1. Berita Terkini</span>
+            </button>
+
+            <button
+              type="button"
+              data-admin-tab="acara"
+              onclick="switchAdminTab('acara')"
+              class="admin-nav-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors text-[#374151] hover:bg-gray-100"
+            >
+              <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+              <span>2. Acara Mendatang</span>
+            </button>
+
+            <button
+              type="button"
+              data-admin-tab="tim"
+              onclick="switchAdminTab('tim')"
+              class="admin-nav-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors text-[#374151] hover:bg-gray-100"
+            >
+              <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+              <span>3. Tim &amp; Peneliti</span>
+            </button>
+
+            <button
+              type="button"
+              data-admin-tab="riset"
+              onclick="switchAdminTab('riset')"
+              class="admin-nav-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors text-[#374151] hover:bg-gray-100"
+            >
+              <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+              <span>4. Riset, Layanan &amp; Pelatihan</span>
+            </button>
+
+            <button
+              type="button"
+              data-admin-tab="profil"
+              onclick="switchAdminTab('profil')"
+              class="admin-nav-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors text-[#374151] hover:bg-gray-100"
+            >
+              <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+              </svg>
+              <span>5. Profil &amp; Konten Utama</span>
+            </button>
+
+            <button
+              type="button"
+              data-admin-tab="koneksi"
+              onclick="switchAdminTab('koneksi')"
+              class="admin-nav-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors text-[#374151] hover:bg-gray-100"
+            >
+              <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/>
+              </svg>
+              <span>6. Koneksi Google Sheets</span>
+            </button>
+          </nav>
+
+          <!-- Helper Info Card inside Sidebar -->
+          <div class="hidden lg:block mt-4 pt-3 border-t border-gray-100 px-3 pb-1 text-[11.5px] text-[#6B7280] space-y-1.5">
+            <p class="font-semibold text-[#1F2937]">Struktur Tab Spreadsheets:</p>
+            <ul class="space-y-1 font-mono text-[11px] text-[#0077B6]">
+              <li>• Sheet: Berita</li>
+              <li>• Sheet: Acara</li>
+              <li>• Sheet: Tim</li>
+              <li>• Sheet: Riset</li>
+              <li>• Sheet: Profil_Web</li>
+            </ul>
+          </div>
+        </aside>
+
+        <!-- Right Main Workspace Area -->
+        <main id="admin-workspace" class="lg:col-span-9 min-w-0">
+          <!-- Rendered dynamically per active tab -->
+        </main>
+
+      </div>
+    </div>
+
+    <!-- Footer (Identical 3-Column Identity) -->
+    <footer class="bg-[#F3F4F6] border-t border-gray-200 py-6 mt-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-600">
+        <div>
+          <strong class="text-[#0077B6]">IPT Research Admin CMS</strong> — Jakarta – lantai 2, 12640 Indonesia
+        </div>
+        <div class="text-gray-500">
+          © 2026 IPT Research. Dihubungkan dengan Google Sheets System.
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- =====================================================================
+       MODAL A: CRUD EDITOR FOR BERITA TERKINI
+       ===================================================================== -->
+  <div id="modal-berita" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-gray-900/60 backdrop-blur-[1px]" role="dialog" aria-modal="true">
+    <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-gray-200 animate-panel">
+      <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+        <div>
+          <span class="text-[11px] font-bold uppercase tracking-wider text-[#0077B6]">Sheet: Berita</span>
+          <h3 id="modal-berita-heading" class="text-base sm:text-lg font-bold text-[#1F2937]">Tambah Berita Terkini</h3>
+        </div>
+        <button type="button" onclick="closeModal('modal-berita')" class="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <form id="form-berita" onsubmit="saveBeritaForm(event)" class="p-6 overflow-y-auto custom-scroll space-y-4">
+        <input type="hidden" id="berita-mode" value="create" />
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">ID Artikel</label>
+            <input type="text" id="berita-id" readonly class="w-full px-3 py-2 rounded-lg border border-gray-200 bg-gray-50 text-xs font-mono font-semibold text-[#0077B6]" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Status Publikasi</label>
+            <select id="berita-status" class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-white text-xs font-medium focus:outline-none focus:border-[#0077B6]">
+              <option value="Published">Published (Tampil di Web)</option>
+              <option value="Draft">Draft (Disembunyikan)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Tanggal Tampil</label>
+            <input type="text" id="berita-tanggal" required placeholder="Tue Sep 15 2026 00:00:00 GMT+0700 (Waktu Indonesia Barat)" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Judul Berita (Bahasa Indonesia) *</label>
+            <input type="text" id="berita-judul-id" required placeholder="Contoh: AI Makin Mirip Manusia..." class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Judul Berita (English)</label>
+            <input type="text" id="berita-judul-en" placeholder="English headline translation..." class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Ringkasan / Excerpt (ID) *</label>
+            <textarea id="berita-excerpt-id" rows="3" required placeholder="Ringkasan singkat yang tampil di halaman depan..." class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]"></textarea>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Ringkasan / Excerpt (EN)</label>
+            <textarea id="berita-excerpt-en" rows="3" placeholder="English excerpt summary..." class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]"></textarea>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Isi Lengkap Artikel (ID)</label>
+            <textarea id="berita-konten-id" rows="4" placeholder="Paragraf lengkap saat pengguna menekan Read More..." class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]"></textarea>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Isi Lengkap Artikel (EN)</label>
+            <textarea id="berita-konten-en" rows="4" placeholder="Full English article paragraphs..." class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]"></textarea>
+          </div>
+        </div>
+
+        <!-- Thumbnail URL + Live Preview -->
+        <div class="p-3.5 rounded-xl bg-gray-50 border border-gray-200 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div class="flex-1 w-full">
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">URL Gambar Thumbnail (165px × 105px)</label>
+            <input
+              type="url"
+              id="berita-gambar"
+              oninput="updateBeritaImgPreview(this.value)"
+              placeholder="https://images.unsplash.com/..."
+              class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-white text-xs focus:outline-none focus:border-[#0077B6]"
+            />
+            <p class="text-[11px] text-[#6B7280] mt-1">Gunakan tautan gambar HTTPS langsung (Unsplash/GitHub/CDN). Gambar cadangan SVG otomatis aktif jika URL kosong.</p>
+          </div>
+          <div class="w-[140px] h-[88px] rounded-lg border border-gray-300 bg-white overflow-hidden shrink-0">
+            <img id="berita-img-preview" src="" alt="Pratinjau Thumbnail" class="w-full h-full object-cover" />
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-gray-200 flex items-center justify-end gap-2.5">
+          <button type="button" onclick="closeModal('modal-berita')" class="px-4 py-2 rounded-lg border border-gray-300 text-xs font-semibold text-gray-600 hover:bg-gray-50">
+            Batal
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold shadow-xs transition-colors">
+            Simpan ke Database
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL B: CRUD EDITOR FOR ACARA MENDATANG @ IPT
+       ===================================================================== -->
+  <div id="modal-acara" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-gray-900/60 backdrop-blur-[1px]" role="dialog" aria-modal="true">
+    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-gray-200 animate-panel">
+      <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+        <div>
+          <span class="text-[11px] font-bold uppercase tracking-wider text-[#0077B6]">Sheet: Acara</span>
+          <h3 id="modal-acara-heading" class="text-base sm:text-lg font-bold text-[#1F2937]">Tambah Acara Mendatang @ IPT</h3>
+        </div>
+        <button type="button" onclick="closeModal('modal-acara')" class="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <form id="form-acara" onsubmit="saveAcaraForm(event)" class="p-6 overflow-y-auto custom-scroll space-y-4">
+        <input type="hidden" id="acara-mode" value="create" />
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">ID Acara</label>
+            <input type="text" id="acara-id" readonly class="w-full px-3 py-2 rounded-lg border border-gray-200 bg-gray-50 text-xs font-mono font-semibold text-[#0077B6]" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Status Acara</label>
+            <select id="acara-status" class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-white text-xs font-medium focus:outline-none focus:border-[#0077B6]">
+              <option value="Upcoming">Upcoming (Akan Datang)</option>
+              <option value="Completed">Completed (Selesai)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-[#1F2937] mb-1">Judul Acara (Bahasa Indonesia) *</label>
+          <input type="text" id="acara-judul-id" required placeholder="Contoh: Data Science Conferences in Indonesia October 2026..." class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-[#1F2937] mb-1">Judul Acara (English)</label>
+          <input type="text" id="acara-judul-en" placeholder="English event title..." class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Rentang Tanggal *</label>
+            <input type="text" id="acara-tanggal" required placeholder="1 Oktober 2026 - 1 Oktober 2026" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Lokasi / Format</label>
+            <input type="text" id="acara-lokasi" placeholder="Jakarta – lantai 2, 12640 Indonesia & Hybrid" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-[#1F2937] mb-1">Deskripsi &amp; Informasi Pendaftaran</label>
+          <textarea id="acara-deskripsi" rows="4" placeholder="Detail konferensi, pembicara kunci, atau tautan registrasi..." class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]"></textarea>
+        </div>
+
+        <div class="pt-3 border-t border-gray-200 flex items-center justify-end gap-2.5">
+          <button type="button" onclick="closeModal('modal-acara')" class="px-4 py-2 rounded-lg border border-gray-300 text-xs font-semibold text-gray-600 hover:bg-gray-50">
+            Batal
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold shadow-xs transition-colors">
+            Simpan Acara
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL C: CRUD EDITOR FOR RISET, LAYANAN & PELATIHAN
+       ===================================================================== -->
+  <div id="modal-riset" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-gray-900/60 backdrop-blur-[1px]" role="dialog" aria-modal="true">
+    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-gray-200 animate-panel">
+      <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+        <div>
+          <span class="text-[11px] font-bold uppercase tracking-wider text-[#0077B6]">Sheet: Riset</span>
+          <h3 id="modal-riset-heading" class="text-base sm:text-lg font-bold text-[#1F2937]">Tambah Item Riset / Layanan</h3>
+        </div>
+        <button type="button" onclick="closeModal('modal-riset')" class="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <form id="form-riset" onsubmit="saveRisetForm(event)" class="p-6 overflow-y-auto custom-scroll space-y-4">
+        <input type="hidden" id="riset-mode" value="create" />
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">ID Item</label>
+            <input type="text" id="riset-id" readonly class="w-full px-3 py-2 rounded-lg border border-gray-200 bg-gray-50 text-xs font-mono font-semibold text-[#0077B6]" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Kategori Menu *</label>
+            <select id="riset-kategori" class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-white text-xs font-medium focus:outline-none focus:border-[#0077B6]">
+              <option value="Riset">Riset</option>
+              <option value="Penelitian Terapan">Penelitian Terapan</option>
+              <option value="Layanan Profesional">Layanan Profesional</option>
+              <option value="Pelatihan Keamanan">Pelatihan Keamanan</option>
+              <option value="Bekerja di IPT">Bekerja di IPT</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Status</label>
+            <select id="riset-status" class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-white text-xs font-medium focus:outline-none focus:border-[#0077B6]">
+              <option value="Active">Active</option>
+              <option value="Archived">Archived</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Judul (Bahasa Indonesia) *</label>
+            <input type="text" id="riset-judul-id" required placeholder="Judul publikasi, program, atau layanan..." class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Judul (English)</label>
+            <input type="text" id="riset-judul-en" placeholder="English title..." class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Peneliti / Koordinator</label>
+            <input type="text" id="riset-koordinator" placeholder="Dr. Iman Paryudi, dkk." class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Tahun / Periode</label>
+            <input type="text" id="riset-tahun" placeholder="2026" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-[#1F2937] mb-1">Deskripsi Singkat *</label>
+          <textarea id="riset-deskripsi" rows="3" required placeholder="Ringkasan ruang lingkup, metodologi, atau manfaat layanan..." class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-[#1F2937] mb-1">Tautan / DOI / Referensi</label>
+          <input type="text" id="riset-tautan" placeholder="https://doi.org/10.1109/... atau kode modul" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+        </div>
+
+        <div class="pt-3 border-t border-gray-200 flex items-center justify-end gap-2.5">
+          <button type="button" onclick="closeModal('modal-riset')" class="px-4 py-2 rounded-lg border border-gray-300 text-xs font-semibold text-gray-600 hover:bg-gray-50">
+            Batal
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold shadow-xs transition-colors">
+            Simpan Item
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL C2: CRUD EDITOR FOR TIM & PENELITI (Sheet: Tim)
+       ===================================================================== -->
+  <div id="modal-tim" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-gray-900/60 backdrop-blur-[1px]" role="dialog" aria-modal="true">
+    <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-gray-200 animate-panel">
+      <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+        <div>
+          <span class="text-[11px] font-bold uppercase tracking-wider text-[#0077B6]">Sheet: Tim</span>
+          <h3 id="modal-tim-heading" class="text-base sm:text-lg font-bold text-[#1F2937]">Tambah Anggota Tim / Peneliti</h3>
+        </div>
+        <button type="button" onclick="closeModal('modal-tim')" class="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <form id="form-tim" onsubmit="saveTimForm(event)" class="p-6 overflow-y-auto custom-scroll space-y-4">
+        <input type="hidden" id="tim-mode" value="create" />
+
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">ID Anggota</label>
+            <input type="text" id="tim-id" readonly class="w-full px-3 py-2 rounded-lg border border-gray-200 bg-gray-50 text-xs font-mono font-semibold text-[#0077B6]" />
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Kategori / Divisi Tim *</label>
+            <select id="tim-category" class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-white text-xs font-medium focus:outline-none focus:border-[#0077B6]">
+              <option value="Management">Management</option>
+              <option value="Scientific & Innovation Board">Scientific &amp; Innovation Board</option>
+              <option value="Key Researchers">Key Researchers</option>
+              <option value="Senior Staff">Senior Staff</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Urutan &amp; Status</label>
+            <div class="flex gap-1.5">
+              <input type="number" id="tim-order" min="1" value="1" title="Urutan tampil" class="w-16 px-2.5 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+              <select id="tim-status" class="flex-1 px-2 py-2 rounded-lg border border-gray-300 bg-white text-xs font-medium focus:outline-none focus:border-[#0077B6]">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Nama Lengkap &amp; Gelar *</label>
+            <input type="text" id="tim-name" required placeholder="Contoh: Dr. Iman Paryudi" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Jabatan / Peran (ID) *</label>
+            <input type="text" id="tim-role-id" required placeholder="Direktur & Peneliti Utama" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Jabatan / Peran (EN)</label>
+            <input type="text" id="tim-role-en" placeholder="Director & Principal Investigator" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-[#1F2937] mb-1">Bidang Keahlian / Sertifikasi (Pisahkan dengan koma)</label>
+          <input type="text" id="tim-expertise" placeholder="Applied AI, Data Science, Computer Vision, ISO 27001" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Biografi Singkat (Bahasa Indonesia)</label>
+            <textarea id="tim-bio-id" rows="3" placeholder="Latar belakang riset, fokus kajian, atau kontribusi akademik..." class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]"></textarea>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Biografi Singkat (English)</label>
+            <textarea id="tim-bio-en" rows="3" placeholder="Academic background and research focus in English..." class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]"></textarea>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">Email Resmi</label>
+            <input type="email" id="tim-email" placeholder="nama@imanparyudi.com" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">URL Google Scholar</label>
+            <input type="url" id="tim-scholar" placeholder="https://scholar.google.com/..." class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">URL LinkedIn</label>
+            <input type="url" id="tim-linkedin" placeholder="https://www.linkedin.com/in/..." class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+          </div>
+        </div>
+
+        <!-- Portrait Photo URL + Live 4:5 Preview -->
+        <div class="p-3.5 rounded-xl bg-gray-50 border border-gray-200 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div class="flex-1 w-full">
+            <label class="block text-xs font-semibold text-[#1F2937] mb-1">URL Foto Profil Potret (Rasio 4:5)</label>
+            <input
+              type="url"
+              id="tim-photo"
+              oninput="updateTimImgPreview(this.value)"
+              placeholder="https://... (Kosongkan untuk memakai avatar akademik standar)"
+              class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-white text-xs focus:outline-none focus:border-[#0077B6]"
+            />
+            <p class="text-[11px] text-[#6B7280] mt-1">Gunakan foto formal berlatar netral agar seragam dengan tampilan direktori Tim.</p>
+          </div>
+          <div class="w-[74px] h-[88px] rounded-lg border border-gray-300 bg-slate-200 overflow-hidden shrink-0">
+            <img id="tim-img-preview" src="" alt="Pratinjau Foto" class="w-full h-full object-cover object-top" />
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-gray-200 flex items-center justify-end gap-2.5">
+          <button type="button" onclick="closeModal('modal-tim')" class="px-4 py-2 rounded-lg border border-gray-300 text-xs font-semibold text-gray-600 hover:bg-gray-50">
+            Batal
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold shadow-xs transition-colors">
+            Simpan Anggota Tim
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL D: LIVE PUBLIC HOMEPAGE PREVIEW MODAL (imanparyudi.com/research)
+       ===================================================================== -->
+  <div id="modal-public-preview" class="fixed inset-0 z-50 hidden items-center justify-center p-2 sm:p-5 bg-gray-900/75 backdrop-blur-xs" role="dialog" aria-modal="true">
+    <div class="bg-white rounded-2xl max-w-6xl w-full max-h-[92vh] flex flex-col shadow-2xl border border-gray-300 overflow-hidden animate-panel">
+      <!-- Simulated Browser Toolbar -->
+      <div class="bg-[#F3F4F6] border-b border-gray-200 px-4 py-2.5 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-2">
+          <span class="w-3 h-3 rounded-full bg-red-400"></span>
+          <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+          <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
+          <div class="ml-2 px-3 py-1 rounded-md bg-white border border-gray-200 text-[11.5px] text-gray-600 font-mono flex items-center gap-1.5">
+            <svg class="w-3 h-3 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
+            <span id="preview-browser-url">https://imanparyudi.com/research</span>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <div class="inline-flex rounded-lg border border-gray-300 bg-white p-0.5 text-[11px] font-semibold">
+            <button type="button" id="preview-page-home" onclick="setPreviewPage('home')" class="px-2.5 py-0.5 rounded bg-[#0077B6] text-white">Halaman Home</button>
+            <button type="button" id="preview-page-tim" onclick="setPreviewPage('tim')" class="px-2.5 py-0.5 rounded text-gray-600">Halaman Tim</button>
+          </div>
+          <div class="inline-flex rounded-lg border border-gray-300 bg-white p-0.5 text-[11px] font-semibold">
+            <button type="button" id="preview-lang-id" onclick="setPreviewLang('id')" class="px-2 py-0.5 rounded bg-[#0077B6] text-white">ID</button>
+            <button type="button" id="preview-lang-en" onclick="setPreviewLang('en')" class="px-2 py-0.5 rounded text-gray-600">EN</button>
+          </div>
+          <button type="button" onclick="closeModal('modal-public-preview')" class="px-3 py-1 rounded-lg bg-gray-800 hover:bg-gray-900 text-white text-xs font-semibold">
+            Tutup Pratinjau
+          </button>
+        </div>
+      </div>
+
+      <!-- Rendered Live Public Page Body -->
+      <div id="public-preview-canvas" class="overflow-y-auto custom-scroll bg-white flex-1">
+        <!-- Populated dynamically from live CMS state -->
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL E: CUSTOM CONFIRMATION DIALOG (Replaces window.confirm())
+       ===================================================================== -->
+  <div id="modal-confirm" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-gray-900/60" role="dialog" aria-modal="true">
+    <div class="bg-white rounded-xl max-w-md w-full p-6 shadow-2xl border border-gray-200 animate-panel">
+      <div class="flex items-start gap-3.5">
+        <div class="w-10 h-10 rounded-full bg-red-50 text-red-600 flex items-center justify-center shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+          </svg>
+        </div>
+        <div>
+          <h3 id="confirm-dialog-title" class="text-base font-bold text-[#1F2937]">Konfirmasi Tindakan</h3>
+          <p id="confirm-dialog-message" class="text-xs text-[#4B5563] leading-relaxed mt-1"></p>
+        </div>
+      </div>
+      <div class="mt-5 flex items-center justify-end gap-2.5">
+        <button type="button" onclick="closeModal('modal-confirm')" class="px-4 py-2 rounded-lg border border-gray-300 text-xs font-semibold text-gray-600 hover:bg-gray-50">
+          Batal
+        </button>
+        <button type="button" id="confirm-dialog-ok-btn" class="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-semibold shadow-xs">
+          Ya, Lanjutkan
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       LOADING OVERLAY & NON-INTRUSIVE TOAST CONTAINER
+       ===================================================================== -->
+  <div id="sync-loading-overlay" class="fixed inset-0 z-50 hidden items-center justify-center bg-gray-900/35 backdrop-blur-[1px]">
+    <div class="bg-white px-5 py-4 rounded-xl shadow-xl border border-gray-200 flex items-center gap-3">
+      <svg class="w-5 h-5 text-[#0077B6] animate-spin" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      <span id="sync-loading-text" class="text-xs font-semibold text-[#1F2937]">Menyinkronkan dengan Google Spreadsheets...</span>
+    </div>
+  </div>
+
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 pointer-events-none flex flex-col gap-2 max-w-sm"></div>
+
+  <!-- =====================================================================
+       APPLICATION JAVASCRIPT: SHEETS API ENGINE, CRUD & STATE MANAGEMENT
+       ===================================================================== -->
+  <script>
+    /**
+     * =========================================================================
+     * 1. STORAGE KEYS & DEFAULT INSTITUTIONAL SEED DATA
+     * =========================================================================
+     */
+    const STORAGE_KEYS = {
+      DATA: 'ipt_research_cms_data_v1',
+      CONFIG: 'ipt_research_cms_config_v1',
+      AUTH: 'ipt_research_cms_auth_v1'
+    };
+
+    const SVG_FALLBACK_CLOCK =
+      "data:image/svg+xml;utf8," +
+      encodeURIComponent(
+        `<svg xmlns="http://www.w3.org/2000/svg" width="330" height="210" viewBox="0 0 330 210">
+          <rect width="330" height="210" fill="#0F2942"/>
+          <circle cx="165" cy="105" r="70" fill="none" stroke="#D4AF37" stroke-width="3"/>
+          <circle cx="165" cy="105" r="52" fill="none" stroke="#93C5FD" stroke-width="1.2" stroke-dasharray="4 3"/>
+          <line x1="165" y1="105" x2="165" y2="50" stroke="#FBBF24" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="165" y1="105" x2="208" y2="120" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+        </svg>`
+      );
+
+    const SVG_FALLBACK_AI =
+      "data:image/svg+xml;utf8," +
+      encodeURIComponent(
+        `<svg xmlns="http://www.w3.org/2000/svg" width="330" height="210" viewBox="0 0 330 210">
+          <rect width="330" height="210" fill="#0B2239"/>
+          <g stroke="#38BDF8" stroke-opacity="0.4" stroke-width="1.2">
+            <line x1="50" y1="45" x2="140" y2="95"/><line x1="140" y1="95" x2="225" y2="60"/>
+            <line x1="140" y1="95" x2="195" y2="155"/><line x1="225" y1="60" x2="280" y2="115"/>
+          </g>
+          <g fill="#7DD3FC">
+            <circle cx="50" cy="45" r="4"/><circle cx="140" cy="95" r="5"/>
+            <circle cx="225" cy="60" r="4"/><circle cx="195" cy="155" r="4"/><circle cx="280" cy="115" r="4"/>
+          </g>
+          <text x="165" y="188" fill="#E0F2FE" font-family="monospace" font-size="11" text-anchor="middle">IPT AI &amp; DATA SCIENCE</text>
+        </svg>`
+      );
+
+    const SVG_AVATAR_FALLBACK =
+      "data:image/svg+xml;utf8," +
+      encodeURIComponent(
+        `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="380" viewBox="0 0 320 380">
+          <rect width="320" height="380" fill="#CBD5E1"/>
+          <circle cx="160" cy="132" r="54" fill="#64748B"/>
+          <path d="M72 345c0-54 39-92 88-92s88 38 88 92v35H72v-35z" fill="#0077B6"/>
+          <path d="M136 253l24 38 24-38" fill="#FFFFFF" opacity="0.9"/>
+        </svg>`
+      );
+
+    const DEFAULT_SEED_DATA = {
+      berita: [
+        {
+          id: 'BRT-001',
+          tanggal: 'Tue Sep 15 2026 00:00:00 GMT+0700 (Waktu Indonesia Barat)',
+          judul_id: 'Mengapa Waktu Seolah Melambat ketika Bahaya Datang?',
+          judul_en: 'Why Does Time Seem to Slow Down When Danger Approaches?',
+          excerpt_id: 'JAKARTA - Penelitian terbaru menunjukkan bahwa sekadar mendengar suara yang mendekat dapat memberi otak waktu lebih lama dari yang sebenarnya untuk mempersiapkan diri menghadapi ba...',
+          excerpt_en: 'JAKARTA - Recent cognitive neuroscience research reveals that merely hearing an approaching sound gives the human brain a longer perceptual window to prepare for impending da...',
+          konten_id: 'JAKARTA - Penelitian terbaru menunjukkan bahwa sekadar mendengar suara yang mendekat dapat memberi otak waktu lebih lama dari yang sebenarnya untuk mempersiapkan diri menghadapi bahaya yang datang.\n\nDalam eksperimen pemodelan kognitif dan pemrosesan sinyal sensorik, para peneliti menemukan bahwa sistem saraf pusat meningkatkan kepadatan pemrosesan informasi ketika mendeteksi stimulus akustik atau visual yang bergerak cepat menuju subjek.',
+          konten_en: 'JAKARTA - Recent research indicates that merely hearing an approaching sound gives the human brain a longer subjective window than actual clock time to prepare for incoming danger.',
+          gambar: 'https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?auto=format&fit=crop&w=500&q=80',
+          status: 'Published'
+        },
+        {
+          id: 'BRT-002',
+          tanggal: 'Wed Sep 16 2026 00:00:00 GMT+0700 (Waktu Indonesia Barat)',
+          judul_id: 'AI Makin Mirip Manusia, Manusia Makin Mirip AI',
+          judul_en: 'AI Becomes More Human-Like, Humans Become More AI-Like',
+          excerpt_id: 'KOMPAS.com - Terlalu sering berinteraksi dengan kecerdasan buatan (AI) ternyata berpotensi mengubah cara manusia berkomunikasi dan menampilkan dirinya. Hal tersebut diungkapkan par...',
+          excerpt_en: 'KOMPAS.com - Frequent daily interaction with generative artificial intelligence (AI) can subtly reshape how humans structure language, communicate, and present themselves. This phenomenon was highlighted by res...',
+          konten_id: 'KOMPAS.com - Terlalu sering berinteraksi dengan kecerdasan buatan (AI) ternyata berpotensi mengubah cara manusia berkomunikasi dan menampilkan dirinya. Hal tersebut diungkapkan para peneliti interaksi manusia-komputer dan linguistik komputasional.\n\nIPT Research terus mengkaji fenomena ko-evolusi manusia dan AI ini untuk merancang sistem kecerdasan buatan terapan yang tetap menjaga autentisitas kognitif.',
+          konten_en: 'KOMPAS.com - Frequent interaction with artificial intelligence (AI) has the potential to reshape how humans communicate and express ideas, according to human-computer interaction researchers.',
+          gambar: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=500&q=80',
+          status: 'Published'
+        }
+      ],
+      acara: [
+        {
+          id: 'ACR-001',
+          judul_id: 'Data Science Conferences in Indonesia October 2026 (International Conference on AI-driven Image Recognition and Data Science (ICIIRDS))',
+          judul_en: 'Data Science Conferences in Indonesia October 2026 (International Conference on AI-driven Image Recognition and Data Science (ICIIRDS))',
+          tanggal_rentang: '1 Oktober 2026 - 1 Oktober 2026',
+          lokasi: 'Jakarta – lantai 2, 12640 Indonesia & Hybrid Conference Hall',
+          deskripsi: 'Konferensi internasional tahunan yang mempertemukan peneliti AI, pakar Computer Vision, dan praktisi Data Science untuk mempresentasikan riset terbaru dalam pengenalan citra berbasis kecerdasan buatan dan analitik data skala besar.',
+          status: 'Upcoming'
+        }
+      ],
+      tim: [
+        {
+          id: 'TIM-001',
+          order: 1,
+          category: 'Management',
+          name: 'Dr. Iman Paryudi',
+          role_id: 'Direktur & Peneliti Utama',
+          role_en: 'Director & Principal Investigator',
+          expertise: 'Applied AI, Data Science, Decision Support Systems, Information Security',
+          bio_id: 'Pendiri dan Direktur IPT Research yang memimpin arah penelitian strategis di bidang aplikasi Kecerdasan Buatan, Data Science, dan rekayasa sistem cerdas di Indonesia.',
+          bio_en: 'Founder and Director of IPT Research leading strategic research initiatives in Applied Artificial Intelligence, Data Science, and intelligent systems engineering.',
+          email: 'imanparyudi@gmail.com',
+          scholar: 'https://scholar.google.com',
+          linkedin: 'https://www.linkedin.com',
+          photo: '',
+          status: 'Active'
+        },
+        {
+          id: 'TIM-002',
+          order: 2,
+          category: 'Management',
+          name: 'Dr. Rina Kusumawardani',
+          role_id: 'Kepala Divisi Penelitian Terapan',
+          role_en: 'Head of Applied Research',
+          expertise: 'Machine Learning, Industrial AI, Technology Transfer',
+          bio_id: 'Mengkoordinasikan program hilirisasi riset dan kemitraan Proof-of-Concept (PoC) antara laboratorium IPT Research dengan mitra industri nasional.',
+          bio_en: 'Coordinates applied research programs and industry Proof-of-Concept (PoC) collaborations at IPT Research.',
+          email: 'rina.k@imanparyudi.com',
+          scholar: 'https://scholar.google.com',
+          linkedin: 'https://www.linkedin.com',
+          photo: '',
+          status: 'Active'
+        },
+        {
+          id: 'TIM-003',
+          order: 3,
+          category: 'Management',
+          name: 'Hendra Wijaya, M.Kom.',
+          role_id: 'Manajer Layanan Profesional & Operasional',
+          role_en: 'Professional Services & Operations Manager',
+          expertise: 'Data Governance, ISO 27001, Enterprise Analytics',
+          bio_id: 'Bertanggung jawab atas tata kelola proyek konsultasi profesional, audit kualitas data, dan manajemen infrastruktur komputasi riset.',
+          bio_en: 'Leads professional consulting engagements, data quality audits, and research computing infrastructure.',
+          email: 'hendra.w@imanparyudi.com',
+          scholar: '',
+          linkedin: 'https://www.linkedin.com',
+          photo: '',
+          status: 'Active'
+        },
+        {
+          id: 'TIM-004',
+          order: 4,
+          category: 'Management',
+          name: 'Siti Rahmawati, M.Sc.',
+          role_id: 'Koordinator Pelatihan & Kolaborasi Akademik',
+          role_en: 'Training & Academic Outreach Coordinator',
+          expertise: 'Cyber Awareness, Academic Programs, Scientific Events',
+          bio_id: 'Mengelola penyelenggaraan konferensi internasional ICIIRDS, kolokium ilmiah bulanan, serta kurikulum pelatihan keamanan informasi.',
+          bio_en: 'Manages the annual ICIIRDS international conference, monthly colloquia, and security training workshops.',
+          email: 'siti.r@imanparyudi.com',
+          scholar: 'https://scholar.google.com',
+          linkedin: 'https://www.linkedin.com',
+          photo: '',
+          status: 'Active'
+        },
+        {
+          id: 'TIM-005',
+          order: 5,
+          category: 'Scientific & Innovation Board',
+          name: 'Prof. Dr. Bambang Setiawan',
+          role_id: 'Dewan Penasihat Ilmiah — AI & Komputasi',
+          role_en: 'Scientific Advisory Board — AI & Computing',
+          expertise: 'Computational Intelligence, Neural Networks, Optimization',
+          bio_id: 'Memberikan arahan metodologi ilmiah serta penjaminan mutu publikasi jurnal internasional pada klaster Kecerdasan Buatan.',
+          bio_en: 'Provides scientific methodology guidance and international journal quality assurance for the AI research cluster.',
+          email: 'bambang.s@imanparyudi.com',
+          scholar: 'https://scholar.google.com',
+          linkedin: '',
+          photo: '',
+          status: 'Active'
+        },
+        {
+          id: 'TIM-006',
+          order: 6,
+          category: 'Scientific & Innovation Board',
+          name: 'Dr. Nadya Permatasari',
+          role_id: 'Dewan Inovasi — Data Science & Statistik',
+          role_en: 'Innovation Board — Data Science & Statistics',
+          expertise: 'Statistical Modeling, Big Data Mining, Predictive Analytics',
+          bio_id: 'Penasihat inovasi dalam pemodelan statistik skala besar dan evaluasi dampak riset data science terapan.',
+          bio_en: 'Innovation advisor for large-scale statistical modeling and applied data science impact evaluation.',
+          email: 'nadya.p@imanparyudi.com',
+          scholar: 'https://scholar.google.com',
+          linkedin: 'https://www.linkedin.com',
+          photo: '',
+          status: 'Active'
+        },
+        {
+          id: 'TIM-007',
+          order: 7,
+          category: 'Key Researchers',
+          name: 'Dr. Aditya Pratama',
+          role_id: 'Peneliti Utama — Computer Vision',
+          role_en: 'Key Researcher — Computer Vision',
+          expertise: 'Computer Vision, Deep Image Recognition, Edge AI',
+          bio_id: 'Memimpin penelitian pengenalan citra berbasis deep learning dan arsitektur Vision Transformer berlatensi rendah.',
+          bio_en: 'Leads research in deep learning image recognition and low-latency Vision Transformer architectures.',
+          email: 'aditya.p@imanparyudi.com',
+          scholar: 'https://scholar.google.com',
+          linkedin: 'https://www.linkedin.com',
+          photo: '',
+          status: 'Active'
+        },
+        {
+          id: 'TIM-008',
+          order: 8,
+          category: 'Key Researchers',
+          name: 'Dr. Farah Nabila',
+          role_id: 'Peneliti Utama — NLP & Interaksi Manusia-AI',
+          role_en: 'Key Researcher — NLP & Human-AI Interaction',
+          expertise: 'Natural Language Processing, Verified RAG, Human-AI Co-evolution',
+          bio_id: 'Meneliti pemrosesan bahasa alami Bahasa Indonesia, sistem RAG terverifikasi, serta dinamika komunikasi manusia dan AI.',
+          bio_en: 'Researches Indonesian natural language processing, verified RAG systems, and human-AI communication dynamics.',
+          email: 'farah.n@imanparyudi.com',
+          scholar: 'https://scholar.google.com',
+          linkedin: 'https://www.linkedin.com',
+          photo: '',
+          status: 'Active'
+        },
+        {
+          id: 'TIM-009',
+          order: 9,
+          category: 'Key Researchers',
+          name: 'Dr. Reza Pahlevi',
+          role_id: 'Peneliti Utama — Keamanan Sistem AI',
+          role_en: 'Key Researcher — AI System Security',
+          expertise: 'Adversarial ML, Network Anomaly Detection, Privacy-Preserving AI',
+          bio_id: 'Berfokus pada ketahanan model pembelajaran mesin terhadap serangan adversarial dan deteksi anomali telemetri keamanan.',
+          bio_en: 'Focuses on machine learning robustness against adversarial attacks and security telemetry anomaly detection.',
+          email: 'reza.p@imanparyudi.com',
+          scholar: 'https://scholar.google.com',
+          linkedin: 'https://www.linkedin.com',
+          photo: '',
+          status: 'Active'
+        },
+        {
+          id: 'TIM-010',
+          order: 10,
+          category: 'Senior Staff',
+          name: 'Dimas Saputra, M.T.',
+          role_id: 'Staf Peneliti Senior — Rekayasa Data',
+          role_en: 'Senior Research Engineer — Data Engineering',
+          expertise: 'MLOps, Data Pipelines, Cloud Computing',
+          bio_id: 'Merancang pipeline data otomatis dan infrastruktur pengujian eksperimen model AI skala produksi.',
+          bio_en: 'Architects automated data pipelines and reproducible experimentation infrastructure for production AI models.',
+          email: 'dimas.s@imanparyudi.com',
+          scholar: '',
+          linkedin: 'https://www.linkedin.com',
+          photo: '',
+          status: 'Active'
+        },
+        {
+          id: 'TIM-011',
+          order: 11,
+          category: 'Senior Staff',
+          name: 'Anisa Maharani, S.Kom., M.Cs.',
+          role_id: 'Staf Peneliti — Analitik Kognitif & Visualisasi',
+          role_en: 'Research Staff — Cognitive Analytics & Visualization',
+          expertise: 'Visual Analytics, Cognitive Modeling, Python & R',
+          bio_id: 'Mengembangkan dasbor analitik interaktif dan studi eksperimental interaksi pengguna dengan sistem cerdas.',
+          bio_en: 'Develops interactive visual analytics dashboards and empirical user-interaction studies for intelligent systems.',
+          email: 'anisa.m@imanparyudi.com',
+          scholar: 'https://scholar.google.com',
+          linkedin: 'https://www.linkedin.com',
+          photo: '',
+          status: 'Active'
+        }
+      ],
+      riset: [
+        {
+          id: 'RST-001',
+          kategori: 'Riset',
+          judul_id: 'Adaptive Deep Image Recognition for Low-Latency Industrial Quality Inspection',
+          judul_en: 'Adaptive Deep Image Recognition for Low-Latency Industrial Quality Inspection',
+          koordinator: 'Dr. Iman Paryudi, A. Pratama, S. Rahmawati',
+          tahun: '2026',
+          deskripsi: 'Pengembangan arsitektur Vision Transformer dan CNN ringan untuk inspeksi kualitas visual secara real-time dengan latensi rendah.',
+          tautan: 'IEEE Access / ICIIRDS 2026',
+          status: 'Active'
+        },
+        {
+          id: 'RST-002',
+          kategori: 'Penelitian Terapan',
+          judul_id: 'Asisten Pengetahuan Dokumen Teknis Berbahasa Indonesia (RAG Terverifikasi)',
+          judul_en: 'Indonesian Technical Document Knowledge Assistant (Verified RAG)',
+          koordinator: 'Tim Applied AI IPT Research',
+          tahun: '2026',
+          deskripsi: 'Prototipe Retrieval-Augmented Generation (RAG) berbasis domain tertutup dengan sitasi dokumen sumber yang dapat diaudit.',
+          tautan: 'PROTOTYPE-NLP-02',
+          status: 'Active'
+        },
+        {
+          id: 'RST-003',
+          kategori: 'Layanan Profesional',
+          judul_id: 'Konsultasi Strategi AI, Audit Model & Tata Kelola Data Science',
+          judul_en: 'AI Strategy Advisory, Model Auditing & Data Science Governance',
+          koordinator: 'Divisi Konsultasi IPT',
+          tahun: '2026',
+          deskripsi: 'Pendampingan evaluasi kesiapan infrastruktur data, pengujian bias algoritma, dan perancangan arsitektur analitik terukur.',
+          tautan: 'mailto:imanparyudi@gmail.com',
+          status: 'Active'
+        },
+        {
+          id: 'RST-004',
+          kategori: 'Pelatihan Keamanan',
+          judul_id: 'Workshop Keamanan Sistem AI, Perlindungan Privasi & Mitigasi Social Engineering',
+          judul_en: 'AI System Security, Data Privacy & Social Engineering Defense Workshop',
+          koordinator: 'Unit Keamanan Informasi IPT',
+          tahun: '2026',
+          deskripsi: 'Pelatihan praktis perlindungan dataset sensitif, mitigasi prompt injection, dan deteksi anomali trafik jaringan.',
+          tautan: 'MODUL-SEC-2026',
+          status: 'Active'
+        },
+        {
+          id: 'RST-005',
+          kategori: 'Bekerja di IPT',
+          judul_id: 'Fellowship Peneliti AI & Asisten Riset Data Science',
+          judul_en: 'Applied AI Research Fellow & Data Science Research Assistant',
+          koordinator: 'Sekretariat Akademik IPT',
+          tahun: '2026',
+          deskripsi: 'Peluang bergabung dalam tim riset Iman Paryudi Team untuk publikasi bereputasi dan pengembangan prototipe AI.',
+          tautan: 'mailto:imanparyudi@gmail.com',
+          status: 'Active'
+        }
+      ],
+      profil: {
+        hero_title_id: 'IPT Research adalah pusat penelitian untuk aplikasi AI dan Data Science',
+        hero_title_en: 'IPT Research is a research center for AI and Data Science applications',
+        hero_sub_id: 'Pusat Riset dan Inovasi aplikasi AI dan Data Science di Indonesia.',
+        hero_sub_en: 'Center for Research and Innovation in Applied AI and Data Science in Indonesia.',
+        sekilas_id: 'IPT Research berfokus pada penelitian inovatif di bidang Aplikasi AI dan Data Science.',
+        sekilas_en: 'IPT Research focuses on innovative research in Applied AI and Data Science.',
+        alamat: 'Jakarta – lantai 2, 12640 Indonesia',
+        email: 'imanparyudi@gmail.com',
+        telepon: '+43 (1) 505 36 88',
+        linkedin: 'https://www.linkedin.com',
+        scholar: 'https://scholar.google.com',
+        github: 'https://github.com',
+        team_group_photo: '',
+        team_intro_1_id: 'Kami adalah tim peneliti yang berdedikasi tinggi dan berpengalaman di bidang Kecerdasan Buatan (AI), Data Science, dan Keamanan Informasi. Sebagian besar anggota tim kami bergelar doktor maupun kandidat doktor serta aktif memublikasikan karya ilmiah pada jurnal dan konferensi internasional bereputasi.',
+        team_intro_2_id: 'Sebagai bagian dari kontribusi akademik, para peneliti kami secara rutin mengajar mata kuliah pemodelan data, pembelajaran mesin, dan keamanan sistem informasi di perguruan tinggi mitra, sekaligus membimbing mahasiswa dan peneliti muda dalam riset terapan.',
+        team_intro_3_id: 'Selain kegiatan penelitian akademik, tim konsultan dan analis profesional kami memiliki keahlian serta sertifikasi industri dalam tata kelola data, audit sistem cerdas, dan keamanan siber untuk mendukung transformasi digital institusi di Indonesia.',
+        team_intro_1_en: 'We are a team of highly educated and experienced researchers specializing in Applied Artificial Intelligence, Data Science, and Information Security. Most of our members hold or are working toward a doctorate degree and actively publish peer-reviewed papers at international conferences and journals.',
+        team_intro_2_en: 'As part of our academic mission, many of our researchers regularly teach courses on machine learning, data analytics, and information security at partner universities while mentoring the next generation of scholars.',
+        team_intro_3_en: 'Alongside our academic research, our applied engineering and security specialists maintain professional certifications and deliver high-impact advisory across data governance, intelligent systems, and cyber resilience.'
+      }
+    };
+
+    const DEFAULT_CONFIG = {
+      sheetsUrl: '',
+      secretToken: 'IPT-ADMIN-2026',
+      adminPin: '2026',
+      lastSyncText: 'Baru saja (Sandbox Lokal)',
+      lastSyncMode: 'local'
+    };
+
+    let cmsData = loadCmsData();
+    let cmsConfig = loadCmsConfig();
+    let activeAdminTab = 'berita';
+    let previewLang = 'id';
+    let previewPage = 'home';
+    let beritaSearchQuery = '';
+    let beritaStatusFilter = 'ALL';
+    let timCategoryFilter = 'ALL';
+    let timSearchQuery = '';
+    let risetCategoryFilter = 'ALL';
+    let risetSearchQuery = '';
+
+    function loadCmsData() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEYS.DATA);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          return {
+            berita: Array.isArray(parsed.berita) ? parsed.berita : DEFAULT_SEED_DATA.berita,
+            acara: Array.isArray(parsed.acara) ? parsed.acara : DEFAULT_SEED_DATA.acara,
+            tim: Array.isArray(parsed.tim) ? parsed.tim : DEFAULT_SEED_DATA.tim,
+            riset: Array.isArray(parsed.riset) ? parsed.riset : DEFAULT_SEED_DATA.riset,
+            profil: parsed.profil ? { ...DEFAULT_SEED_DATA.profil, ...parsed.profil } : { ...DEFAULT_SEED_DATA.profil }
+          };
+        }
+      } catch (e) {}
+      return JSON.parse(JSON.stringify(DEFAULT_SEED_DATA));
+    }
+
+    function persistCmsData() {
+      try {
+        localStorage.setItem(STORAGE_KEYS.DATA, JSON.stringify(cmsData));
+      } catch (e) {}
+      updateKpiCards();
+    }
+
+    function loadCmsConfig() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEYS.CONFIG);
+        if (raw) {
+          return { ...DEFAULT_CONFIG, ...JSON.parse(raw) };
+        }
+      } catch (e) {}
+      return { ...DEFAULT_CONFIG };
+    }
+
+    function persistCmsConfig() {
+      try {
+        localStorage.setItem(STORAGE_KEYS.CONFIG, JSON.stringify(cmsConfig));
+      } catch (e) {}
+      updateConnectionStatusUI();
+      updateKpiCards();
+    }
+
+    /**
+     * =========================================================================
+     * 2. SPREADSHEET API SYNC ENGINE (GET & POST via text/plain for GAS CORS)
+     * =========================================================================
+     */
+    const SheetsAPI = {
+      isConnected() {
+        return Boolean(cmsConfig.sheetsUrl && cmsConfig.sheetsUrl.trim().startsWith('https://'));
+      },
+
+      async getAll() {
+        if (!this.isConnected()) {
+          return { ok: false, reason: 'URL Google Apps Script belum diatur.' };
+        }
+        const sep = cmsConfig.sheetsUrl.includes('?') ? '&' : '?';
+        const endpoint = `${cmsConfig.sheetsUrl.trim()}${sep}action=getAll&t=${Date.now()}`;
+        const startTime = performance.now();
+        const response = await fetch(endpoint, { method: 'GET' });
+        const latencyMs = Math.round(performance.now() - startTime);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status} ${response.statusText}`);
+        }
+        const json = await response.json();
+        return { ok: true, latencyMs, payload: json };
+      },
+
+      async mutate(sheet, action, data) {
+        if (!this.isConnected()) {
+          // Local sandbox mode: immediately succeed and persist locally
+          cmsConfig.lastSyncText = formatTimestampWIB() + ' (Lokal)';
+          cmsConfig.lastSyncMode = 'local';
+          persistCmsConfig();
+          return { ok: true, mode: 'local' };
+        }
+
+        showLoadingOverlay(`Menyimpan perubahan ke sheet "${sheet}"...`);
+        try {
+          const response = await fetch(cmsConfig.sheetsUrl.trim(), {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'text/plain;charset=utf-8'
+            },
+            body: JSON.stringify({
+              token: cmsConfig.secretToken,
+              sheet,
+              action,
+              data
+            })
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+
+          const result = await response.json();
+          if (result && result.status === 'error') {
+            throw new Error(result.message || 'Gagal menulis ke Google Sheets');
+          }
+
+          cmsConfig.lastSyncText = formatTimestampWIB() + ' (Sheets)';
+          cmsConfig.lastSyncMode = 'sheets';
+          persistCmsConfig();
+          hideLoadingOverlay();
+          return { ok: true, mode: 'sheets', result };
+        } catch (err) {
+          hideLoadingOverlay();
+          showToast(`Tersimpan lokal, namun gagal sinkron ke Sheets: ${err.message}`, 'warning');
+          return { ok: false, mode: 'fallback', error: err.message };
+        }
+      }
+    };
+
+    async function pullFromSheets() {
+      if (!SheetsAPI.isConnected()) {
+        showToast('URL Google Apps Script belum dikonfigurasi. Membuka tab Koneksi...', 'info');
+        switchAdminTab('koneksi');
+        return;
+      }
+
+      const icon = document.getElementById('pull-sync-icon');
+      icon?.classList.add('animate-spin');
+      showLoadingOverlay('Menarik data terbaru dari Google Spreadsheets...');
+
+      try {
+        const res = await SheetsAPI.getAll();
+        const p = res.payload || {};
+
+        if (Array.isArray(p.berita)) cmsData.berita = p.berita;
+        if (Array.isArray(p.acara)) cmsData.acara = p.acara;
+        if (Array.isArray(p.tim)) cmsData.tim = p.tim;
+        if (Array.isArray(p.riset)) cmsData.riset = p.riset;
+        if (p.profil && typeof p.profil === 'object') {
+          cmsData.profil = { ...cmsData.profil, ...p.profil };
+        }
+
+        persistCmsData();
+        cmsConfig.lastSyncText = `${formatTimestampWIB()} (${res.latencyMs}ms)`;
+        cmsConfig.lastSyncMode = 'sheets';
+        persistCmsConfig();
+
+        renderActiveWorkspace();
+        showToast(`Sinkronisasi berhasil (${res.latencyMs} ms) dari Google Spreadsheets.`, 'success');
+      } catch (err) {
+        showToast(`Gagal menarik data dari Google Sheets: ${err.message}`, 'error');
+      } finally {
+        icon?.classList.remove('animate-spin');
+        hideLoadingOverlay();
+      }
+    }
+
+    async function pushAllToSheets() {
+      if (!SheetsAPI.isConnected()) {
+        showToast('Masukkan & simpan URL Google Apps Script terlebih dahulu.', 'warning');
+        return;
+      }
+      const res = await SheetsAPI.mutate('ALL', 'syncAll', cmsData);
+      if (res.ok && res.mode === 'sheets') {
+        showToast('Seluruh data Berita, Acara, Riset & Profil berhasil didorong ke Google Spreadsheets!', 'success');
+      }
+    }
+
+    /**
+     * =========================================================================
+     * 3. AUTHENTICATION & SESSION GATE
+     * =========================================================================
+     */
+    function checkAuthOnLoad() {
+      const isAuthed =
+        sessionStorage.getItem(STORAGE_KEYS.AUTH) === 'true' ||
+        localStorage.getItem(STORAGE_KEYS.AUTH) === 'true';
+
+      if (isAuthed) {
+        unlockCmsShell();
+      }
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const input = document.getElementById('login-pin-input');
+      const errorEl = document.getElementById('login-error-msg');
+      const remember = document.getElementById('remember-session-checkbox').checked;
+
+      if (input.value.trim() === String(cmsConfig.adminPin)) {
+        errorEl.classList.add('hidden');
+        sessionStorage.setItem(STORAGE_KEYS.AUTH, 'true');
+        if (remember) {
+          localStorage.setItem(STORAGE_KEYS.AUTH, 'true');
+        }
+        input.value = '';
+        unlockCmsShell();
+        showToast('Selamat datang di IPT Research Admin CMS.', 'success');
+      } else {
+        errorEl.classList.remove('hidden');
+        input.focus();
+      }
+    }
+
+    function handleAdminLogout() {
+      sessionStorage.removeItem(STORAGE_KEYS.AUTH);
+      localStorage.removeItem(STORAGE_KEYS.AUTH);
+      document.getElementById('cms-app-shell').classList.add('hidden');
+      document.getElementById('login-gate').classList.remove('hidden');
+      document.getElementById('login-gate').classList.add('flex');
+    }
+
+    function togglePinVisibility() {
+      const input = document.getElementById('login-pin-input');
+      const btn = document.getElementById('toggle-pin-btn');
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.textContent = 'Sembunyi';
+      } else {
+        input.type = 'password';
+        btn.textContent = 'Lihat';
+      }
+    }
+
+    function unlockCmsShell() {
+      const gate = document.getElementById('login-gate');
+      gate.classList.add('hidden');
+      gate.classList.remove('flex');
+      document.getElementById('cms-app-shell').classList.remove('hidden');
+
+      updateConnectionStatusUI();
+      updateKpiCards();
+      renderActiveWorkspace();
+    }
+
+    /**
+     * =========================================================================
+     * 4. HEADER STATUS, KPI CARDS & NAVIGATION TABS
+     * =========================================================================
+     */
+    function updateConnectionStatusUI() {
+      const pill = document.getElementById('connection-status-pill');
+      const dot = document.getElementById('connection-status-dot');
+      const text = document.getElementById('connection-status-text');
+      if (!pill || !dot || !text) return;
+
+      if (SheetsAPI.isConnected()) {
+        pill.className = 'inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100';
+        dot.className = 'w-2 h-2 rounded-full bg-emerald-500';
+        text.textContent = 'Terhubung: Google Sheets';
+      } else {
+        pill.className = 'inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors bg-amber-50 text-amber-800 border-amber-200 hover:bg-amber-100';
+        dot.className = 'w-2 h-2 rounded-full bg-amber-500';
+        text.textContent = 'Mode Sandbox Lokal';
+      }
+    }
+
+    function updateKpiCards() {
+      const pubBerita = cmsData.berita.filter((b) => b.status === 'Published').length;
+      document.getElementById('kpi-berita-count').textContent = cmsData.berita.length;
+      document.getElementById('kpi-berita-sub').textContent = `${pubBerita} artikel dipublikasikan`;
+
+      const upAcara = cmsData.acara.filter((a) => a.status === 'Upcoming').length;
+      document.getElementById('kpi-acara-count').textContent = cmsData.acara.length;
+      document.getElementById('kpi-acara-sub').textContent = `${upAcara} jadwal konferensi aktif`;
+
+      const actTim = cmsData.tim.filter((m) => (m.status || 'Active') === 'Active').length;
+      document.getElementById('kpi-tim-count').textContent = cmsData.tim.length;
+      document.getElementById('kpi-tim-sub').textContent = `${actTim} peneliti aktif di 4 divisi`;
+
+      document.getElementById('kpi-sync-time').textContent = cmsConfig.lastSyncText;
+      document.getElementById('kpi-sync-source').textContent = SheetsAPI.isConnected()
+        ? 'Terhubung ke Google Apps Script'
+        : 'Penyimpanan Browser (Belum terhubung URL)';
+    }
+
+    function switchAdminTab(tabKey) {
+      activeAdminTab = tabKey;
+
+      document.querySelectorAll('.admin-nav-btn').forEach((btn) => {
+        if (btn.getAttribute('data-admin-tab') === tabKey) {
+          btn.className = 'admin-nav-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors bg-[#0077B6] text-white shadow-2xs';
+        } else {
+          btn.className = 'admin-nav-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors text-[#374151] hover:bg-gray-100';
+        }
+      });
+
+      renderActiveWorkspace();
+    }
+
+    function renderActiveWorkspace() {
+      const container = document.getElementById('admin-workspace');
+      if (!container) return;
+
+      if (activeAdminTab === 'berita') renderBeritaModule(container);
+      else if (activeAdminTab === 'acara') renderAcaraModule(container);
+      else if (activeAdminTab === 'tim') renderTimModule(container);
+      else if (activeAdminTab === 'riset') renderRisetModule(container);
+      else if (activeAdminTab === 'profil') renderProfilModule(container);
+      else if (activeAdminTab === 'koneksi') renderKoneksiModule(container);
+    }
+
+    /**
+     * =========================================================================
+     * 5. MODULE 1: BERITA TERKINI (CRUD TABLE + MODAL)
+     * =========================================================================
+     */
+    function renderBeritaModule(container) {
+      const filtered = cmsData.berita.filter((item) => {
+        const matchStatus = beritaStatusFilter === 'ALL' || item.status === beritaStatusFilter;
+        const q = beritaSearchQuery.trim().toLowerCase();
+        const matchSearch =
+          !q ||
+          item.judul_id.toLowerCase().includes(q) ||
+          (item.judul_en || '').toLowerCase().includes(q) ||
+          item.id.toLowerCase().includes(q);
+        return matchStatus && matchSearch;
+      });
+
+      const rowsHtml =
+        filtered.length === 0
+          ? `<tr><td colspan="5" class="px-4 py-8 text-center text-xs text-gray-500">Tidak ada artikel berita yang sesuai filter pencarian.</td></tr>`
+          : filtered
+              .map(
+                (b) => `
+              <tr class="border-b border-gray-100 hover:bg-gray-50/80 transition-colors">
+                <td class="px-4 py-3.5 align-top font-mono text-[11px] font-semibold text-[#0077B6] whitespace-nowrap">${escapeHtml(b.id)}</td>
+                <td class="px-4 py-3.5 align-top">
+                  <div class="w-[82px] h-[52px] rounded border border-gray-200 overflow-hidden bg-gray-100 shrink-0">
+                    <img
+                      src="${escapeHtml(b.gambar || '')}"
+                      onerror="this.onerror=null; this.src='${SVG_FALLBACK_AI}';"
+                      alt=""
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+                </td>
+                <td class="px-4 py-3.5 align-top max-w-md">
+                  <div class="text-xs font-bold text-[#1F2937] leading-snug">${escapeHtml(b.judul_id)}</div>
+                  <div class="text-[11px] text-[#6B7280] mt-1 line-clamp-2">${escapeHtml(b.excerpt_id)}</div>
+                  <div class="text-[10.5px] text-gray-400 mt-1">${escapeHtml(b.tanggal)}</div>
+                </td>
+                <td class="px-4 py-3.5 align-top whitespace-nowrap">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${
+                    b.status === 'Published'
+                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                      : 'bg-gray-100 text-gray-600 border border-gray-200'
+                  }">
+                    ${escapeHtml(b.status)}
+                  </span>
+                </td>
+                <td class="px-4 py-3.5 align-top text-right whitespace-nowrap">
+                  <div class="inline-flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onclick="openBeritaModal('edit', '${escapeHtml(b.id)}')"
+                      class="px-2.5 py-1.5 rounded-lg border border-gray-200 bg-white hover:border-[#0077B6] hover:text-[#0077B6] text-xs font-semibold text-gray-700 transition-colors"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      onclick="confirmDeleteItem('berita', '${escapeHtml(b.id)}', '${escapeHtml(b.judul_id)}')"
+                      class="px-2.5 py-1.5 rounded-lg border border-gray-200 bg-white hover:border-red-300 hover:bg-red-50 hover:text-red-700 text-xs font-semibold text-gray-600 transition-colors"
+                    >
+                      Hapus
+                    </button>
+                  </div>
+                </td>
+              </tr>`
+              )
+              .join('');
+
+      container.innerHTML = `
+        <div class="bg-white rounded-xl border border-gray-200 shadow-2xs overflow-hidden animate-panel">
+          <!-- Module Header -->
+          <div class="p-5 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 class="text-base font-bold text-[#1F2937]">Manajemen Berita Terkini</h2>
+              <p class="text-xs text-[#6B7280] mt-0.5">Kelola daftar berita dan artikel riset yang tampil pada kolom utama <em>Berita Terkini:</em> di halaman depan.</p>
+            </div>
+            <button
+              type="button"
+              onclick="openBeritaModal('create')"
+              class="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold shadow-xs transition-colors shrink-0"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+              <span>Tambah Berita Baru</span>
+            </button>
+          </div>
+
+          <!-- Filter & Search Bar -->
+          <div class="px-5 py-3 bg-gray-50 border-b border-gray-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+            <input
+              type="text"
+              value="${escapeHtml(beritaSearchQuery)}"
+              oninput="beritaSearchQuery = this.value; renderActiveWorkspace();"
+              placeholder="Cari judul artikel atau ID (misal: BRT-001)..."
+              class="px-3 py-1.5 rounded-lg border border-gray-300 bg-white text-xs focus:outline-none focus:border-[#0077B6] sm:w-72"
+            />
+            <div class="flex items-center gap-2 text-xs">
+              <span class="text-gray-500 font-medium">Status:</span>
+              <select
+                onchange="beritaStatusFilter = this.value; renderActiveWorkspace();"
+                class="px-2.5 py-1.5 rounded-lg border border-gray-300 bg-white text-xs font-medium focus:outline-none focus:border-[#0077B6]"
+              >
+                <option value="ALL" ${beritaStatusFilter === 'ALL' ? 'selected' : ''}>Semua Status</option>
+                <option value="Published" ${beritaStatusFilter === 'Published' ? 'selected' : ''}>Published</option>
+                <option value="Draft" ${beritaStatusFilter === 'Draft' ? 'selected' : ''}>Draft</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Responsive Table -->
+          <div class="overflow-x-auto custom-scroll">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-gray-50/70 border-b border-gray-200 text-[11px] font-bold uppercase tracking-wider text-[#6B7280]">
+                  <th class="px-4 py-3">ID</th>
+                  <th class="px-4 py-3">Thumbnail</th>
+                  <th class="px-4 py-3">Judul &amp; Ringkasan Artikel</th>
+                  <th class="px-4 py-3">Status</th>
+                  <th class="px-4 py-3 text-right">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${rowsHtml}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    function openBeritaModal(mode, id = null) {
+      document.getElementById('berita-mode').value = mode;
+      const heading = document.getElementById('modal-berita-heading');
+
+      if (mode === 'edit' && id) {
+        const item = cmsData.berita.find((b) => b.id === id);
+        if (!item) return;
+        heading.textContent = `Edit Berita (${item.id})`;
+        document.getElementById('berita-id').value = item.id;
+        document.getElementById('berita-status').value = item.status || 'Published';
+        document.getElementById('berita-tanggal').value = item.tanggal || '';
+        document.getElementById('berita-judul-id').value = item.judul_id || '';
+        document.getElementById('berita-judul-en').value = item.judul_en || '';
+        document.getElementById('berita-excerpt-id').value = item.excerpt_id || '';
+        document.getElementById('berita-excerpt-en').value = item.excerpt_en || '';
+        document.getElementById('berita-konten-id').value = item.konten_id || '';
+        document.getElementById('berita-konten-en').value = item.konten_en || '';
+        document.getElementById('berita-gambar').value = item.gambar || '';
+        updateBeritaImgPreview(item.gambar || '');
+      } else {
+        heading.textContent = 'Tambah Berita Terkini Baru';
+        document.getElementById('berita-id').value = generateNextId('BRT', cmsData.berita);
+        document.getElementById('berita-status').value = 'Published';
+        document.getElementById('berita-tanggal').value = new Date().toString();
+        document.getElementById('berita-judul-id').value = '';
+        document.getElementById('berita-judul-en').value = '';
+        document.getElementById('berita-excerpt-id').value = '';
+        document.getElementById('berita-excerpt-en').value = '';
+        document.getElementById('berita-konten-id').value = '';
+        document.getElementById('berita-konten-en').value = '';
+        document.getElementById('berita-gambar').value = '';
+        updateBeritaImgPreview('');
+      }
+
+      openModal('modal-berita');
+    }
+
+    function updateBeritaImgPreview(url) {
+      const img = document.getElementById('berita-img-preview');
+      if (!img) return;
+      img.src = url && url.trim() ? url.trim() : SVG_FALLBACK_AI;
+      img.onerror = function () {
+        this.onerror = null;
+        this.src = SVG_FALLBACK_AI;
+      };
+    }
+
+    async function saveBeritaForm(e) {
+      e.preventDefault();
+      const mode = document.getElementById('berita-mode').value;
+      const record = {
+        id: document.getElementById('berita-id').value.trim(),
+        tanggal: document.getElementById('berita-tanggal').value.trim(),
+        judul_id: document.getElementById('berita-judul-id').value.trim(),
+        judul_en: document.getElementById('berita-judul-en').value.trim() || document.getElementById('berita-judul-id').value.trim(),
+        excerpt_id: document.getElementById('berita-excerpt-id').value.trim(),
+        excerpt_en: document.getElementById('berita-excerpt-en').value.trim() || document.getElementById('berita-excerpt-id').value.trim(),
+        konten_id: document.getElementById('berita-konten-id').value.trim(),
+        konten_en: document.getElementById('berita-konten-en').value.trim(),
+        gambar: document.getElementById('berita-gambar').value.trim(),
+        status: document.getElementById('berita-status').value
+      };
+
+      if (mode === 'edit') {
+        const idx = cmsData.berita.findIndex((b) => b.id === record.id);
+        if (idx !== -1) cmsData.berita[idx] = record;
+      } else {
+        cmsData.berita.unshift(record);
+      }
+
+      persistCmsData();
+      closeModal('modal-berita');
+      renderActiveWorkspace();
+
+      const res = await SheetsAPI.mutate('Berita', mode, record);
+      if (res.ok) {
+        showToast(
+          res.mode === 'sheets'
+            ? `Artikel ${record.id} berhasil disimpan ke Google Spreadsheets.`
+            : `Artikel ${record.id} berhasil disimpan di Sandbox Lokal.`,
+          'success'
+        );
+      }
+    }
+
+    /**
+     * =========================================================================
+     * 6. MODULE 2: ACARA MENDATANG @ IPT (CRUD TABLE + MODAL)
+     * =========================================================================
+     */
+    function renderAcaraModule(container) {
+      const rowsHtml =
+        cmsData.acara.length === 0
+          ? `<tr><td colspan="5" class="px-4 py-8 text-center text-xs text-gray-500">Belum ada jadwal acara terdaftar.</td></tr>`
+          : cmsData.acara
+              .map(
+                (a) => `
+              <tr class="border-b border-gray-100 hover:bg-gray-50/80 transition-colors">
+                <td class="px-4 py-3.5 align-top font-mono text-[11px] font-semibold text-[#0077B6] whitespace-nowrap">${escapeHtml(a.id)}</td>
+                <td class="px-4 py-3.5 align-top max-w-md">
+                  <div class="text-xs font-bold text-[#0077B6] leading-snug">${escapeHtml(a.judul_id)}</div>
+                  <div class="text-[11px] text-[#6B7280] mt-1">${escapeHtml(a.lokasi || '')}</div>
+                </td>
+                <td class="px-4 py-3.5 align-top text-xs text-[#4B5563] whitespace-nowrap">${escapeHtml(a.tanggal_rentang)}</td>
+                <td class="px-4 py-3.5 align-top whitespace-nowrap">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${
+                    a.status === 'Upcoming'
+                      ? 'bg-blue-50 text-[#0077B6] border border-blue-200'
+                      : 'bg-gray-100 text-gray-600 border border-gray-200'
+                  }">
+                    ${escapeHtml(a.status)}
+                  </span>
+                </td>
+                <td class="px-4 py-3.5 align-top text-right whitespace-nowrap">
+                  <div class="inline-flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onclick="openAcaraModal('edit', '${escapeHtml(a.id)}')"
+                      class="px-2.5 py-1.5 rounded-lg border border-gray-200 bg-white hover:border-[#0077B6] hover:text-[#0077B6] text-xs font-semibold text-gray-700 transition-colors"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      onclick="confirmDeleteItem('acara', '${escapeHtml(a.id)}', '${escapeHtml(a.judul_id)}')"
+                      class="px-2.5 py-1.5 rounded-lg border border-gray-200 bg-white hover:border-red-300 hover:bg-red-50 hover:text-red-700 text-xs font-semibold text-gray-600 transition-colors"
+                    >
+                      Hapus
+                    </button>
+                  </div>
+                </td>
+              </tr>`
+              )
+              .join('');
+
+      container.innerHTML = `
+        <div class="bg-white rounded-xl border border-gray-200 shadow-2xs overflow-hidden animate-panel">
+          <div class="p-5 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 class="text-base font-bold text-[#1F2937]">Manajemen Acara Mendatang @ IPT</h2>
+              <p class="text-xs text-[#6B7280] mt-0.5">Kelola jadwal konferensi internasional, seminar, dan kolokium riset pada sidebar kanan.</p>
+            </div>
+            <button
+              type="button"
+              onclick="openAcaraModal('create')"
+              class="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold shadow-xs transition-colors shrink-0"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+              <span>Tambah Acara Baru</span>
+            </button>
+          </div>
+
+          <div class="overflow-x-auto custom-scroll">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-gray-50/70 border-b border-gray-200 text-[11px] font-bold uppercase tracking-wider text-[#6B7280]">
+                  <th class="px-4 py-3">ID</th>
+                  <th class="px-4 py-3">Judul Konferensi / Acara</th>
+                  <th class="px-4 py-3">Rentang Tanggal</th>
+                  <th class="px-4 py-3">Status</th>
+                  <th class="px-4 py-3 text-right">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${rowsHtml}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    function openAcaraModal(mode, id = null) {
+      document.getElementById('acara-mode').value = mode;
+      const heading = document.getElementById('modal-acara-heading');
+
+      if (mode === 'edit' && id) {
+        const item = cmsData.acara.find((a) => a.id === id);
+        if (!item) return;
+        heading.textContent = `Edit Acara (${item.id})`;
+        document.getElementById('acara-id').value = item.id;
+        document.getElementById('acara-status').value = item.status || 'Upcoming';
+        document.getElementById('acara-judul-id').value = item.judul_id || '';
+        document.getElementById('acara-judul-en').value = item.judul_en || '';
+        document.getElementById('acara-tanggal').value = item.tanggal_rentang || '';
+        document.getElementById('acara-lokasi').value = item.lokasi || '';
+        document.getElementById('acara-deskripsi').value = item.deskripsi || '';
+      } else {
+        heading.textContent = 'Tambah Acara Mendatang @ IPT';
+        document.getElementById('acara-id').value = generateNextId('ACR', cmsData.acara);
+        document.getElementById('acara-status').value = 'Upcoming';
+        document.getElementById('acara-judul-id').value = '';
+        document.getElementById('acara-judul-en').value = '';
+        document.getElementById('acara-tanggal').value = '';
+        document.getElementById('acara-lokasi').value = 'Jakarta – lantai 2, 12640 Indonesia';
+        document.getElementById('acara-deskripsi').value = '';
+      }
+
+      openModal('modal-acara');
+    }
+
+    async function saveAcaraForm(e) {
+      e.preventDefault();
+      const mode = document.getElementById('acara-mode').value;
+      const record = {
+        id: document.getElementById('acara-id').value.trim(),
+        judul_id: document.getElementById('acara-judul-id').value.trim(),
+        judul_en: document.getElementById('acara-judul-en').value.trim() || document.getElementById('acara-judul-id').value.trim(),
+        tanggal_rentang: document.getElementById('acara-tanggal').value.trim(),
+        lokasi: document.getElementById('acara-lokasi').value.trim(),
+        deskripsi: document.getElementById('acara-deskripsi').value.trim(),
+        status: document.getElementById('acara-status').value
+      };
+
+      if (mode === 'edit') {
+        const idx = cmsData.acara.findIndex((a) => a.id === record.id);
+        if (idx !== -1) cmsData.acara[idx] = record;
+      } else {
+        cmsData.acara.unshift(record);
+      }
+
+      persistCmsData();
+      closeModal('modal-acara');
+      renderActiveWorkspace();
+
+      const res = await SheetsAPI.mutate('Acara', mode, record);
+      if (res.ok) {
+        showToast(
+          res.mode === 'sheets'
+            ? `Acara ${record.id} berhasil disimpan ke Google Spreadsheets.`
+            : `Acara ${record.id} berhasil disimpan di Sandbox Lokal.`,
+          'success'
+        );
+      }
+    }
+
+    /**
+     * =========================================================================
+     * 6B. MODULE 2B: TIM & PENELITI (Sheet: Tim + Intro Narrative Editor)
+     * =========================================================================
+     */
+    function renderTimModule(container) {
+      const sorted = [...cmsData.tim].sort((a, b) => (Number(a.order) || 99) - (Number(b.order) || 99));
+      const filtered = sorted.filter((m) => {
+        const matchCat = timCategoryFilter === 'ALL' || m.category === timCategoryFilter;
+        const q = timSearchQuery.trim().toLowerCase();
+        const matchSearch =
+          !q ||
+          (m.name || '').toLowerCase().includes(q) ||
+          (m.role_id || '').toLowerCase().includes(q) ||
+          (m.expertise || '').toLowerCase().includes(q) ||
+          (m.id || '').toLowerCase().includes(q);
+        return matchCat && matchSearch;
+      });
+
+      const rowsHtml =
+        filtered.length === 0
+          ? `<tr><td colspan="6" class="px-4 py-8 text-center text-xs text-gray-500">Tidak ada anggota tim yang sesuai filter pencarian.</td></tr>`
+          : filtered
+              .map(
+                (m) => `
+              <tr class="border-b border-gray-100 hover:bg-gray-50/80 transition-colors">
+                <td class="px-4 py-3.5 align-top whitespace-nowrap">
+                  <div class="font-mono text-[11px] font-semibold text-[#0077B6]">${escapeHtml(m.id)}</div>
+                  <div class="text-[10.5px] text-gray-400 mt-0.5">Urutan #${escapeHtml(m.order || 1)}</div>
+                </td>
+                <td class="px-4 py-3.5 align-top">
+                  <div class="w-[46px] h-[54px] rounded border border-gray-200 overflow-hidden bg-slate-200 shrink-0">
+                    <img
+                      src="${escapeHtml(m.photo || '')}"
+                      onerror="this.onerror=null; this.src='${SVG_AVATAR_FALLBACK}';"
+                      alt=""
+                      class="w-full h-full object-cover object-top"
+                    />
+                  </div>
+                </td>
+                <td class="px-4 py-3.5 align-top">
+                  <div class="text-xs font-bold text-[#1F2937]">${escapeHtml(m.name)}</div>
+                  <div class="text-[11px] text-[#0077B6] font-medium mt-0.5">${escapeHtml(m.role_id || '')}</div>
+                  <div class="text-[10.5px] text-gray-400 mt-0.5">${escapeHtml(m.email || '')}</div>
+                </td>
+                <td class="px-4 py-3.5 align-top whitespace-nowrap">
+                  <span class="inline-block px-2.5 py-0.5 rounded bg-blue-50 text-[#0077B6] text-[11px] font-semibold border border-blue-100">
+                    ${escapeHtml(m.category)}
+                  </span>
+                </td>
+                <td class="px-4 py-3.5 align-top whitespace-nowrap">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${
+                    (m.status || 'Active') === 'Active'
+                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                      : 'bg-gray-100 text-gray-600 border border-gray-200'
+                  }">
+                    ${escapeHtml(m.status || 'Active')}
+                  </span>
+                </td>
+                <td class="px-4 py-3.5 align-top text-right whitespace-nowrap">
+                  <div class="inline-flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onclick="openTimModal('edit', '${escapeHtml(m.id)}')"
+                      class="px-2.5 py-1.5 rounded-lg border border-gray-200 bg-white hover:border-[#0077B6] hover:text-[#0077B6] text-xs font-semibold text-gray-700 transition-colors"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      onclick="confirmDeleteItem('tim', '${escapeHtml(m.id)}', '${escapeHtml(m.name)}')"
+                      class="px-2.5 py-1.5 rounded-lg border border-gray-200 bg-white hover:border-red-300 hover:bg-red-50 hover:text-red-700 text-xs font-semibold text-gray-600 transition-colors"
+                    >
+                      Hapus
+                    </button>
+                  </div>
+                </td>
+              </tr>`
+              )
+              .join('');
+
+      const p = cmsData.profil;
+      container.innerHTML = `
+        <div class="space-y-6 animate-panel">
+          <!-- Card 1: Researcher Directory CRUD Table -->
+          <div class="bg-white rounded-xl border border-gray-200 shadow-2xs overflow-hidden">
+            <div class="p-5 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <h2 class="text-base font-bold text-[#1F2937]">Manajemen Tim &amp; Peneliti (Menu Tentang → Tim)</h2>
+                <p class="text-xs text-[#6B7280] mt-0.5">Tambah, edit, atau hapus anggota tim pada divisi <em>Management</em>, <em>Scientific &amp; Innovation Board</em>, <em>Key Researchers</em>, dan <em>Senior Staff</em>.</p>
+              </div>
+              <button
+                type="button"
+                onclick="openTimModal('create')"
+                class="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold shadow-xs transition-colors shrink-0"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                <span>Tambah Anggota Tim</span>
+              </button>
+            </div>
+
+            <!-- Filter & Search Bar -->
+            <div class="px-5 py-3 bg-gray-50 border-b border-gray-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+              <input
+                type="text"
+                value="${escapeHtml(timSearchQuery)}"
+                oninput="timSearchQuery = this.value; renderActiveWorkspace();"
+                placeholder="Cari nama peneliti, gelar, jabatan, atau keahlian..."
+                class="px-3 py-1.5 rounded-lg border border-gray-300 bg-white text-xs focus:outline-none focus:border-[#0077B6] sm:w-72"
+              />
+              <div class="flex items-center gap-2 text-xs">
+                <span class="text-gray-500 font-medium">Divisi:</span>
+                <select
+                  onchange="timCategoryFilter = this.value; renderActiveWorkspace();"
+                  class="px-2.5 py-1.5 rounded-lg border border-gray-300 bg-white text-xs font-medium focus:outline-none focus:border-[#0077B6]"
+                >
+                  <option value="ALL" ${timCategoryFilter === 'ALL' ? 'selected' : ''}>Semua Divisi (${cmsData.tim.length})</option>
+                  <option value="Management" ${timCategoryFilter === 'Management' ? 'selected' : ''}>Management</option>
+                  <option value="Scientific & Innovation Board" ${timCategoryFilter === 'Scientific & Innovation Board' ? 'selected' : ''}>Scientific &amp; Innovation Board</option>
+                  <option value="Key Researchers" ${timCategoryFilter === 'Key Researchers' ? 'selected' : ''}>Key Researchers</option>
+                  <option value="Senior Staff" ${timCategoryFilter === 'Senior Staff' ? 'selected' : ''}>Senior Staff</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="overflow-x-auto custom-scroll">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="bg-gray-50/70 border-b border-gray-200 text-[11px] font-bold uppercase tracking-wider text-[#6B7280]">
+                    <th class="px-4 py-3">ID &amp; Urutan</th>
+                    <th class="px-4 py-3">Foto</th>
+                    <th class="px-4 py-3">Nama &amp; Jabatan</th>
+                    <th class="px-4 py-3">Divisi Tim</th>
+                    <th class="px-4 py-3">Status</th>
+                    <th class="px-4 py-3 text-right">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${rowsHtml}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Card 2: Group Team Photo & 3 Narrative Paragraphs Editor -->
+          <div class="bg-white rounded-xl border border-gray-200 shadow-2xs overflow-hidden">
+            <div class="p-5 border-b border-gray-200 flex items-center justify-between">
+              <div>
+                <h3 class="text-sm font-bold text-[#1F2937]">Foto Grup Tim &amp; Narasi Pengantar Halaman Tim</h3>
+                <p class="text-xs text-[#6B7280] mt-0.5">Ubah foto bersama tim di bagian atas halaman Tim serta 3 paragraf narasi profil peneliti.</p>
+              </div>
+              <button type="button" onclick="setPreviewPage('tim'); openPublicPreviewModal();" class="text-xs font-semibold text-[#0077B6] hover:underline">
+                Pratinjau Halaman Tim →
+              </button>
+            </div>
+            <form onsubmit="saveTeamIntroSettings(event)" class="p-5 space-y-4">
+              <div>
+                <label class="block text-xs font-semibold text-[#1F2937] mb-1">URL Foto Grup Tim (Banner Atas Halaman Tim)</label>
+                <input
+                  type="url"
+                  id="tim-group-photo-url"
+                  value="${escapeHtml(p.team_group_photo || '')}"
+                  placeholder="https://... (Kosongkan untuk memakai banner ilustrasi institusi IPT Research)"
+                  class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]"
+                />
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label class="block text-xs font-semibold text-[#1F2937] mb-1">Paragraf 1 (Profil Peneliti - ID)</label>
+                  <textarea id="tim-intro-1" rows="3" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]">${escapeHtml(p.team_intro_1_id || '')}</textarea>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-[#1F2937] mb-1">Paragraf 2 (Sinergi Akademik - ID)</label>
+                  <textarea id="tim-intro-2" rows="3" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]">${escapeHtml(p.team_intro_2_id || '')}</textarea>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-[#1F2937] mb-1">Paragraf 3 (Sertifikasi &amp; Keahlian - ID)</label>
+                  <textarea id="tim-intro-3" rows="3" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]">${escapeHtml(p.team_intro_3_id || '')}</textarea>
+                </div>
+              </div>
+              <div class="flex justify-end">
+                <button type="submit" class="px-4 py-2 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold shadow-xs transition-colors">
+                  Simpan Foto Grup &amp; Narasi Tim
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      `;
+    }
+
+    function openTimModal(mode, id = null) {
+      document.getElementById('tim-mode').value = mode;
+      const heading = document.getElementById('modal-tim-heading');
+
+      if (mode === 'edit' && id) {
+        const item = cmsData.tim.find((m) => m.id === id);
+        if (!item) return;
+        heading.textContent = `Edit Anggota Tim (${item.id})`;
+        document.getElementById('tim-id').value = item.id;
+        document.getElementById('tim-category').value = item.category || 'Key Researchers';
+        document.getElementById('tim-order').value = item.order || 1;
+        document.getElementById('tim-status').value = item.status || 'Active';
+        document.getElementById('tim-name').value = item.name || '';
+        document.getElementById('tim-role-id').value = item.role_id || '';
+        document.getElementById('tim-role-en').value = item.role_en || '';
+        document.getElementById('tim-expertise').value = item.expertise || '';
+        document.getElementById('tim-bio-id').value = item.bio_id || '';
+        document.getElementById('tim-bio-en').value = item.bio_en || '';
+        document.getElementById('tim-email').value = item.email || '';
+        document.getElementById('tim-scholar').value = item.scholar || '';
+        document.getElementById('tim-linkedin').value = item.linkedin || '';
+        document.getElementById('tim-photo').value = item.photo || '';
+        updateTimImgPreview(item.photo || '');
+      } else {
+        heading.textContent = 'Tambah Anggota Tim / Peneliti Baru';
+        document.getElementById('tim-id').value = generateNextId('TIM', cmsData.tim);
+        document.getElementById('tim-category').value = 'Key Researchers';
+        document.getElementById('tim-order').value = cmsData.tim.length + 1;
+        document.getElementById('tim-status').value = 'Active';
+        document.getElementById('tim-name').value = '';
+        document.getElementById('tim-role-id').value = '';
+        document.getElementById('tim-role-en').value = '';
+        document.getElementById('tim-expertise').value = '';
+        document.getElementById('tim-bio-id').value = '';
+        document.getElementById('tim-bio-en').value = '';
+        document.getElementById('tim-email').value = '';
+        document.getElementById('tim-scholar').value = '';
+        document.getElementById('tim-linkedin').value = '';
+        document.getElementById('tim-photo').value = '';
+        updateTimImgPreview('');
+      }
+
+      openModal('modal-tim');
+    }
+
+    function updateTimImgPreview(url) {
+      const img = document.getElementById('tim-img-preview');
+      if (!img) return;
+      img.src = url && url.trim() ? url.trim() : SVG_AVATAR_FALLBACK;
+      img.onerror = function () {
+        this.onerror = null;
+        this.src = SVG_AVATAR_FALLBACK;
+      };
+    }
+
+    async function saveTimForm(e) {
+      e.preventDefault();
+      const mode = document.getElementById('tim-mode').value;
+      const record = {
+        id: document.getElementById('tim-id').value.trim(),
+        order: Number(document.getElementById('tim-order').value) || 1,
+        category: document.getElementById('tim-category').value,
+        name: document.getElementById('tim-name').value.trim(),
+        role_id: document.getElementById('tim-role-id').value.trim(),
+        role_en: document.getElementById('tim-role-en').value.trim() || document.getElementById('tim-role-id').value.trim(),
+        expertise: document.getElementById('tim-expertise').value.trim(),
+        bio_id: document.getElementById('tim-bio-id').value.trim(),
+        bio_en: document.getElementById('tim-bio-en').value.trim() || document.getElementById('tim-bio-id').value.trim(),
+        email: document.getElementById('tim-email').value.trim(),
+        scholar: document.getElementById('tim-scholar').value.trim(),
+        linkedin: document.getElementById('tim-linkedin').value.trim(),
+        photo: document.getElementById('tim-photo').value.trim(),
+        status: document.getElementById('tim-status').value
+      };
+
+      if (mode === 'edit') {
+        const idx = cmsData.tim.findIndex((m) => m.id === record.id);
+        if (idx !== -1) cmsData.tim[idx] = record;
+      } else {
+        cmsData.tim.push(record);
+      }
+
+      persistCmsData();
+      closeModal('modal-tim');
+      renderActiveWorkspace();
+
+      const res = await SheetsAPI.mutate('Tim', mode, record);
+      if (res.ok) {
+        showToast(
+          res.mode === 'sheets'
+            ? `Anggota tim ${record.name} (${record.id}) berhasil disimpan ke Google Spreadsheets.`
+            : `Anggota tim ${record.name} (${record.id}) berhasil disimpan di Sandbox Lokal.`,
+          'success'
+        );
+      }
+    }
+
+    async function saveTeamIntroSettings(e) {
+      e.preventDefault();
+      cmsData.profil.team_group_photo = document.getElementById('tim-group-photo-url').value.trim();
+      cmsData.profil.team_intro_1_id = document.getElementById('tim-intro-1').value.trim();
+      cmsData.profil.team_intro_2_id = document.getElementById('tim-intro-2').value.trim();
+      cmsData.profil.team_intro_3_id = document.getElementById('tim-intro-3').value.trim();
+
+      persistCmsData();
+      const res = await SheetsAPI.mutate('Profil_Web', 'saveProfile', cmsData.profil);
+      if (res.ok) {
+        showToast('Foto grup dan narasi halaman Tim berhasil disimpan.', 'success');
+      }
+    }
+
+    /**
+     * =========================================================================
+     * 7. MODULE 3: RISET, LAYANAN & PELATIHAN (Sheet: Riset)
+     * =========================================================================
+     */
+    function renderRisetModule(container) {
+      const filtered = cmsData.riset.filter((item) => {
+        const matchCat = risetCategoryFilter === 'ALL' || item.kategori === risetCategoryFilter;
+        const q = risetSearchQuery.trim().toLowerCase();
+        const matchSearch =
+          !q ||
+          (item.judul_id || '').toLowerCase().includes(q) ||
+          (item.koordinator || '').toLowerCase().includes(q) ||
+          (item.id || '').toLowerCase().includes(q);
+        return matchCat && matchSearch;
+      });
+
+      const rowsHtml =
+        filtered.length === 0
+          ? `<tr><td colspan="5" class="px-4 py-8 text-center text-xs text-gray-500">Tidak ada item riset atau layanan yang sesuai filter.</td></tr>`
+          : filtered
+              .map(
+                (r) => `
+              <tr class="border-b border-gray-100 hover:bg-gray-50/80 transition-colors">
+                <td class="px-4 py-3.5 align-top font-mono text-[11px] font-semibold text-[#0077B6] whitespace-nowrap">${escapeHtml(r.id)}</td>
+                <td class="px-4 py-3.5 align-top whitespace-nowrap">
+                  <span class="inline-block px-2.5 py-0.5 rounded bg-blue-50 text-[#0077B6] text-[11px] font-semibold border border-blue-100">
+                    ${escapeHtml(r.kategori)}
+                  </span>
+                </td>
+                <td class="px-4 py-3.5 align-top max-w-md">
+                  <div class="text-xs font-bold text-[#1F2937] leading-snug">${escapeHtml(r.judul_id)}</div>
+                  <div class="text-[11px] text-[#6B7280] mt-1">${escapeHtml(r.koordinator || '')} • ${escapeHtml(r.tahun || '')}</div>
+                </td>
+                <td class="px-4 py-3.5 align-top whitespace-nowrap">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${
+                    r.status === 'Active'
+                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                      : 'bg-gray-100 text-gray-600 border border-gray-200'
+                  }">
+                    ${escapeHtml(r.status)}
+                  </span>
+                </td>
+                <td class="px-4 py-3.5 align-top text-right whitespace-nowrap">
+                  <div class="inline-flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onclick="openRisetModal('edit', '${escapeHtml(r.id)}')"
+                      class="px-2.5 py-1.5 rounded-lg border border-gray-200 bg-white hover:border-[#0077B6] hover:text-[#0077B6] text-xs font-semibold text-gray-700 transition-colors"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      onclick="confirmDeleteItem('riset', '${escapeHtml(r.id)}', '${escapeHtml(r.judul_id)}')"
+                      class="px-2.5 py-1.5 rounded-lg border border-gray-200 bg-white hover:border-red-300 hover:bg-red-50 hover:text-red-700 text-xs font-semibold text-gray-600 transition-colors"
+                    >
+                      Hapus
+                    </button>
+                  </div>
+                </td>
+              </tr>`
+              )
+              .join('');
+
+      container.innerHTML = `
+        <div class="bg-white rounded-xl border border-gray-200 shadow-2xs overflow-hidden animate-panel">
+          <div class="p-5 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 class="text-base font-bold text-[#1F2937]">Manajemen Riset, Layanan &amp; Pelatihan</h2>
+              <p class="text-xs text-[#6B7280] mt-0.5">Kelola konten untuk menu <em>Riset</em>, <em>Penelitian Terapan</em>, <em>Layanan Profesional</em>, <em>Pelatihan Keamanan</em>, dan <em>Bekerja di IPT</em>.</p>
+            </div>
+            <button
+              type="button"
+              onclick="openRisetModal('create')"
+              class="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold shadow-xs transition-colors shrink-0"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+              <span>Tambah Item Baru</span>
+            </button>
+          </div>
+
+          <div class="px-5 py-3 bg-gray-50 border-b border-gray-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+            <input
+              type="text"
+              value="${escapeHtml(risetSearchQuery)}"
+              oninput="risetSearchQuery = this.value; renderActiveWorkspace();"
+              placeholder="Cari judul, koordinator, atau ID..."
+              class="px-3 py-1.5 rounded-lg border border-gray-300 bg-white text-xs focus:outline-none focus:border-[#0077B6] sm:w-72"
+            />
+            <div class="flex items-center gap-2 text-xs">
+              <span class="text-gray-500 font-medium">Kategori:</span>
+              <select
+                onchange="risetCategoryFilter = this.value; renderActiveWorkspace();"
+                class="px-2.5 py-1.5 rounded-lg border border-gray-300 bg-white text-xs font-medium focus:outline-none focus:border-[#0077B6]"
+              >
+                <option value="ALL" ${risetCategoryFilter === 'ALL' ? 'selected' : ''}>Semua Kategori</option>
+                <option value="Riset" ${risetCategoryFilter === 'Riset' ? 'selected' : ''}>Riset</option>
+                <option value="Penelitian Terapan" ${risetCategoryFilter === 'Penelitian Terapan' ? 'selected' : ''}>Penelitian Terapan</option>
+                <option value="Layanan Profesional" ${risetCategoryFilter === 'Layanan Profesional' ? 'selected' : ''}>Layanan Profesional</option>
+                <option value="Pelatihan Keamanan" ${risetCategoryFilter === 'Pelatihan Keamanan' ? 'selected' : ''}>Pelatihan Keamanan</option>
+                <option value="Bekerja di IPT" ${risetCategoryFilter === 'Bekerja di IPT' ? 'selected' : ''}>Bekerja di IPT</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto custom-scroll">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-gray-50/70 border-b border-gray-200 text-[11px] font-bold uppercase tracking-wider text-[#6B7280]">
+                  <th class="px-4 py-3">ID</th>
+                  <th class="px-4 py-3">Kategori</th>
+                  <th class="px-4 py-3">Judul &amp; Koordinator</th>
+                  <th class="px-4 py-3">Status</th>
+                  <th class="px-4 py-3 text-right">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${rowsHtml}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    function openRisetModal(mode, id = null) {
+      document.getElementById('riset-mode').value = mode;
+      const heading = document.getElementById('modal-riset-heading');
+
+      if (mode === 'edit' && id) {
+        const item = cmsData.riset.find((r) => r.id === id);
+        if (!item) return;
+        heading.textContent = `Edit Item (${item.id})`;
+        document.getElementById('riset-id').value = item.id;
+        document.getElementById('riset-kategori').value = item.kategori || 'Riset';
+        document.getElementById('riset-status').value = item.status || 'Active';
+        document.getElementById('riset-judul-id').value = item.judul_id || '';
+        document.getElementById('riset-judul-en').value = item.judul_en || '';
+        document.getElementById('riset-koordinator').value = item.koordinator || '';
+        document.getElementById('riset-tahun').value = item.tahun || '2026';
+        document.getElementById('riset-deskripsi').value = item.deskripsi || '';
+        document.getElementById('riset-tautan').value = item.tautan || '';
+      } else {
+        heading.textContent = 'Tambah Item Riset / Layanan Baru';
+        document.getElementById('riset-id').value = generateNextId('RST', cmsData.riset);
+        document.getElementById('riset-kategori').value = 'Riset';
+        document.getElementById('riset-status').value = 'Active';
+        document.getElementById('riset-judul-id').value = '';
+        document.getElementById('riset-judul-en').value = '';
+        document.getElementById('riset-koordinator').value = 'Dr. Iman Paryudi';
+        document.getElementById('riset-tahun').value = '2026';
+        document.getElementById('riset-deskripsi').value = '';
+        document.getElementById('riset-tautan').value = '';
+      }
+
+      openModal('modal-riset');
+    }
+
+    async function saveRisetForm(e) {
+      e.preventDefault();
+      const mode = document.getElementById('riset-mode').value;
+      const record = {
+        id: document.getElementById('riset-id').value.trim(),
+        kategori: document.getElementById('riset-kategori').value,
+        judul_id: document.getElementById('riset-judul-id').value.trim(),
+        judul_en: document.getElementById('riset-judul-en').value.trim() || document.getElementById('riset-judul-id').value.trim(),
+        koordinator: document.getElementById('riset-koordinator').value.trim(),
+        tahun: document.getElementById('riset-tahun').value.trim(),
+        deskripsi: document.getElementById('riset-deskripsi').value.trim(),
+        tautan: document.getElementById('riset-tautan').value.trim(),
+        status: document.getElementById('riset-status').value
+      };
+
+      if (mode === 'edit') {
+        const idx = cmsData.riset.findIndex((r) => r.id === record.id);
+        if (idx !== -1) cmsData.riset[idx] = record;
+      } else {
+        cmsData.riset.unshift(record);
+      }
+
+      persistCmsData();
+      closeModal('modal-riset');
+      renderActiveWorkspace();
+
+      const res = await SheetsAPI.mutate('Riset', mode, record);
+      if (res.ok) {
+        showToast(
+          res.mode === 'sheets'
+            ? `Item ${record.id} berhasil disimpan ke Google Spreadsheets.`
+            : `Item ${record.id} berhasil disimpan di Sandbox Lokal.`,
+          'success'
+        );
+      }
+    }
+
+    /**
+     * =========================================================================
+     * 8. MODULE 4: PENGATURAN PROFIL & KONTEN UTAMA (Profil_Web)
+     * =========================================================================
+     */
+    function renderProfilModule(container) {
+      const p = cmsData.profil;
+      container.innerHTML = `
+        <div class="bg-white rounded-xl border border-gray-200 shadow-2xs overflow-hidden animate-panel">
+          <div class="p-5 border-b border-gray-200">
+            <h2 class="text-base font-bold text-[#1F2937]">Pengaturan Profil &amp; Konten Utama (Sheet: Profil_Web)</h2>
+            <p class="text-xs text-[#6B7280] mt-0.5">Ubah teks Hero Banner biru, ringkasan <em>IPT Research sekilas</em>, alamat sekretariat, dan informasi kontak footer.</p>
+          </div>
+
+          <form onsubmit="saveProfilForm(event)" class="p-5 sm:p-6 space-y-6">
+            <!-- Hero Banner Section -->
+            <div class="space-y-4">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-[#0077B6] border-b border-gray-100 pb-1.5">
+                1. Teks Hero Banner (Kotak Biru Matriks)
+              </h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-[#1F2937] mb-1">Hero Headline (Bahasa Indonesia)</label>
+                  <input type="text" id="prof-hero-id" required value="${escapeHtml(p.hero_title_id)}" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-[#1F2937] mb-1">Hero Headline (English)</label>
+                  <input type="text" id="prof-hero-en" required value="${escapeHtml(p.hero_title_en)}" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-[#1F2937] mb-1">Hero Sub-Headline (Bahasa Indonesia)</label>
+                  <input type="text" id="prof-sub-id" required value="${escapeHtml(p.hero_sub_id)}" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-[#1F2937] mb-1">Hero Sub-Headline (English)</label>
+                  <input type="text" id="prof-sub-en" required value="${escapeHtml(p.hero_sub_en)}" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+                </div>
+              </div>
+            </div>
+
+            <!-- IPT Research Sekilas -->
+            <div class="space-y-4">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-[#0077B6] border-b border-gray-100 pb-1.5">
+                2. Kotak Sidebar "IPT Research sekilas"
+              </h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-[#1F2937] mb-1">Deskripsi Sekilas (Bahasa Indonesia)</label>
+                  <textarea id="prof-sekilas-id" rows="3" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]">${escapeHtml(p.sekilas_id)}</textarea>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-[#1F2937] mb-1">Deskripsi Sekilas (English)</label>
+                  <textarea id="prof-sekilas-en" rows="3" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]">${escapeHtml(p.sekilas_en)}</textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Secretariat & Footer Contact -->
+            <div class="space-y-4">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-[#0077B6] border-b border-gray-100 pb-1.5">
+                3. Alamat Kantor, Kontak &amp; Tautan Akademik
+              </h3>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-[#1F2937] mb-1">Alamat Kantor (Top Bar &amp; Footer)</label>
+                  <input type="text" id="prof-alamat" required value="${escapeHtml(p.alamat)}" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-[#1F2937] mb-1">Email Resmi</label>
+                  <input type="email" id="prof-email" required value="${escapeHtml(p.email)}" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-[#1F2937] mb-1">Nomor Telepon</label>
+                  <input type="text" id="prof-telepon" required value="${escapeHtml(p.telepon)}" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-[#1F2937] mb-1">URL LinkedIn</label>
+                  <input type="url" id="prof-linkedin" value="${escapeHtml(p.linkedin)}" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-[#1F2937] mb-1">URL Google Scholar</label>
+                  <input type="url" id="prof-scholar" value="${escapeHtml(p.scholar)}" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-[#1F2937] mb-1">URL GitHub</label>
+                  <input type="url" id="prof-github" value="${escapeHtml(p.github)}" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-gray-200 flex flex-wrap items-center justify-between gap-3">
+              <button type="button" onclick="openPublicPreviewModal()" class="text-xs font-semibold text-[#0077B6] hover:underline">
+                Lihat Hasil di Pratinjau Halaman Publik →
+              </button>
+              <button type="submit" class="px-5 py-2.5 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold shadow-xs transition-colors">
+                Simpan Pengaturan ke Spreadsheets
+              </button>
+            </div>
+          </form>
+        </div>
+      `;
+    }
+
+    async function saveProfilForm(e) {
+      e.preventDefault();
+      cmsData.profil = {
+        ...cmsData.profil,
+        hero_title_id: document.getElementById('prof-hero-id').value.trim(),
+        hero_title_en: document.getElementById('prof-hero-en').value.trim(),
+        hero_sub_id: document.getElementById('prof-sub-id').value.trim(),
+        hero_sub_en: document.getElementById('prof-sub-en').value.trim(),
+        sekilas_id: document.getElementById('prof-sekilas-id').value.trim(),
+        sekilas_en: document.getElementById('prof-sekilas-en').value.trim(),
+        alamat: document.getElementById('prof-alamat').value.trim(),
+        email: document.getElementById('prof-email').value.trim(),
+        telepon: document.getElementById('prof-telepon').value.trim(),
+        linkedin: document.getElementById('prof-linkedin').value.trim(),
+        scholar: document.getElementById('prof-scholar').value.trim(),
+        github: document.getElementById('prof-github').value.trim()
+      };
+
+      persistCmsData();
+      const res = await SheetsAPI.mutate('Profil_Web', 'saveProfile', cmsData.profil);
+      if (res.ok) {
+        showToast(
+          res.mode === 'sheets'
+            ? 'Pengaturan profil utama berhasil disimpan ke Google Spreadsheets.'
+            : 'Pengaturan profil berhasil disimpan di Sandbox Lokal.',
+          'success'
+        );
+      }
+    }
+
+    /**
+     * =========================================================================
+     * 9. MODULE 5: KONEKSI GOOGLE SPREADSHEETS & APPS SCRIPT (Code.gs)
+     * =========================================================================
+     */
+    const GOOGLE_APPS_SCRIPT_CODE = `/**
+ * ============================================================================
+ * IPT RESEARCH (imanparyudi.com/research) — GOOGLE SHEETS DATABASE BACKEND
+ * Deploy sebagai Web App: Execute as "Me", Who has access: "Anyone"
+ * ============================================================================
+ */
+const ADMIN_SECRET_TOKEN = "IPT-ADMIN-2026"; // Samakan dengan Secret Token di Admin CMS
+
+function doGet(e) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const payload = {
+    status: "ok",
+    timestamp: new Date().toISOString(),
+    berita: readSheetAsObjects(ss, "Berita"),
+    acara: readSheetAsObjects(ss, "Acara"),
+    tim: readSheetAsObjects(ss, "Tim"),
+    riset: readSheetAsObjects(ss, "Riset"),
+    profil: readProfileSheet(ss, "Profil_Web")
+  };
+  return ContentService
+    .createTextOutput(JSON.stringify(payload))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  try {
+    const req = JSON.parse(e.postData.contents);
+    if (req.token !== ADMIN_SECRET_TOKEN) {
+      return jsonResponse({ status: "error", message: "Unauthorized Secret Token" });
+    }
+
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const { sheet, action, data } = req;
+
+    if (action === "syncAll" && data) {
+      if (Array.isArray(data.berita)) overwriteSheet(ss, "Berita", data.berita);
+      if (Array.isArray(data.acara)) overwriteSheet(ss, "Acara", data.acara);
+      if (Array.isArray(data.tim)) overwriteSheet(ss, "Tim", data.tim);
+      if (Array.isArray(data.riset)) overwriteSheet(ss, "Riset", data.riset);
+      if (data.profil) saveProfileObject(ss, "Profil_Web", data.profil);
+      return jsonResponse({ status: "ok", message: "Full sync completed" });
+    }
+
+    if (sheet === "Profil_Web" && action === "saveProfile") {
+      saveProfileObject(ss, "Profil_Web", data);
+      return jsonResponse({ status: "ok", message: "Profile updated" });
+    }
+
+    const targetSheet = getOrCreateSheet(ss, sheet);
+    if (action === "create") {
+      upsertRowById(targetSheet, data);
+    } else if (action === "update" || action === "edit") {
+      upsertRowById(targetSheet, data);
+    } else if (action === "delete") {
+      deleteRowById(targetSheet, data.id);
+    }
+
+    return jsonResponse({ status: "ok", sheet: sheet, action: action });
+  } catch (err) {
+    return jsonResponse({ status: "error", message: err.toString() });
+  }
+}
+
+function getOrCreateSheet(ss, name) {
+  let sh = ss.getSheetByName(name);
+  if (!sh) sh = ss.insertSheet(name);
+  return sh;
+}
+
+function readSheetAsObjects(ss, name) {
+  const sh = ss.getSheetByName(name);
+  if (!sh || sh.getLastRow() < 2) return [];
+  const values = sh.getDataRange().getValues();
+  const headers = values[0];
+  return values.slice(1).map(row => {
+    const obj = {};
+    headers.forEach((h, i) => { obj[h] = row[i]; });
+    return obj;
+  });
+}
+
+function upsertRowById(sh, obj) {
+  const keys = Object.keys(obj);
+  if (sh.getLastRow() === 0) {
+    sh.appendRow(keys);
+  }
+  const headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+  const rowValues = headers.map(h => obj[h] !== undefined ? obj[h] : "");
+  const data = sh.getDataRange().getValues();
+  for (let r = 1; r < data.length; r++) {
+    if (String(data[r][0]) === String(obj.id)) {
+      sh.getRange(r + 1, 1, 1, headers.length).setValues([rowValues]);
+      return;
+    }
+  }
+  sh.appendRow(rowValues);
+}
+
+function deleteRowById(sh, id) {
+  const data = sh.getDataRange().getValues();
+  for (let r = data.length - 1; r >= 1; r--) {
+    if (String(data[r][0]) === String(id)) {
+      sh.deleteRow(r + 1);
+    }
+  }
+}
+
+function overwriteSheet(ss, name, items) {
+  const sh = getOrCreateSheet(ss, name);
+  sh.clearContents();
+  if (!items || items.length === 0) return;
+  const headers = Object.keys(items[0]);
+  sh.appendRow(headers);
+  const rows = items.map(item => headers.map(h => item[h] !== undefined ? item[h] : ""));
+  sh.getRange(2, 1, rows.length, headers.length).setValues(rows);
+}
+
+function saveProfileObject(ss, name, prof) {
+  const sh = getOrCreateSheet(ss, name);
+  sh.clearContents();
+  sh.appendRow(["key", "value"]);
+  const rows = Object.keys(prof).map(k => [k, prof[k]]);
+  if (rows.length > 0) sh.getRange(2, 1, rows.length, 2).setValues(rows);
+}
+
+function readProfileSheet(ss, name) {
+  const sh = ss.getSheetByName(name);
+  if (!sh || sh.getLastRow() < 2) return null;
+  const values = sh.getDataRange().getValues().slice(1);
+  const out = {};
+  values.forEach(([k, v]) => { if (k) out[k] = v; });
+  return out;
+}
+
+function jsonResponse(obj) {
+  return ContentService
+    .createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}`;
+
+    function renderKoneksiModule(container) {
+      container.innerHTML = `
+        <div class="space-y-6 animate-panel">
+          <!-- Card 1: Web App Endpoint & Credentials -->
+          <div class="bg-white rounded-xl border border-gray-200 shadow-2xs overflow-hidden">
+            <div class="p-5 border-b border-gray-200">
+              <h2 class="text-base font-bold text-[#1F2937]">Koneksi Database Google Spreadsheets</h2>
+              <p class="text-xs text-[#6B7280] mt-0.5">Hubungkan halaman Admin CMS ini dengan Google Spreadsheets Anda melalui Google Apps Script Web App URL.</p>
+            </div>
+
+            <form onsubmit="saveConnectionSettings(event)" class="p-5 sm:p-6 space-y-4">
+              <div>
+                <label class="block text-xs font-semibold text-[#1F2937] mb-1">
+                  Google Apps Script Web App URL (<code class="text-[#0077B6]">/exec</code>)
+                </label>
+                <input
+                  type="url"
+                  id="cfg-sheets-url"
+                  value="${escapeHtml(cmsConfig.sheetsUrl)}"
+                  placeholder="https://script.google.com/macros/s/AKfycbx.../exec"
+                  class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-xs font-mono focus:outline-none focus:border-[#0077B6]"
+                />
+                <p class="text-[11px] text-[#6B7280] mt-1">Kosongkan jika Anda masih menguji CMS dalam Mode Sandbox Lokal.</p>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-[#1F2937] mb-1">Admin Secret Token (Keamanan Penulisan)</label>
+                  <input
+                    type="text"
+                    id="cfg-secret-token"
+                    required
+                    value="${escapeHtml(cmsConfig.secretToken)}"
+                    class="w-full px-3.5 py-2 rounded-lg border border-gray-300 text-xs font-mono focus:outline-none focus:border-[#0077B6]"
+                  />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-[#1F2937] mb-1">PIN Login Admin Lokal</label>
+                  <input
+                    type="text"
+                    id="cfg-admin-pin"
+                    required
+                    value="${escapeHtml(cmsConfig.adminPin)}"
+                    class="w-full px-3.5 py-2 rounded-lg border border-gray-300 text-xs font-mono focus:outline-none focus:border-[#0077B6]"
+                  />
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="pt-3 border-t border-gray-100 flex flex-wrap items-center gap-2.5">
+                <button
+                  type="submit"
+                  class="px-4 py-2 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold shadow-xs transition-colors"
+                >
+                  Simpan Konfigurasi
+                </button>
+                <button
+                  type="button"
+                  onclick="runConnectionDiagnostics()"
+                  class="px-4 py-2 rounded-lg border border-[#0077B6] text-[#0077B6] hover:bg-blue-50 text-xs font-semibold transition-colors"
+                >
+                  Tes Koneksi &amp; Tarik Data (GET)
+                </button>
+                <button
+                  type="button"
+                  onclick="pushAllToSheets()"
+                  class="px-4 py-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 text-xs font-semibold text-[#1F2937] transition-colors"
+                >
+                  Kirim Semua Data Awal ke Sheets (Push All)
+                </button>
+              </div>
+
+              <!-- Live Diagnostic Box -->
+              <div id="connection-diagnostic-box" class="hidden rounded-xl p-3.5 text-xs border"></div>
+            </form>
+          </div>
+
+          <!-- Card 2: Step-by-Step Google Apps Script Deployment Guide + Code.gs -->
+          <div class="bg-white rounded-xl border border-gray-200 shadow-2xs overflow-hidden">
+            <div class="p-5 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <h3 class="text-sm font-bold text-[#1F2937]">Panduan &amp; Kode Backend Google Apps Script (<code class="text-[#0077B6]">Code.gs</code>)</h3>
+                <p class="text-xs text-[#6B7280] mt-0.5">Salin kode ini ke Google Spreadsheet Anda agar seluruh CRUD otomatis tersimpan ke baris Spreadsheet.</p>
+              </div>
+              <button
+                type="button"
+                onclick="copyAppsScriptCode()"
+                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-gray-900 hover:bg-gray-800 text-white text-xs font-semibold shrink-0 transition-colors"
+              >
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                </svg>
+                <span>Salin Kode Code.gs</span>
+              </button>
+            </div>
+
+            <div class="p-5 space-y-4">
+              <ol class="list-decimal list-inside text-xs text-[#4B5563] space-y-1.5 leading-relaxed bg-blue-50/60 border border-blue-100 rounded-xl p-4">
+                <li>Buka <strong>Google Sheets</strong> baru (beri nama misal: <code class="font-mono text-[#0077B6]">DB_IPT_Research</code>).</li>
+                <li>Klik menu <strong>Ekstensi (Extensions) → Apps Script</strong>, hapus kode bawaan, lalu tempel kode <code class="font-mono text-[#0077B6]">Code.gs</code> di bawah ini.</li>
+                <li>Klik <strong>Terapkan (Deploy) → Deployment baru</strong>, pilih jenis <strong>Aplikasi web (Web app)</strong>, atur <em>Jalankan sebagai: Saya (Me)</em> dan <em>Yang memiliki akses: Siapa saja (Anyone)</em>.</li>
+                <li>Salin <strong>URL Aplikasi Web (<code class="font-mono">/exec</code>)</strong>, tempel pada kolom di atas, lalu klik <strong>Kirim Semua Data Awal ke Sheets (Push All)</strong> untuk membuat tab <code class="font-mono">Berita</code>, <code class="font-mono">Acara</code>, <code class="font-mono">Riset</code>, dan <code class="font-mono">Profil_Web</code> secara otomatis!</li>
+              </ol>
+
+              <pre class="bg-[#0F172A] text-slate-100 p-4 rounded-xl text-[11.5px] font-mono overflow-x-auto max-h-72 custom-scroll leading-relaxed"><code>${escapeHtml(GOOGLE_APPS_SCRIPT_CODE)}</code></pre>
+            </div>
+          </div>
+
+          <!-- Card 3: Backup & Reset Utilities -->
+          <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-2xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h3 class="text-sm font-bold text-[#1F2937]">Cadangan Data &amp; Pemulihan</h3>
+              <p class="text-xs text-[#6B7280] mt-0.5">Unduh salinan JSON seluruh konten CMS atau kembalikan ke data awal IPT Research.</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2.5">
+              <button
+                type="button"
+                onclick="exportJsonBackup()"
+                class="px-3.5 py-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 text-xs font-semibold text-[#1F2937]"
+              >
+                Ekspor Cadangan JSON
+              </button>
+              <button
+                type="button"
+                onclick="confirmResetDemoData()"
+                class="px-3.5 py-2 rounded-lg border border-red-200 bg-red-50 hover:bg-red-100 text-xs font-semibold text-red-700"
+              >
+                Reset Data Awal (Demo)
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function saveConnectionSettings(e) {
+      e.preventDefault();
+      cmsConfig.sheetsUrl = document.getElementById('cfg-sheets-url').value.trim();
+      cmsConfig.secretToken = document.getElementById('cfg-secret-token').value.trim();
+      cmsConfig.adminPin = document.getElementById('cfg-admin-pin').value.trim() || '2026';
+
+      persistCmsConfig();
+      showToast('Konfigurasi koneksi Google Spreadsheets & PIN berhasil disimpan.', 'success');
+    }
+
+    async function runConnectionDiagnostics() {
+      const urlInput = document.getElementById('cfg-sheets-url').value.trim();
+      cmsConfig.sheetsUrl = urlInput;
+      cmsConfig.secretToken = document.getElementById('cfg-secret-token').value.trim();
+      persistCmsConfig();
+
+      const box = document.getElementById('connection-diagnostic-box');
+      if (!SheetsAPI.isConnected()) {
+        box.className = 'rounded-xl p-3.5 text-xs border bg-amber-50 border-amber-200 text-amber-800';
+        box.innerHTML = '<strong>URL Belum Valid:</strong> Masukkan URL Web App Google Apps Script yang diawali dengan <code class="font-mono">https://script.google.com/macros/s/.../exec</code>.';
+        box.classList.remove('hidden');
+        return;
+      }
+
+      box.className = 'rounded-xl p-3.5 text-xs border bg-blue-50 border-blue-200 text-[#0077B6]';
+      box.textContent = 'Menguji koneksi GET ke Google Spreadsheets...';
+      box.classList.remove('hidden');
+
+      try {
+        const res = await SheetsAPI.getAll();
+        const p = res.payload || {};
+        if (Array.isArray(p.berita) && p.berita.length > 0) cmsData.berita = p.berita;
+        if (Array.isArray(p.acara) && p.acara.length > 0) cmsData.acara = p.acara;
+        if (Array.isArray(p.tim) && p.tim.length > 0) cmsData.tim = p.tim;
+        if (Array.isArray(p.riset) && p.riset.length > 0) cmsData.riset = p.riset;
+        if (p.profil) cmsData.profil = { ...cmsData.profil, ...p.profil };
+        persistCmsData();
+
+        cmsConfig.lastSyncText = `${formatTimestampWIB()} (${res.latencyMs}ms)`;
+        cmsConfig.lastSyncMode = 'sheets';
+        persistCmsConfig();
+
+        box.className = 'rounded-xl p-3.5 text-xs border bg-emerald-50 border-emerald-200 text-emerald-800';
+        box.innerHTML = `<strong>Koneksi Berhasil (${res.latencyMs} ms):</strong> Endpoint merespons JSON valid. Data sheet telah disinkronkan.`;
+        showToast('Koneksi Google Spreadsheets terverifikasi!', 'success');
+      } catch (err) {
+        box.className = 'rounded-xl p-3.5 text-xs border bg-red-50 border-red-200 text-red-700';
+        box.innerHTML = `<strong>Koneksi Gagal:</strong> ${escapeHtml(err.message)}. Pastikan Web App sudah di-deploy dengan akses <em>Anyone</em>.`;
+      }
+    }
+
+    function copyAppsScriptCode() {
+      const ta = document.createElement('textarea');
+      ta.value = GOOGLE_APPS_SCRIPT_CODE;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('Kode Google Apps Script (Code.gs) berhasil disalin ke clipboard.', 'success');
+      } catch (e) {
+        showToast('Gagal menyalin kode. Silakan blok dan salin secara manual.', 'warning');
+      }
+      document.body.removeChild(ta);
+    }
+
+    function exportJsonBackup() {
+      const blob = new Blob([JSON.stringify(cmsData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `ipt-research-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('File cadangan JSON berhasil diunduh.', 'success');
+    }
+
+    function confirmResetDemoData() {
+      openConfirmDialog(
+        'Reset Data ke Pengaturan Awal?',
+        'Seluruh perubahan lokal akan dikembalikan ke data awal IPT Research (2 Berita Terkini, 1 Acara ICIIRDS, 5 Item Riset, dan Profil Standar).',
+        () => {
+          cmsData = JSON.parse(JSON.stringify(DEFAULT_SEED_DATA));
+          persistCmsData();
+          renderActiveWorkspace();
+          showToast('Data CMS berhasil dikembalikan ke data awal.', 'info');
+        }
+      );
+    }
+
+    /**
+     * =========================================================================
+     * 10. DELETE CONFIRMATION & LIVE PUBLIC HOMEPAGE PREVIEW MODAL
+     * =========================================================================
+     */
+    function confirmDeleteItem(collection, id, label) {
+      openConfirmDialog(
+        `Hapus Item (${id})?`,
+        `Anda akan menghapus "${label}" dari daftar dan menyinkronkan penghapusan ini ke database.`,
+        async () => {
+          if (collection === 'berita') {
+            cmsData.berita = cmsData.berita.filter((b) => b.id !== id);
+            persistCmsData();
+            renderActiveWorkspace();
+            await SheetsAPI.mutate('Berita', 'delete', { id });
+          } else if (collection === 'acara') {
+            cmsData.acara = cmsData.acara.filter((a) => a.id !== id);
+            persistCmsData();
+            renderActiveWorkspace();
+            await SheetsAPI.mutate('Acara', 'delete', { id });
+          } else if (collection === 'tim') {
+            cmsData.tim = cmsData.tim.filter((m) => m.id !== id);
+            persistCmsData();
+            renderActiveWorkspace();
+            await SheetsAPI.mutate('Tim', 'delete', { id });
+          } else if (collection === 'riset') {
+            cmsData.riset = cmsData.riset.filter((r) => r.id !== id);
+            persistCmsData();
+            renderActiveWorkspace();
+            await SheetsAPI.mutate('Riset', 'delete', { id });
+          }
+          showToast(`Item ${id} berhasil dihapus.`, 'info');
+        }
+      );
+    }
+
+    function openPublicPreviewModal() {
+      renderPublicPreviewCanvas();
+      openModal('modal-public-preview');
+    }
+
+    function setPreviewPage(page) {
+      previewPage = page;
+      const btnHome = document.getElementById('preview-page-home');
+      const btnTim = document.getElementById('preview-page-tim');
+      const urlEl = document.getElementById('preview-browser-url');
+      if (page === 'tim') {
+        btnTim.className = 'px-2.5 py-0.5 rounded bg-[#0077B6] text-white';
+        btnHome.className = 'px-2.5 py-0.5 rounded text-gray-600';
+        if (urlEl) urlEl.textContent = 'https://imanparyudi.com/research#tim';
+      } else {
+        btnHome.className = 'px-2.5 py-0.5 rounded bg-[#0077B6] text-white';
+        btnTim.className = 'px-2.5 py-0.5 rounded text-gray-600';
+        if (urlEl) urlEl.textContent = 'https://imanparyudi.com/research';
+      }
+      renderPublicPreviewCanvas();
+    }
+
+    function setPreviewLang(lang) {
+      previewLang = lang;
+      const btnId = document.getElementById('preview-lang-id');
+      const btnEn = document.getElementById('preview-lang-en');
+      if (lang === 'id') {
+        btnId.className = 'px-2 py-0.5 rounded bg-[#0077B6] text-white';
+        btnEn.className = 'px-2 py-0.5 rounded text-gray-600';
+      } else {
+        btnEn.className = 'px-2 py-0.5 rounded bg-[#0077B6] text-white';
+        btnId.className = 'px-2 py-0.5 rounded text-gray-600';
+      }
+      renderPublicPreviewCanvas();
+    }
+
+    function renderPublicPreviewCanvas() {
+      const canvas = document.getElementById('public-preview-canvas');
+      if (!canvas) return;
+      const p = cmsData.profil;
+      const isId = previewLang === 'id';
+
+      const publishedNews = cmsData.berita.filter((b) => b.status === 'Published');
+      const upcomingEvents = cmsData.acara.filter((a) => a.status === 'Upcoming');
+      const activeTeam = cmsData.tim
+        .filter((m) => (m.status || 'Active') === 'Active')
+        .sort((a, b) => (Number(a.order) || 99) - (Number(b.order) || 99));
+
+      const newsHtml =
+        publishedNews.length === 0
+          ? `<p class="text-xs text-gray-500">${isId ? 'Belum ada berita berstatus Published.' : 'No published news articles yet.'}</p>`
+          : publishedNews
+              .map(
+                (b) => `
+              <div class="border-b border-gray-200 pb-5 mb-5 last:border-b-0 last:pb-0 last:mb-0 flex items-start justify-between gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="text-[15.5px] font-bold text-[#0077B6] leading-snug">${escapeHtml(isId ? b.judul_id : b.judul_en)}</div>
+                  <div class="text-[11px] text-[#6B7280] mt-1 mb-2">${escapeHtml(b.tanggal)}</div>
+                  <p class="text-[12.5px] text-[#4B5563] leading-relaxed">
+                    ${escapeHtml(isId ? b.excerpt_id : b.excerpt_en)}
+                    <span class="text-[#0077B6] underline ml-1">Read More</span>
+                  </p>
+                </div>
+                <div class="w-[140px] h-[90px] shrink-0 border border-gray-200 bg-gray-100 overflow-hidden">
+                  <img src="${escapeHtml(b.gambar || '')}" onerror="this.onerror=null; this.src='${SVG_FALLBACK_AI}';" alt="" class="w-full h-full object-cover" />
+                </div>
+              </div>`
+              )
+              .join('');
+
+      const eventsHtml =
+        upcomingEvents.length === 0
+          ? `<p class="text-xs text-gray-500">${isId ? 'Belum ada acara berstatus Upcoming.' : 'No upcoming events.'}</p>`
+          : upcomingEvents
+              .map(
+                (a) => `
+              <div class="mb-4 last:mb-0">
+                <div class="text-[13.5px] font-semibold text-[#0077B6] leading-snug">${escapeHtml(isId ? a.judul_id : a.judul_en)}</div>
+                <div class="text-[11.5px] text-[#6B7280] mt-1">${escapeHtml(a.tanggal_rentang)}</div>
+              </div>`
+              )
+              .join('');
+
+      const teamCategories = ['Management', 'Scientific & Innovation Board', 'Key Researchers', 'Senior Staff'];
+      const teamSectionsHtml = teamCategories
+        .map((cat) => {
+          const list = activeTeam.filter((m) => m.category === cat);
+          if (list.length === 0) return '';
+          return `
+            <div class="mt-6">
+              <h4 class="text-[15px] font-bold text-[#1E293B] mb-3">${cat}</h4>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
+                ${list
+                  .map(
+                    (m) => `
+                  <div class="text-center">
+                    <div class="w-full aspect-[4/4.6] bg-slate-200 overflow-hidden mb-1.5 border border-gray-200">
+                      <img src="${escapeHtml(m.photo || '')}" onerror="this.onerror=null; this.src='${SVG_AVATAR_FALLBACK}';" alt="" class="w-full h-full object-cover object-top" />
+                    </div>
+                    <div class="text-xs font-medium text-[#0077B6]">${escapeHtml(m.name)}</div>
+                    <div class="text-[10.5px] text-gray-500 line-clamp-1">${escapeHtml(isId ? m.role_id : m.role_en || m.role_id)}</div>
+                  </div>`
+                  )
+                  .join('')}
+              </div>
+            </div>`;
+        })
+        .join('');
+
+      const bodySectionHtml =
+        previewPage === 'tim'
+          ? `
+          <div class="px-6 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8 bg-white">
+            <div class="lg:col-span-8">
+              <div class="text-xs text-gray-500 mb-4">Home / ${isId ? 'Tentang' : 'About'} / <strong class="text-gray-800">${isId ? 'Tim' : 'Team'}</strong></div>
+              <div class="space-y-3 text-xs text-[#334155] leading-relaxed mb-6">
+                <p>${escapeHtml(isId ? p.team_intro_1_id : p.team_intro_1_en || p.team_intro_1_id)}</p>
+                <p>${escapeHtml(isId ? p.team_intro_2_id : p.team_intro_2_en || p.team_intro_2_id)}</p>
+                <p>${escapeHtml(isId ? p.team_intro_3_id : p.team_intro_3_en || p.team_intro_3_id)}</p>
+              </div>
+              ${teamSectionsHtml}
+            </div>
+            <div class="lg:col-span-4">
+              <div class="border-t-2 border-[#0077B6] pt-2.5">
+                <div class="text-sm font-bold text-[#1F2937] pb-2 border-b border-gray-200">${isId ? 'Tim' : 'Team'}</div>
+                ${teamCategories
+                  .map((cat) => {
+                    const list = activeTeam.filter((m) => m.category === cat);
+                    if (list.length === 0) return '';
+                    return `
+                      <div class="py-2 border-b border-gray-200">
+                        <div class="text-xs font-semibold text-[#1F2937] mb-1">${cat}</div>
+                        <ul class="pl-2 space-y-1 text-[11px] text-gray-600">
+                          ${list.map((m) => `<li class="border-b border-gray-100 pb-0.5 last:border-b-0">${escapeHtml(m.name)}</li>`).join('')}
+                        </ul>
+                      </div>`;
+                  })
+                  .join('')}
+              </div>
+            </div>
+          </div>`
+          : `
+          <!-- Two-Column Public Content -->
+          <div class="px-6 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8 bg-white">
+            <div class="lg:col-span-8">
+              <h3 class="text-[17px] font-bold text-[#1F2937] pb-2 border-b border-gray-200 mb-5">
+                ${isId ? 'Berita Terkini:' : 'Latest News:'}
+              </h3>
+              ${newsHtml}
+            </div>
+            <div class="lg:col-span-4">
+              <h3 class="text-[16px] font-bold text-[#1F2937] pb-2 border-b border-gray-200 mb-4">
+                ${isId ? 'Acara mendatang @ IPT' : 'Upcoming Events @ IPT'}
+              </h3>
+              ${eventsHtml}
+
+              <div class="mt-7 pt-5 border-t border-gray-200">
+                <h3 class="text-[15px] font-bold text-[#1F2937] mb-2">
+                  ${isId ? 'IPT Research sekilas' : 'IPT Research at a Glance'}
+                </h3>
+                <p class="text-[12.5px] text-[#4B5563] leading-relaxed">
+                  ${escapeHtml(isId ? p.sekilas_id : p.sekilas_en)}
+                </p>
+              </div>
+            </div>
+          </div>`;
+
+      canvas.innerHTML = `
+        <!-- Top Utility Bar -->
+        <div class="bg-white border-b border-gray-100 px-6 py-1.5 flex items-center justify-between text-[11px] text-gray-500">
+          <span>${escapeHtml(p.alamat)}</span>
+          <span class="font-semibold text-[#0077B6]">Pratinjau Langsung CMS</span>
+        </div>
+
+        <!-- Header -->
+        <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-[#0077B6] flex items-center justify-center text-white font-bold text-xs">IPT</div>
+            <div>
+              <div class="text-base font-bold text-[#0077B6] leading-tight">Iman Paryudi Team</div>
+              <div class="text-xs text-[#0077B6]">Research</div>
+            </div>
+          </div>
+          <div class="hidden md:flex items-center gap-4 text-xs text-gray-600">
+            <span class="${previewPage === 'home' ? 'font-bold text-[#0077B6] underline underline-offset-4' : ''}">Home</span>
+            <span>Riset</span>
+            <span>Penelitian Terapan</span>
+            <span>Layanan Profesional</span>
+            <span>Pelatihan Keamanan</span>
+            <span>Acara</span>
+            <span>Bekerja di IPT</span>
+            <span class="${previewPage === 'tim' ? 'font-bold text-[#0077B6] underline underline-offset-4' : ''}">Tentang ▾</span>
+          </div>
+        </div>
+
+        <!-- Dotted Blue Matrix Hero Banner -->
+        <div class="ipt-hero-matrix px-6 py-10 text-white">
+          <div class="max-w-2xl">
+            <h2 class="text-2xl font-bold leading-snug">
+              ${escapeHtml(
+                previewPage === 'tim'
+                  ? isId
+                    ? 'Tim Peneliti & Manajemen IPT Research'
+                    : 'IPT Research Team & Leadership'
+                  : isId
+                    ? p.hero_title_id
+                    : p.hero_title_en
+              )}
+            </h2>
+            <p class="text-sm text-[#F0F9FF] mt-2">
+              ${escapeHtml(
+                previewPage === 'tim'
+                  ? isId
+                    ? 'Para peneliti, dewan ilmiah, dan tenaga ahli di balik inovasi AI dan Data Science di Iman Paryudi Team.'
+                    : 'Meet the researchers, scientific board, and specialists driving AI and Data Science innovation.'
+                  : isId
+                    ? p.hero_sub_id
+                    : p.hero_sub_en
+              )}
+            </p>
+          </div>
+        </div>
+
+        ${bodySectionHtml}
+
+        <!-- 3-Column Footer -->
+        <div class="bg-[#F3F4F6] border-t border-gray-200 px-6 py-6 grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-gray-600">
+          <div>
+            <div class="font-bold text-[#0077B6] mb-1">IPT Research</div>
+            <div>${escapeHtml(p.alamat)}</div>
+          </div>
+          <div>
+            <div class="font-bold text-[#0077B6] mb-1">${isId ? 'Kontak' : 'Contact'}</div>
+            <div>Email: ${escapeHtml(p.email)}</div>
+            <div>Telp: ${escapeHtml(p.telepon)}</div>
+          </div>
+          <div class="md:text-right">
+            <div>© 2026 IPT Research. ${isId ? 'Seluruh hak cipta dilindungi.' : 'All rights reserved.'}</div>
+            <div class="text-gray-400 mt-1">${isId ? 'Dihubungkan dengan Google Sheets System.' : 'Connected with Google Sheets System.'}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    /**
+     * =========================================================================
+     * 11. UTILITY HELPERS (Modals, Toasts, ID Generator, Escaping)
+     * =========================================================================
+     */
+    function openModal(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.remove('hidden');
+      el.classList.add('flex');
+    }
+
+    function closeModal(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.add('hidden');
+      el.classList.remove('flex');
+    }
+
+    function openConfirmDialog(title, message, onConfirmCallback) {
+      document.getElementById('confirm-dialog-title').textContent = title;
+      document.getElementById('confirm-dialog-message').textContent = message;
+      const okBtn = document.getElementById('confirm-dialog-ok-btn');
+      okBtn.onclick = function () {
+        closeModal('modal-confirm');
+        if (typeof onConfirmCallback === 'function') onConfirmCallback();
+      };
+      openModal('modal-confirm');
+    }
+
+    function showLoadingOverlay(text) {
+      const el = document.getElementById('sync-loading-overlay');
+      const txt = document.getElementById('sync-loading-text');
+      if (txt && text) txt.textContent = text;
+      el?.classList.remove('hidden');
+      el?.classList.add('flex');
+    }
+
+    function hideLoadingOverlay() {
+      const el = document.getElementById('sync-loading-overlay');
+      el?.classList.add('hidden');
+      el?.classList.remove('flex');
+    }
+
+    function showToast(message, variant = 'info') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+
+      const styles = {
+        success: 'bg-emerald-900 text-white border-emerald-700',
+        warning: 'bg-amber-900 text-white border-amber-700',
+        error: 'bg-red-900 text-white border-red-700',
+        info: 'bg-[#1F2937] text-white border-gray-700'
+      };
+
+      const toast = document.createElement('div');
+      toast.className = `pointer-events-auto px-4 py-3 rounded-xl text-xs font-medium shadow-xl border animate-panel ${styles[variant] || styles.info}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.25s ease';
+        setTimeout(() => toast.remove(), 260);
+      }, 3600);
+    }
+
+    function generateNextId(prefix, list) {
+      let maxNum = 0;
+      list.forEach((item) => {
+        const match = String(item.id || '').match(/(\d+)$/);
+        if (match) {
+          const n = parseInt(match[1], 10);
+          if (n > maxNum) maxNum = n;
+        }
+      });
+      return `${prefix}-${String(maxNum + 1).padStart(3, '0')}`;
+    }
+
+    function formatTimestampWIB() {
+      const d = new Date();
+      const hh = String(d.getHours()).padStart(2, '0');
+      const mm = String(d.getMinutes()).padStart(2, '0');
+      return `${hh}:${mm} WIB`;
+    }
+
+    function escapeHtml(str) {
+      return String(str ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    // Close open modals on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        ['modal-berita', 'modal-acara', 'modal-tim', 'modal-riset', 'modal-public-preview', 'modal-confirm'].forEach(closeModal);
+      }
+    });
+
+    window.onload = function () {
+      checkAuthOnLoad();
+    };
+  </script>
+</body>
+</html>

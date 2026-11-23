@@ -1,0 +1,2488 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IPT Research | Iman Paryudi Team Research</title>
+  <meta name="description" content="IPT Research adalah pusat penelitian untuk aplikasi AI dan Data Science di Indonesia (imanparyudi.com)." />
+
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          colors: {
+            ipt: {
+              blue: '#0077B6',
+              cerulean: '#0082C8',
+              banner: '#007EC6',
+              dark: '#005F94',
+              light: '#F0F9FF',
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+      background-color: #FFFFFF;
+      color: #1F2937;
+      overflow-x: hidden;
+    }
+
+    /* Exact Dotted Blue Matrix Hero Banner matching imanparyudi.com/research */
+    .ipt-hero-matrix {
+      background-color: #007EC6;
+      background-image:
+        radial-gradient(rgba(255, 255, 255, 0.28) 1.25px, transparent 1.25px),
+        linear-gradient(135deg, #0084CE 0%, #0072B5 100%);
+      background-size: 16px 16px, 100% 100%;
+      background-position: 0 0, 0 0;
+    }
+
+    /* Active Navigation Tab Bottom Underline Bar */
+    .nav-tab-active {
+      color: #0077B6 !important;
+      font-weight: 600;
+      position: relative;
+    }
+    .nav-tab-active::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -6px;
+      height: 2px;
+      background-color: #0077B6;
+      border-radius: 9999px;
+    }
+
+    @keyframes subtleFade {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-view {
+      animation: subtleFade 0.22s ease-out forwards;
+    }
+
+    /* Tentang (About) Dropdown Elevation matching SBA Research */
+    .about-dropdown-panel {
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      border: 1px solid #E5E7EB;
+    }
+
+    @keyframes cardPulseHighlight {
+      0% { box-shadow: 0 0 0 0 rgba(0, 119, 182, 0.45); }
+      70% { box-shadow: 0 0 0 8px rgba(0, 119, 182, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 119, 182, 0); }
+    }
+
+    .highlight-member-card {
+      animation: cardPulseHighlight 1.4s ease-out;
+      border-color: #0077B6 !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-white text-[#1F2937] antialiased selection:bg-[#0077B6] selection:text-white">
+
+  <!-- =====================================================================
+       1. TOP UTILITY BAR (Address on Left, Monochrome Icons & ID/EN on Right)
+       ===================================================================== -->
+  <div class="bg-white border-b border-gray-100">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-8 flex items-center justify-between text-[11px] text-[#6B7280]">
+      <!-- Left Address -->
+      <div class="truncate">
+        Jakarta – lantai 2, 12640 Indonesia
+      </div>
+
+      <!-- Right Monochrome Social/Academic Icons + Bilingual ID/EN Toggle -->
+      <div class="flex items-center gap-3 shrink-0">
+        <!-- Social & Academic Links -->
+        <div class="hidden sm:flex items-center gap-2.5 text-gray-500">
+          <!-- LinkedIn -->
+          <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" title="LinkedIn IPT Research" class="hover:text-[#0077B6] transition-colors">
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M18.5 18.5V13.2A3.26 3.26 0 0 0 15.24 9.94C14.39 9.94 13.4 10.46 12.92 11.24V10.13H10.13V18.5H12.92V13.57C12.92 12.8 13.54 12.17 14.31 12.17A1.4 1.4 0 0 1 15.71 13.57V18.5H18.5M6.88 8.56A1.68 1.68 0 0 0 8.56 6.88C8.56 5.95 7.81 5.19 6.88 5.19A1.69 1.69 0 0 0 5.19 6.88C5.19 7.81 5.95 8.56 6.88 8.56M8.27 18.5V10.13H5.5V18.5H8.27Z"/>
+            </svg>
+          </a>
+          <!-- Google Scholar / Academic Cap -->
+          <a href="#riset" onclick="switchTab('riset'); return false;" title="Publikasi & Google Scholar" class="hover:text-[#0077B6] transition-colors">
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3L1 9L12 15L21 10.09V17H23V9M5 13.18V17.18L12 21L19 17.18V13.18L12 17L5 13.18Z"/>
+            </svg>
+          </a>
+          <!-- RSS Feed -->
+          <a href="#berita" onclick="switchTab('home'); return false;" title="RSS Berita Terkini" class="hover:text-[#0077B6] transition-colors">
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6.18 15.64A2.18 2.18 0 0 1 8.36 17.82C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82A2.18 2.18 0 0 1 6.18 15.64M4 4.44A15.56 15.56 0 0 1 19.56 20H16.73A12.73 12.73 0 0 0 4 7.27V4.44M4 10.1A9.9 9.9 0 0 1 13.9 20H11.07A7.07 7.07 0 0 0 4 12.93V10.1Z"/>
+            </svg>
+          </a>
+          <!-- GitHub -->
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" title="GitHub Repository" class="hover:text-[#0077B6] transition-colors">
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 2A10 10 0 0 0 2 12C2 16.42 4.87 20.17 8.84 21.5C9.34 21.58 9.5 21.27 9.5 21C9.5 20.77 9.5 20.14 9.5 19.31C6.73 19.91 6.14 17.97 6.14 17.97C5.68 16.81 5.03 16.5 5.03 16.5C4.12 15.88 5.1 15.9 5.1 15.9C6.1 15.97 6.63 16.93 6.63 16.93C7.5 18.45 8.97 18 9.54 17.76C9.63 17.11 9.89 16.67 10.17 16.42C7.95 16.17 5.62 15.31 5.62 11.5C5.62 10.39 6 9.5 6.65 8.79C6.55 8.54 6.2 7.5 6.75 6.15C6.75 6.15 7.59 5.88 9.5 7.17C10.29 6.95 11.15 6.84 12 6.84C12.85 6.84 13.71 6.95 14.5 7.17C16.41 5.88 17.25 6.15 17.25 6.15C17.8 7.5 17.45 8.54 17.35 8.79C18 9.5 18.38 10.39 18.38 11.5C18.38 15.32 16.04 16.16 13.81 16.41C14.17 16.72 14.5 17.33 14.5 18.26C14.5 19.6 14.5 20.68 14.5 21C14.5 21.27 14.66 21.59 15.17 21.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Thin Vertical Divider -->
+        <span class="hidden sm:inline text-gray-300 select-none">|</span>
+
+        <!-- Indonesian Flag + ID & UK Flag + EN Toggle -->
+        <div class="flex items-center gap-2" role="group" aria-label="Pilihan Bahasa">
+          <button
+            type="button"
+            id="btn-lang-id"
+            onclick="setLanguage('id')"
+            class="inline-flex items-center gap-1.5 px-1.5 py-0.5 rounded text-[11px] font-bold text-[#1F2937] hover:text-[#0077B6] transition-colors"
+            title="Bahasa Indonesia"
+          >
+            <!-- Indonesian Flag SVG -->
+            <svg class="w-4 h-3 rounded-[1px] border border-gray-200 shrink-0" viewBox="0 0 24 16" aria-hidden="true">
+              <rect width="24" height="8" fill="#CE1126"/>
+              <rect y="8" width="24" height="8" fill="#FFFFFF"/>
+            </svg>
+            <span>ID</span>
+          </button>
+
+          <button
+            type="button"
+            id="btn-lang-en"
+            onclick="setLanguage('en')"
+            class="inline-flex items-center gap-1.5 px-1.5 py-0.5 rounded text-[11px] font-normal text-[#6B7280] hover:text-[#0077B6] transition-colors"
+            title="English"
+          >
+            <!-- UK Flag SVG -->
+            <svg class="w-4 h-3 rounded-[1px] border border-gray-200 shrink-0" viewBox="0 0 60 30" aria-hidden="true">
+              <rect width="60" height="30" fill="#012169"/>
+              <path d="M0,0 L60,30 M60,0 L0,30" stroke="#FFFFFF" stroke-width="6"/>
+              <path d="M30,0 v30 M0,15 h60" stroke="#FFFFFF" stroke-width="10"/>
+              <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/>
+            </svg>
+            <span>EN</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       2. STICKY MAIN NAVIGATION HEADER (Exact Brand Lockup + 8 Menu Tabs)
+       ===================================================================== -->
+  <header class="sticky top-0 z-40 bg-white border-b border-gray-100 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-[72px]">
+        <!-- Left Brand Block: 44x44 Rounded-Square Blue Badge + Stacked Text -->
+        <a
+          href="#home"
+          onclick="switchTab('home'); return false;"
+          class="flex items-center gap-3 group focus:outline-none shrink-0"
+        >
+          <!-- Crisp 44px x 44px #0077B6 Rounded-Square SVG Emblem (Fixes broken Logo IPT) -->
+          <div class="w-[44px] h-[44px] rounded-xl bg-[#0077B6] group-hover:bg-[#0082C8] transition-colors flex items-center justify-center shadow-xs shrink-0">
+            <svg class="w-7 h-7" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+              <!-- Subtle AI / Data Node Constellation Motif -->
+              <circle cx="9" cy="9" r="1.8" fill="#BAE6FD"/>
+              <circle cx="27" cy="9" r="1.8" fill="#BAE6FD"/>
+              <circle cx="27" cy="27" r="1.8" fill="#BAE6FD"/>
+              <path d="M10.5 9H25.5" stroke="#7DD3FC" stroke-width="1" stroke-dasharray="2 2"/>
+              <path d="M27 10.5V25.5" stroke="#7DD3FC" stroke-width="1" stroke-dasharray="2 2"/>
+              <!-- Clean Geometric IPT Monogram -->
+              <rect x="8.5" y="14.5" width="2.6" height="11" rx="0.8" fill="#FFFFFF"/>
+              <path d="M13.5 14.5H17.6C19.4 14.5 20.6 15.6 20.6 17.3C20.6 19.0 19.4 20.1 17.6 20.1H16.0V25.5H13.5V14.5ZM16.0 16.5V18.2H17.3C17.9 18.2 18.3 17.85 18.3 17.35C18.3 16.85 17.9 16.5 17.3 16.5H16.0Z" fill="#FFFFFF"/>
+              <path d="M21.8 14.5H28.5V16.6H26.4V25.5H23.9V16.6H21.8V14.5Z" fill="#FFFFFF"/>
+            </svg>
+          </div>
+
+          <!-- Adjacent Stacked Brand Text -->
+          <div class="flex flex-col leading-tight">
+            <span class="text-[17px] sm:text-[18px] font-semibold text-[#0077B6] tracking-tight">
+              Iman Paryudi Team
+            </span>
+            <span class="text-[12px] font-medium text-[#0077B6]">
+              Research
+            </span>
+          </div>
+        </a>
+
+        <!-- Right Horizontal Menu (Exact 8 Tabs on lg: screens) -->
+        <nav class="hidden lg:flex items-center gap-6 text-[13.5px] font-medium text-[#374151]" aria-label="Navigasi Utama">
+          <button type="button" data-nav="home" onclick="switchTab('home')" class="nav-item nav-tab-active hover:text-[#0077B6] transition-colors py-1" data-i18n="nav_home">
+            Home
+          </button>
+          <button type="button" data-nav="riset" onclick="switchTab('riset')" class="nav-item hover:text-[#0077B6] transition-colors py-1" data-i18n="nav_riset">
+            Riset
+          </button>
+          <button type="button" data-nav="terapan" onclick="switchTab('terapan')" class="nav-item hover:text-[#0077B6] transition-colors py-1" data-i18n="nav_terapan">
+            Penelitian Terapan
+          </button>
+          <button type="button" data-nav="layanan" onclick="switchTab('layanan')" class="nav-item hover:text-[#0077B6] transition-colors py-1" data-i18n="nav_layanan">
+            Layanan Profesional
+          </button>
+          <button type="button" data-nav="pelatihan" onclick="switchTab('pelatihan')" class="nav-item hover:text-[#0077B6] transition-colors py-1" data-i18n="nav_pelatihan">
+            Pelatihan Keamanan
+          </button>
+          <button type="button" data-nav="acara" onclick="switchTab('acara')" class="nav-item hover:text-[#0077B6] transition-colors py-1" data-i18n="nav_acara">
+            Acara
+          </button>
+          <button type="button" data-nav="karir" onclick="switchTab('karir')" class="nav-item hover:text-[#0077B6] transition-colors py-1" data-i18n="nav_karir">
+            Bekerja di IPT
+          </button>
+
+          <!-- Tentang (About) with SBA Research-style Dropdown Menu -->
+          <div
+            class="relative"
+            id="desktop-about-dropdown-wrapper"
+            onmouseenter="openAboutDropdown()"
+            onmouseleave="scheduleCloseAboutDropdown()"
+          >
+            <button
+              type="button"
+              data-nav="tentang"
+              id="desktop-about-trigger"
+              onclick="toggleAboutDropdown(event)"
+              aria-expanded="false"
+              aria-haspopup="true"
+              class="nav-item inline-flex items-center gap-1 hover:text-[#0077B6] transition-colors py-1"
+            >
+              <span data-i18n="nav_tentang">Tentang</span>
+              <svg class="w-3.5 h-3.5 opacity-75 transition-transform duration-150" id="desktop-about-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+
+            <!-- Dropdown Panel -->
+            <div
+              id="desktop-about-menu"
+              onmouseenter="cancelCloseAboutDropdown()"
+              onmouseleave="scheduleCloseAboutDropdown()"
+              class="hidden absolute right-0 top-full mt-2 w-64 bg-white rounded-md about-dropdown-panel py-2 z-50 text-[13px]"
+              role="menu"
+            >
+              <button
+                type="button"
+                onclick="navigateToAboutSub('tim')"
+                class="w-full text-left px-5 py-2.5 font-semibold text-[#0077B6] hover:bg-blue-50/70 transition-colors flex items-center justify-between"
+                role="menuitem"
+              >
+                <span data-i18n="dd_tim">Tim</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-blue-50 text-[#0077B6]" id="dd-team-badge">IPT</span>
+              </button>
+              <button
+                type="button"
+                onclick="navigateToAboutSub('profil')"
+                class="w-full text-left px-5 py-2.5 text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors"
+                role="menuitem"
+                data-i18n="dd_profil"
+              >
+                Profil Pusat Riset
+              </button>
+              <button
+                type="button"
+                onclick="navigateToAboutSub('mitra')"
+                class="w-full text-left px-5 py-2.5 text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors"
+                role="menuitem"
+                data-i18n="dd_mitra"
+              >
+                Mitra &amp; Kolaborasi
+              </button>
+              <button
+                type="button"
+                onclick="navigateToAboutSub('asosiasi')"
+                class="w-full text-left px-5 py-2.5 text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors"
+                role="menuitem"
+                data-i18n="dd_asosiasi"
+              >
+                Asosiasi &amp; Jejaring
+              </button>
+              <button
+                type="button"
+                onclick="navigateToAboutSub('sdg')"
+                class="w-full text-left px-5 py-2.5 text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors"
+                role="menuitem"
+                data-i18n="dd_sdg"
+              >
+                Tujuan Pembangunan Berkelanjutan (SDG)
+              </button>
+              <button
+                type="button"
+                onclick="navigateToAboutSub('standar')"
+                class="w-full text-left px-5 py-2.5 text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors"
+                role="menuitem"
+                data-i18n="dd_standar"
+              >
+                Standar Mutu &amp; Keamanan Informasi
+              </button>
+              <div class="my-1 border-t border-gray-100"></div>
+              <button
+                type="button"
+                onclick="navigateToAboutSub('kontak')"
+                class="w-full text-left px-5 py-2.5 text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors"
+                role="menuitem"
+                data-i18n="dd_kontak"
+              >
+                Kontak
+              </button>
+            </div>
+          </div>
+        </nav>
+
+        <!-- Mobile Hamburger Drawer Trigger -->
+        <button
+          type="button"
+          id="mobile-menu-btn"
+          onclick="toggleMobileMenu()"
+          aria-expanded="false"
+          aria-controls="mobile-nav-drawer"
+          class="lg:hidden p-2 rounded-lg border border-gray-200 text-gray-700 hover:text-[#0077B6] hover:bg-gray-50 transition-colors"
+          title="Buka Menu"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-nav-drawer" class="hidden lg:hidden bg-white border-t border-gray-100 px-4 pt-2 pb-4 shadow-md">
+      <div class="flex flex-col space-y-1 text-sm font-medium text-[#374151]">
+        <button type="button" onclick="switchTab('home'); toggleMobileMenu();" class="text-left px-3 py-2.5 rounded-lg hover:bg-blue-50 hover:text-[#0077B6]" data-i18n="nav_home">Home</button>
+        <button type="button" onclick="switchTab('riset'); toggleMobileMenu();" class="text-left px-3 py-2.5 rounded-lg hover:bg-blue-50 hover:text-[#0077B6]" data-i18n="nav_riset">Riset</button>
+        <button type="button" onclick="switchTab('terapan'); toggleMobileMenu();" class="text-left px-3 py-2.5 rounded-lg hover:bg-blue-50 hover:text-[#0077B6]" data-i18n="nav_terapan">Penelitian Terapan</button>
+        <button type="button" onclick="switchTab('layanan'); toggleMobileMenu();" class="text-left px-3 py-2.5 rounded-lg hover:bg-blue-50 hover:text-[#0077B6]" data-i18n="nav_layanan">Layanan Profesional</button>
+        <button type="button" onclick="switchTab('pelatihan'); toggleMobileMenu();" class="text-left px-3 py-2.5 rounded-lg hover:bg-blue-50 hover:text-[#0077B6]" data-i18n="nav_pelatihan">Pelatihan Keamanan</button>
+        <button type="button" onclick="switchTab('acara'); toggleMobileMenu();" class="text-left px-3 py-2.5 rounded-lg hover:bg-blue-50 hover:text-[#0077B6]" data-i18n="nav_acara">Acara</button>
+        <button type="button" onclick="switchTab('karir'); toggleMobileMenu();" class="text-left px-3 py-2.5 rounded-lg hover:bg-blue-50 hover:text-[#0077B6]" data-i18n="nav_karir">Bekerja di IPT</button>
+
+        <!-- Expandable Tentang Sub-menu on Mobile -->
+        <div class="pt-1">
+          <button
+            type="button"
+            onclick="toggleMobileAboutSubmenu()"
+            class="w-full flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-blue-50 hover:text-[#0077B6] font-semibold"
+          >
+            <span data-i18n="nav_tentang">Tentang</span>
+            <svg id="mobile-about-chevron" class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div id="mobile-about-submenu" class="pl-4 pr-2 py-1 space-y-1 border-l-2 border-blue-100 ml-3">
+            <button type="button" onclick="navigateToAboutSub('tim'); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-lg text-[#0077B6] font-semibold hover:bg-blue-50" data-i18n="dd_tim">Tim</button>
+            <button type="button" onclick="navigateToAboutSub('profil'); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-lg text-gray-600 hover:text-[#0077B6] hover:bg-gray-50" data-i18n="dd_profil">Profil Pusat Riset</button>
+            <button type="button" onclick="navigateToAboutSub('mitra'); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-lg text-gray-600 hover:text-[#0077B6] hover:bg-gray-50" data-i18n="dd_mitra">Mitra &amp; Kolaborasi</button>
+            <button type="button" onclick="navigateToAboutSub('sdg'); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-lg text-gray-600 hover:text-[#0077B6] hover:bg-gray-50" data-i18n="dd_sdg">Tujuan Pembangunan Berkelanjutan (SDG)</button>
+            <button type="button" onclick="navigateToAboutSub('standar'); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-lg text-gray-600 hover:text-[#0077B6] hover:bg-gray-50" data-i18n="dd_standar">Standar Mutu &amp; Keamanan Informasi</button>
+            <button type="button" onclick="navigateToAboutSub('kontak'); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-lg text-gray-600 hover:text-[#0077B6] hover:bg-gray-50" data-i18n="dd_kontak">Kontak</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       3. HERO BANNER (Exact Dotted Blue Matrix Design)
+       ===================================================================== -->
+  <section class="ipt-hero-matrix w-full text-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-11 sm:py-14">
+      <div class="max-w-2xl">
+        <h1 id="hero-headline" class="text-[26px] sm:text-[32px] font-bold text-white leading-[1.24] tracking-tight">
+          IPT Research adalah pusat penelitian untuk aplikasi AI dan Data Science
+        </h1>
+        <p id="hero-subheadline" class="text-[14px] sm:text-[15px] text-[#F0F9FF] mt-2.5 font-normal leading-relaxed">
+          Pusat Riset dan Inovasi aplikasi AI dan Data Science di Indonesia.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       4. MAIN CONTENT AREA (Dynamic Tab Views, Defaulting to Exact Home Layout)
+       ===================================================================== -->
+  <main id="main-content-area" class="flex-1 bg-white">
+    <!-- Populated cleanly via JS on load; Home view renders the exact 2-column layout -->
+  </main>
+
+  <!-- =====================================================================
+       5. FOOTER (Exact 3-Column Layout on #F3F4F6)
+       ===================================================================== -->
+  <footer class="bg-[#F3F4F6] border-t border-gray-200 py-8 mt-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-xs text-gray-600">
+      <!-- Column 1 -->
+      <div>
+        <h2 class="font-bold text-[#0077B6] text-sm mb-1.5">IPT Research</h2>
+        <p class="leading-relaxed">Jakarta – lantai 2</p>
+        <p class="leading-relaxed">12640 Jakarta, Indonesia</p>
+      </div>
+
+      <!-- Column 2 -->
+      <div>
+        <h2 class="font-bold text-[#0077B6] text-sm mb-1.5" data-i18n="footer_contact_heading">Kontak</h2>
+        <p class="leading-relaxed">Email: <a href="mailto:imanparyudi@gmail.com" class="hover:text-[#0077B6] hover:underline">imanparyudi@gmail.com</a></p>
+        <p class="leading-relaxed">Telp: +43 (1) 505 36 88</p>
+      </div>
+
+      <!-- Column 3 -->
+      <div class="md:text-right">
+        <p class="leading-relaxed" data-i18n="footer_copyright">© 2026 IPT Research. Seluruh hak cipta dilindungi.</p>
+        <p class="text-gray-400 mt-1" data-i18n="footer_sheets_badge">Dihubungkan dengan Google Sheets System.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       MODAL 1: FULL ARTICLE READER MODAL ("Read More" on Berita Terkini)
+       ===================================================================== -->
+  <div id="article-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-gray-900/60 backdrop-blur-[1px]" role="dialog" aria-modal="true" aria-labelledby="article-modal-title">
+    <div class="bg-white rounded-xl max-w-2xl w-full max-h-[88vh] overflow-y-auto shadow-2xl border border-gray-200 animate-view">
+      <div class="p-5 sm:p-6 border-b border-gray-200 flex items-start justify-between gap-4 sticky top-0 bg-white z-10">
+        <div>
+          <span class="inline-block text-[11px] font-semibold text-[#0077B6] uppercase tracking-wider mb-1" data-i18n="modal_news_label">Berita Terkini • IPT Research</span>
+          <h3 id="article-modal-title" class="text-lg sm:text-xl font-bold text-[#1F2937] leading-snug"></h3>
+          <div class="flex items-center gap-1.5 text-[11.5px] text-[#6B7280] mt-1.5">
+            <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            <span id="article-modal-date"></span>
+          </div>
+        </div>
+        <button type="button" onclick="closeArticleModal()" class="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors" aria-label="Tutup">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="p-5 sm:p-6 space-y-4">
+        <img id="article-modal-img" src="" alt="" class="w-full h-56 object-cover rounded-lg border border-gray-200" />
+        <div id="article-modal-body" class="text-sm text-[#4B5563] leading-relaxed space-y-3"></div>
+      </div>
+      <div class="px-5 py-3.5 bg-gray-50 border-t border-gray-200 flex items-center justify-between text-xs text-gray-500">
+        <span>Sumber: IPT Research Knowledge Base</span>
+        <button type="button" onclick="closeArticleModal()" class="px-4 py-1.5 rounded-md bg-[#0077B6] hover:bg-[#0082C8] text-white font-semibold transition-colors" data-i18n="modal_close_btn">
+          Tutup Artikel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 2: EVENT DETAILS & REGISTRATION MODAL ("Acara mendatang @ IPT")
+       ===================================================================== -->
+  <div id="event-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-gray-900/60 backdrop-blur-[1px]" role="dialog" aria-modal="true" aria-labelledby="event-modal-title">
+    <div class="bg-white rounded-xl max-w-lg w-full overflow-hidden shadow-2xl border border-gray-200 animate-view">
+      <div class="ipt-hero-matrix p-5 text-white flex items-start justify-between gap-4">
+        <div>
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-blue-100" data-i18n="sidebar_events_title">Acara mendatang @ IPT</span>
+          <h3 id="event-modal-title" class="text-base sm:text-lg font-bold leading-snug mt-1"></h3>
+        </div>
+        <button type="button" onclick="closeEventModal()" class="p-1 rounded-lg text-white/80 hover:text-white hover:bg-white/10">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="p-5 sm:p-6 space-y-4">
+        <div class="bg-gray-50 border border-gray-200 rounded-lg p-3.5 text-xs text-[#4B5563] space-y-1.5">
+          <div><strong class="text-[#1F2937]">Tanggal:</strong> <span id="event-modal-date"></span></div>
+          <div><strong class="text-[#1F2937]">Lokasi:</strong> <span id="event-modal-location"></span></div>
+          <div><strong class="text-[#1F2937]">Penyelenggara:</strong> Iman Paryudi Team (IPT) Research</div>
+        </div>
+        <p id="event-modal-desc" class="text-xs sm:text-sm text-[#4B5563] leading-relaxed"></p>
+        <form onsubmit="submitEventRegistration(event)" class="pt-2 border-t border-gray-200 space-y-3">
+          <div class="text-xs font-bold text-[#1F2937]" data-i18n="event_form_heading">Pendaftaran Peserta Seminar / Konferensi</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <input type="text" required placeholder="Nama Lengkap & Gelar" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+            <input type="email" required placeholder="Email Institusi / Pribadi" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+          </div>
+          <div class="flex justify-end gap-2 pt-1">
+            <button type="button" onclick="closeEventModal()" class="px-3.5 py-2 rounded-lg border border-gray-300 text-xs font-medium text-gray-600 hover:bg-gray-50">Batal</button>
+            <button type="submit" class="px-4 py-2 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold">Daftar Sekarang</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 3: RESEARCHER / TEAM MEMBER DETAIL MODAL
+       ===================================================================== -->
+  <div id="member-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-gray-900/60 backdrop-blur-[1px]" role="dialog" aria-modal="true" aria-labelledby="member-modal-name">
+    <div class="bg-white rounded-xl max-w-xl w-full overflow-hidden shadow-2xl border border-gray-200 animate-view">
+      <div class="p-5 sm:p-6 border-b border-gray-200 flex items-start justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <div class="w-20 h-24 rounded-lg overflow-hidden bg-slate-200 border border-gray-200 shrink-0">
+            <img id="member-modal-photo" src="" alt="" class="w-full h-full object-cover" />
+          </div>
+          <div>
+            <span id="member-modal-category" class="inline-block px-2 py-0.5 rounded bg-blue-50 text-[#0077B6] text-[11px] font-semibold mb-1"></span>
+            <h3 id="member-modal-name" class="text-lg font-bold text-[#1F2937] leading-snug"></h3>
+            <p id="member-modal-role" class="text-xs font-medium text-[#0077B6] mt-0.5"></p>
+          </div>
+        </div>
+        <button type="button" onclick="closeMemberModal()" class="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors" aria-label="Tutup">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="p-5 sm:p-6 space-y-4">
+        <p id="member-modal-bio" class="text-xs sm:text-sm text-[#4B5563] leading-relaxed"></p>
+        <div>
+          <div class="text-[11px] font-bold uppercase tracking-wider text-gray-500 mb-1.5" id="member-modal-expertise-label">Bidang Keahlian &amp; Sertifikasi</div>
+          <div id="member-modal-tags" class="flex flex-wrap gap-1.5"></div>
+        </div>
+        <div id="member-modal-links" class="pt-3 border-t border-gray-100 flex flex-wrap items-center gap-3 text-xs"></div>
+      </div>
+      <div class="px-5 py-3 bg-gray-50 border-t border-gray-200 flex justify-end">
+        <button type="button" onclick="closeMemberModal()" class="px-4 py-1.5 rounded-md bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold transition-colors" data-i18n="modal_close_btn">
+          Tutup Profil
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       NON-INTRUSIVE TOAST NOTIFICATION (Replaces alert() completely)
+       ===================================================================== -->
+  <div id="toast-box" class="fixed bottom-5 right-5 z-50 pointer-events-none flex flex-col gap-2"></div>
+
+  <!-- =====================================================================
+       APPLICATION JAVASCRIPT (Google Sheets Hook, Bilingual ID/EN, 8 Tabs)
+       ===================================================================== -->
+  <script>
+    /**
+     * =========================================================================
+     * GOOGLE SHEETS SYSTEM INTEGRATION CONFIGURATION
+     * Paste your deployed Google Apps Script Web App URL below to fetch live
+     * "Berita Terkini" and "Acara mendatang" rows directly from Google Sheets.
+     * When left empty ("") or offline, pre-loaded institutional data renders
+     * immediately without delay.
+     * =========================================================================
+     */
+    const SHEETS_API_URL = "";
+    const CMS_STORAGE_KEY = "ipt_research_cms_data_v1";
+
+    let currentLang = 'id';
+    let activeTab = 'home';
+    let aboutDropdownTimer = null;
+    let openAccordionCategories = {
+      'Management': true,
+      'Scientific & Innovation Board': true,
+      'Key Researchers': true,
+      'Senior Staff': true
+    };
+
+    // High-res inline SVG fallbacks if external images are offline
+    const FALLBACK_THUMB_CLOCK =
+      "data:image/svg+xml;utf8," +
+      encodeURIComponent(
+        `<svg xmlns="http://www.w3.org/2000/svg" width="330" height="210" viewBox="0 0 330 210">
+          <rect width="330" height="210" fill="#0F2942"/>
+          <circle cx="165" cy="105" r="70" fill="none" stroke="#D4AF37" stroke-width="3"/>
+          <circle cx="165" cy="105" r="52" fill="none" stroke="#93C5FD" stroke-width="1.2" stroke-dasharray="4 3"/>
+          <line x1="165" y1="105" x2="165" y2="50" stroke="#FBBF24" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="165" y1="105" x2="208" y2="120" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="165" cy="105" r="5" fill="#D4AF37"/>
+        </svg>`
+      );
+
+    const FALLBACK_THUMB_AI =
+      "data:image/svg+xml;utf8," +
+      encodeURIComponent(
+        `<svg xmlns="http://www.w3.org/2000/svg" width="330" height="210" viewBox="0 0 330 210">
+          <rect width="330" height="210" fill="#0B2239"/>
+          <g stroke="#38BDF8" stroke-opacity="0.45" stroke-width="1.2">
+            <line x1="40" y1="40" x2="130" y2="90"/><line x1="130" y1="90" x2="220" y2="55"/>
+            <line x1="130" y1="90" x2="190" y2="160"/><line x1="220" y1="55" x2="285" y2="115"/>
+            <line x1="75" y1="155" x2="130" y2="90"/>
+          </g>
+          <g fill="#7DD3FC">
+            <circle cx="40" cy="40" r="4"/><circle cx="130" cy="90" r="5"/>
+            <circle cx="220" cy="55" r="4"/><circle cx="190" cy="160" r="4"/>
+            <circle cx="285" cy="115" r="4"/><circle cx="75" cy="155" r="4"/>
+          </g>
+          <text x="165" y="190" fill="#E0F2FE" font-family="monospace" font-size="11" text-anchor="middle">01001001 01010000 01010100</text>
+        </svg>`
+      );
+
+    let newsArticles = [
+      {
+        id: 'news-1',
+        title: {
+          id: 'Mengapa Waktu Seolah Melambat ketika Bahaya Datang?',
+          en: 'Why Does Time Seem to Slow Down When Danger Approaches?'
+        },
+        date: 'Tue Sep 15 2026 00:00:00 GMT+0700 (Waktu Indonesia Barat)',
+        excerpt: {
+          id: 'JAKARTA - Penelitian terbaru menunjukkan bahwa sekadar mendengar suara yang mendekat dapat memberi otak waktu lebih lama dari yang sebenarnya untuk mempersiapkan diri menghadapi ba...',
+          en: 'JAKARTA - Recent cognitive neuroscience research reveals that merely hearing an approaching sound gives the human brain a longer perceptual window to prepare for impending da...'
+        },
+        fullText: {
+          id: [
+            'JAKARTA - Penelitian terbaru menunjukkan bahwa sekadar mendengar suara yang mendekat dapat memberi otak waktu lebih lama dari yang sebenarnya untuk mempersiapkan diri menghadapi bahaya yang datang.',
+            'Dalam eksperimen pemodelan kognitif dan pemrosesan sinyal sensorik, para peneliti menemukan bahwa sistem saraf pusat meningkatkan kepadatan pemrosesan informasi ketika mendeteksi stimulus akustik atau visual yang bergerak cepat menuju subjek.',
+            'Temuan ini memberikan implikasi penting bagi perancangan sistem peringatan dini berbasis kecerdasan buatan (AI), antarmuka keselamatan kendaraan otonom, serta simulasi respons keputusan manusia di bawah tekanan.'
+          ],
+          en: [
+            'JAKARTA - Recent research indicates that merely hearing an approaching sound gives the human brain a longer subjective window than actual clock time to prepare for incoming danger.',
+            'Through cognitive modeling and sensory signal-processing experiments, researchers demonstrated that the central nervous system heightens information sampling density when detecting looming acoustic or visual stimuli.',
+            'These findings offer valuable insights for designing AI-driven early warning systems, autonomous vehicle safety interfaces, and human decision-making models under acute stress.'
+          ]
+        },
+        image: 'https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?auto=format&fit=crop&w=500&q=80',
+        fallback: FALLBACK_THUMB_CLOCK
+      },
+      {
+        id: 'news-2',
+        title: {
+          id: 'AI Makin Mirip Manusia, Manusia Makin Mirip AI',
+          en: 'AI Becomes More Human-Like, Humans Become More AI-Like'
+        },
+        date: 'Wed Sep 16 2026 00:00:00 GMT+0700 (Waktu Indonesia Barat)',
+        excerpt: {
+          id: 'KOMPAS.com - Terlalu sering berinteraksi dengan kecerdasan buatan (AI) ternyata berpotensi mengubah cara manusia berkomunikasi dan menampilkan dirinya. Hal tersebut diungkapkan par...',
+          en: 'KOMPAS.com - Frequent daily interaction with generative artificial intelligence (AI) can subtly reshape how humans structure language, communicate, and present themselves. This phenomenon was highlighted by res...'
+        },
+        fullText: {
+          id: [
+            'KOMPAS.com - Terlalu sering berinteraksi dengan kecerdasan buatan (AI) ternyata berpotensi mengubah cara manusia berkomunikasi dan menampilkan dirinya. Hal tersebut diungkapkan para peneliti interaksi manusia-komputer dan linguistik komputasional.',
+            'Analisis terhadap jutaan korpus teks akademik dan komunikasi profesional menunjukkan adanya konvergensi pola kalimat, pilihan kosakata terstruktur, serta gaya penyampaian informasi antara pengguna dan model bahasa besar (LLM).',
+            'IPT Research terus mengkaji fenomena ko-evolusi manusia dan AI ini untuk merancang sistem kecerdasan buatan terapan yang tetap menjaga autentisitas kognitif serta keberagaman ekspresi manusia.'
+          ],
+          en: [
+            'KOMPAS.com - Frequent interaction with artificial intelligence (AI) has the potential to reshape how humans communicate and express ideas, according to human-computer interaction and computational linguistics researchers.',
+            'Empirical analysis across large-scale academic and professional text corpora reveals measurable linguistic convergence in phrasing patterns and structured rhetoric between human writers and Large Language Models (LLMs).',
+            'IPT Research actively investigates this human-AI co-evolution to engineer applied AI systems that preserve cognitive authenticity and human expressive diversity.'
+          ]
+        },
+        image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=500&q=80',
+        fallback: FALLBACK_THUMB_AI
+      }
+    ];
+
+    // Group Team Photo Banner Fallback SVG (SBA Research-style institutional group portrait)
+    const FALLBACK_GROUP_TEAM_PHOTO =
+      "data:image/svg+xml;utf8," +
+      encodeURIComponent(
+        `<svg xmlns="http://www.w3.org/2000/svg" width="960" height="510" viewBox="0 0 960 510">
+          <defs>
+            <linearGradient id="bgTeam" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#E2E8F0"/>
+              <stop offset="50%" stop-color="#CBD5E1"/>
+              <stop offset="100%" stop-color="#94A3B8"/>
+            </linearGradient>
+            <linearGradient id="iptAccent" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#0077B6"/>
+              <stop offset="100%" stop-color="#0082C8"/>
+            </linearGradient>
+          </defs>
+          <rect width="960" height="510" fill="url(#bgTeam)"/>
+          <!-- Architectural glass atrium background lines -->
+          <g stroke="#FFFFFF" stroke-opacity="0.45" stroke-width="2">
+            <line x1="0" y1="90" x2="960" y2="90"/>
+            <line x1="0" y1="180" x2="960" y2="180"/>
+            <line x1="160" y1="0" x2="160" y2="510"/>
+            <line x1="320" y1="0" x2="320" y2="510"/>
+            <line x1="480" y1="0" x2="480" y2="510"/>
+            <line x1="640" y1="0" x2="640" y2="510"/>
+            <line x1="800" y1="0" x2="800" y2="510"/>
+          </g>
+          <!-- Stylized Research Team Silhouettes (Back Row) -->
+          <g fill="#475569" opacity="0.72">
+            <circle cx="210" cy="215" r="24"/><path d="M172 320c0-28 17-48 38-48s38 20 38 48v40h-76v-40z"/>
+            <circle cx="300" cy="208" r="25"/><path d="M260 320c0-30 18-50 40-50s40 20 40 50v40h-80v-40z"/>
+            <circle cx="395" cy="212" r="24"/><path d="M357 320c0-28 17-48 38-48s38 20 38 48v40h-76v-40z"/>
+            <circle cx="485" cy="205" r="25"/><path d="M445 320c0-30 18-50 40-50s40 20 40 50v40h-80v-40z"/>
+            <circle cx="575" cy="212" r="24"/><path d="M537 320c0-28 17-48 38-48s38 20 38 48v40h-76v-40z"/>
+            <circle cx="665" cy="208" r="25"/><path d="M625 320c0-30 18-50 40-50s40 20 40 50v40h-80v-40z"/>
+            <circle cx="755" cy="216" r="23"/><path d="M718 320c0-27 16-46 37-46s37 19 37 46v40h-74v-40z"/>
+          </g>
+          <!-- Front Row Researchers -->
+          <g fill="#1E293B">
+            <circle cx="255" cy="252" r="26"/><path d="M212 385c0-34 19-56 43-56s43 22 43 56v45h-86v-45z" fill="#0077B6"/>
+            <circle cx="350" cy="248" r="27"/><path d="M306 385c0-35 20-58 44-58s44 23 44 58v45h-88v-45z" fill="#1E293B"/>
+            <circle cx="445" cy="245" r="28"/><path d="M400 385c0-36 20-60 45-60s45 24 45 60v45h-90v-45z" fill="#0F172A"/>
+            <circle cx="540" cy="248" r="27"/><path d="M496 385c0-35 20-58 44-58s44 23 44 58v45h-88v-45z" fill="#005F94"/>
+            <circle cx="635" cy="250" r="26"/><path d="M592 385c0-34 19-56 43-56s43 22 43 56v45h-86v-45z" fill="#334155"/>
+            <circle cx="725" cy="254" r="25"/><path d="M684 385c0-32 18-54 41-54s41 22 41 54v45h-82v-45z" fill="#1E293B"/>
+          </g>
+          <!-- Subtle Institutional Caption Strip -->
+          <rect x="0" y="430" width="960" height="80" fill="url(#iptAccent)"/>
+          <text x="480" y="466" fill="#FFFFFF" font-family="sans-serif" font-weight="700" font-size="20" text-anchor="middle">Iman Paryudi Team (IPT) Research — Applied AI &amp; Data Science</text>
+          <text x="480" y="490" fill="#E0F2FE" font-family="sans-serif" font-size="13" text-anchor="middle">Jakarta – lantai 2, 12640 Indonesia • imanparyudi.com/research</text>
+        </svg>`
+      );
+
+    // Generates a clean, crisp SVG portrait avatar when a researcher has no custom photo URL
+    function getMemberAvatarFallback(name, idx = 0) {
+      const accents = ['#0077B6', '#005F94', '#0284C7', '#0369A1', '#1E3A8A'];
+      const accent = accents[idx % accents.length];
+      return (
+        "data:image/svg+xml;utf8," +
+        encodeURIComponent(
+          `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="380" viewBox="0 0 320 380">
+            <rect width="320" height="380" fill="#CBD5E1"/>
+            <circle cx="160" cy="132" r="54" fill="#64748B"/>
+            <path d="M72 345c0-54 39-92 88-92s88 38 88 92v35H72v-35z" fill="${accent}"/>
+            <path d="M136 253l24 38 24-38" fill="#FFFFFF" opacity="0.9"/>
+          </svg>`
+        )
+      );
+    }
+
+    // -------------------------------------------------------------------------
+    // 1. PRE-LOADED CONTENT (Synced with CMS localStorage & Google Sheets)
+    // -------------------------------------------------------------------------
+    let teamGroupConfig = {
+      groupPhoto: '',
+      introParagraphs: {
+        id: [
+          'Kami adalah tim peneliti yang berdedikasi tinggi dan berpengalaman di bidang Kecerdasan Buatan (AI), Data Science, dan Keamanan Informasi. Sebagian besar anggota tim kami bergelar doktor maupun kandidat doktor serta aktif memublikasikan karya ilmiah pada jurnal dan konferensi internasional bereputasi.',
+          'Sebagai bagian dari kontribusi akademik, para peneliti kami secara rutin mengajar mata kuliah pemodelan data, pembelajaran mesin, dan keamanan sistem informasi di perguruan tinggi mitra, sekaligus membimbing mahasiswa dan peneliti muda dalam riset terapan.',
+          'Selain kegiatan penelitian akademik, tim konsultan dan analis profesional kami memiliki keahlian serta sertifikasi industri dalam tata kelola data, audit sistem cerdas, dan keamanan siber untuk mendukung transformasi digital institusi di Indonesia.'
+        ],
+        en: [
+          'We are a team of highly educated and experienced researchers specializing in Applied Artificial Intelligence, Data Science, and Information Security. Most of our members hold or are working toward a doctorate degree and actively publish peer-reviewed papers at international conferences and journals.',
+          'As part of our academic mission, many of our researchers regularly teach courses on machine learning, data analytics, and information security at partner universities while mentoring the next generation of scholars.',
+          'Alongside our academic research, our applied engineering and security specialists maintain professional certifications and deliver high-impact advisory across data governance, intelligent systems, and cyber resilience.'
+        ]
+      }
+    };
+
+    let teamMembers = [
+      {
+        id: 'TIM-001',
+        order: 1,
+        category: 'Management',
+        name: 'Dr. Iman Paryudi',
+        role: { id: 'Direktur & Peneliti Utama', en: 'Director & Principal Investigator' },
+        expertise: ['Applied AI', 'Data Science', 'Decision Support Systems', 'Information Security'],
+        bio: {
+          id: 'Pendiri dan Direktur IPT Research yang memimpin arah penelitian strategis di bidang aplikasi Kecerdasan Buatan, Data Science, dan rekayasa sistem cerdas di Indonesia.',
+          en: 'Founder and Director of IPT Research leading strategic research initiatives in Applied Artificial Intelligence, Data Science, and intelligent systems engineering.'
+        },
+        email: 'imanparyudi@gmail.com',
+        scholar: 'https://scholar.google.com',
+        linkedin: 'https://www.linkedin.com',
+        photo: '',
+        status: 'Active'
+      },
+      {
+        id: 'TIM-002',
+        order: 2,
+        category: 'Management',
+        name: 'Dr. Rina Kusumawardani',
+        role: { id: 'Kepala Divisi Penelitian Terapan', en: 'Head of Applied Research' },
+        expertise: ['Machine Learning', 'Industrial AI', 'Technology Transfer'],
+        bio: {
+          id: 'Mengkoordinasikan program hilirisasi riset dan kemitraan Proof-of-Concept (PoC) antara laboratorium IPT Research dengan mitra industri nasional.',
+          en: 'Coordinates applied research programs and industry Proof-of-Concept (PoC) collaborations at IPT Research.'
+        },
+        email: 'rina.k@imanparyudi.com',
+        scholar: 'https://scholar.google.com',
+        linkedin: 'https://www.linkedin.com',
+        photo: '',
+        status: 'Active'
+      },
+      {
+        id: 'TIM-003',
+        order: 3,
+        category: 'Management',
+        name: 'Hendra Wijaya, M.Kom.',
+        role: { id: 'Manajer Layanan Profesional & Operasional', en: 'Professional Services & Operations Manager' },
+        expertise: ['Data Governance', 'ISO 27001', 'Enterprise Analytics'],
+        bio: {
+          id: 'Bertanggung jawab atas tata kelola proyek konsultasi profesional, audit kualitas data, dan manajemen infrastruktur komputasi riset.',
+          en: 'Leads professional consulting engagements, data quality audits, and research computing infrastructure.'
+        },
+        email: 'hendra.w@imanparyudi.com',
+        scholar: '',
+        linkedin: 'https://www.linkedin.com',
+        photo: '',
+        status: 'Active'
+      },
+      {
+        id: 'TIM-004',
+        order: 4,
+        category: 'Management',
+        name: 'Siti Rahmawati, M.Sc.',
+        role: { id: 'Koordinator Pelatihan & Kolaborasi Akademik', en: 'Training & Academic Outreach Coordinator' },
+        expertise: ['Cyber Awareness', 'Academic Programs', 'Scientific Events'],
+        bio: {
+          id: 'Mengelola penyelenggaraan konferensi internasional ICIIRDS, kolokium ilmiah bulanan, serta kurikulum pelatihan keamanan informasi.',
+          en: 'Manages the annual ICIIRDS international conference, monthly colloquia, and security training workshops.'
+        },
+        email: 'siti.r@imanparyudi.com',
+        scholar: 'https://scholar.google.com',
+        linkedin: 'https://www.linkedin.com',
+        photo: '',
+        status: 'Active'
+      },
+      {
+        id: 'TIM-005',
+        order: 5,
+        category: 'Scientific & Innovation Board',
+        name: 'Prof. Dr. Bambang Setiawan',
+        role: { id: 'Dewan Penasihat Ilmiah — AI & Komputasi', en: 'Scientific Advisory Board — AI & Computing' },
+        expertise: ['Computational Intelligence', 'Neural Networks', 'Optimization'],
+        bio: {
+          id: 'Memberikan arahan metodologi ilmiah serta penjaminan mutu publikasi jurnal internasional pada klaster Kecerdasan Buatan.',
+          en: 'Provides scientific methodology guidance and international journal quality assurance for the AI research cluster.'
+        },
+        email: 'bambang.s@imanparyudi.com',
+        scholar: 'https://scholar.google.com',
+        linkedin: '',
+        photo: '',
+        status: 'Active'
+      },
+      {
+        id: 'TIM-006',
+        order: 6,
+        category: 'Scientific & Innovation Board',
+        name: 'Dr. Nadya Permatasari',
+        role: { id: 'Dewan Inovasi — Data Science & Statistik', en: 'Innovation Board — Data Science & Statistics' },
+        expertise: ['Statistical Modeling', 'Big Data Mining', 'Predictive Analytics'],
+        bio: {
+          id: 'Penasihat inovasi dalam pemodelan statistik skala besar dan evaluasi dampak riset data science terapan.',
+          en: 'Innovation advisor for large-scale statistical modeling and applied data science impact evaluation.'
+        },
+        email: 'nadya.p@imanparyudi.com',
+        scholar: 'https://scholar.google.com',
+        linkedin: 'https://www.linkedin.com',
+        photo: '',
+        status: 'Active'
+      },
+      {
+        id: 'TIM-007',
+        order: 7,
+        category: 'Key Researchers',
+        name: 'Dr. Aditya Pratama',
+        role: { id: 'Peneliti Utama — Computer Vision', en: 'Key Researcher — Computer Vision' },
+        expertise: ['Computer Vision', 'Deep Image Recognition', 'Edge AI'],
+        bio: {
+          id: 'Memimpin penelitian pengenalan citra berbasis deep learning dan arsitektur Vision Transformer berlatensi rendah.',
+          en: 'Leads research in deep learning image recognition and low-latency Vision Transformer architectures.'
+        },
+        email: 'aditya.p@imanparyudi.com',
+        scholar: 'https://scholar.google.com',
+        linkedin: 'https://www.linkedin.com',
+        photo: '',
+        status: 'Active'
+      },
+      {
+        id: 'TIM-008',
+        order: 8,
+        category: 'Key Researchers',
+        name: 'Dr. Farah Nabila',
+        role: { id: 'Peneliti Utama — NLP & Interaksi Manusia-AI', en: 'Key Researcher — NLP & Human-AI Interaction' },
+        expertise: ['Natural Language Processing', 'Verified RAG', 'Human-AI Co-evolution'],
+        bio: {
+          id: 'Meneliti pemrosesan bahasa alami Bahasa Indonesia, sistem RAG terverifikasi, serta dinamika komunikasi manusia dan AI.',
+          en: 'Researches Indonesian natural language processing, verified RAG systems, and human-AI communication dynamics.'
+        },
+        email: 'farah.n@imanparyudi.com',
+        scholar: 'https://scholar.google.com',
+        linkedin: 'https://www.linkedin.com',
+        photo: '',
+        status: 'Active'
+      },
+      {
+        id: 'TIM-009',
+        order: 9,
+        category: 'Key Researchers',
+        name: 'Dr. Reza Pahlevi',
+        role: { id: 'Peneliti Utama — Keamanan Sistem AI', en: 'Key Researcher — AI System Security' },
+        expertise: ['Adversarial ML', 'Network Anomaly Detection', 'Privacy-Preserving AI'],
+        bio: {
+          id: 'Berfokus pada ketahanan model pembelajaran mesin terhadap serangan adversarial dan deteksi anomali telemetri keamanan.',
+          en: 'Focuses on machine learning robustness against adversarial attacks and security telemetry anomaly detection.'
+        },
+        email: 'reza.p@imanparyudi.com',
+        scholar: 'https://scholar.google.com',
+        linkedin: 'https://www.linkedin.com',
+        photo: '',
+        status: 'Active'
+      },
+      {
+        id: 'TIM-010',
+        order: 10,
+        category: 'Senior Staff',
+        name: 'Dimas Saputra, M.T.',
+        role: { id: 'Staf Peneliti Senior — Rekayasa Data', en: 'Senior Research Engineer — Data Engineering' },
+        expertise: ['MLOps', 'Data Pipelines', 'Cloud Computing'],
+        bio: {
+          id: 'Merancang pipeline data otomatis dan infrastruktur pengujian eksperimen model AI skala produksi.',
+          en: 'Architects automated data pipelines and reproducible experimentation infrastructure for production AI models.'
+        },
+        email: 'dimas.s@imanparyudi.com',
+        scholar: '',
+        linkedin: 'https://www.linkedin.com',
+        photo: '',
+        status: 'Active'
+      },
+      {
+        id: 'TIM-011',
+        order: 11,
+        category: 'Senior Staff',
+        name: 'Anisa Maharani, S.Kom., M.Cs.',
+        role: { id: 'Staf Peneliti — Analitik Kognitif & Visualisasi', en: 'Research Staff — Cognitive Analytics & Visualization' },
+        expertise: ['Visual Analytics', 'Cognitive Modeling', 'Python & R'],
+        bio: {
+          id: 'Mengembangkan dasbor analitik interaktif dan studi eksperimental interaksi pengguna dengan sistem cerdas.',
+          en: 'Develops interactive visual analytics dashboards and empirical user-interaction studies for intelligent systems.'
+        },
+        email: 'anisa.m@imanparyudi.com',
+        scholar: 'https://scholar.google.com',
+        linkedin: 'https://www.linkedin.com',
+        photo: '',
+        status: 'Active'
+      }
+    ];
+
+    let upcomingEvents = [
+      {
+        id: 'evt-iciirds-2026',
+        title: {
+          id: 'Data Science Conferences in Indonesia October 2026 (International Conference on AI-driven Image Recognition and Data Science (ICIIRDS))',
+          en: 'Data Science Conferences in Indonesia October 2026 (International Conference on AI-driven Image Recognition and Data Science (ICIIRDS))'
+        },
+        dateRange: '1 Oktober 2026 - 1 Oktober 2026',
+        location: 'Jakarta – lantai 2, 12640 Indonesia & Hybrid Conference Hall',
+        description: {
+          id: 'Konferensi internasional tahunan yang mempertemukan peneliti AI, pakar Computer Vision, dan praktisi Data Science untuk mempresentasikan riset terbaru dalam pengenalan citra berbasis kecerdasan buatan dan analitik data skala besar.',
+          en: 'Annual international conference bringing together AI researchers, Computer Vision specialists, and Data Science practitioners to present peer-reviewed advances in AI-driven image recognition and large-scale data analytics.'
+        }
+      }
+    ];
+
+    // Publications repository data for the "Riset" tab
+    const publicationsList = [
+      {
+        year: '2026',
+        venue: 'IEEE',
+        title: 'Adaptive Deep Image Recognition for Low-Latency Industrial Quality Inspection',
+        authors: 'Iman Paryudi, A. Pratama, S. Rahmawati',
+        journal: 'IEEE Access / International Conference on AI-driven Image Recognition and Data Science (ICIIRDS)',
+        bibtex: `@inproceedings{paryudi2026adaptive,\n  author={Paryudi, Iman and Pratama, A. and Rahmawati, S.},\n  title={Adaptive Deep Image Recognition for Low-Latency Industrial Quality Inspection},\n  booktitle={Proc. ICIIRDS 2026},\n  year={2026}\n}`
+      },
+      {
+        year: '2025',
+        venue: 'ACM',
+        title: 'Human-AI Linguistic Convergence in Collaborative Knowledge Workflows',
+        authors: 'Iman Paryudi, N. Kusuma',
+        journal: 'ACM Transactions on Interactive Intelligent Systems',
+        bibtex: `@article{paryudi2025convergence,\n  author={Paryudi, Iman and Kusuma, N.},\n  title={Human-AI Linguistic Convergence in Collaborative Knowledge Workflows},\n  journal={ACM Trans. Interact. Intell. Syst.},\n  year={2025}\n}`
+      },
+      {
+        year: '2024',
+        venue: 'Springer',
+        title: 'Predictive Data Science Pipelines for Enterprise Information Security Telemetry',
+        authors: 'Iman Paryudi, H. Wijaya',
+        journal: 'Springer Lecture Notes in Computer Science (LNCS)',
+        bibtex: `@inproceedings{paryudi2024predictive,\n  author={Paryudi, Iman and Wijaya, H.},\n  title={Predictive Data Science Pipelines for Enterprise Information Security Telemetry},\n  publisher={Springer},\n  year={2024}\n}`
+      }
+    ];
+
+    // -------------------------------------------------------------------------
+    // 2. BILINGUAL DICTIONARY & HERO METADATA PER TAB
+    // -------------------------------------------------------------------------
+    const translations = {
+      id: {
+        nav_home: 'Home',
+        nav_riset: 'Riset',
+        nav_terapan: 'Penelitian Terapan',
+        nav_layanan: 'Layanan Profesional',
+        nav_pelatihan: 'Pelatihan Keamanan',
+        nav_acara: 'Acara',
+        nav_karir: 'Bekerja di IPT',
+        nav_tentang: 'Tentang',
+        news_heading: 'Berita Terkini:',
+        read_more: 'Read More',
+        sidebar_events_title: 'Acara mendatang @ IPT',
+        sidebar_glance_title: 'IPT Research sekilas',
+        sidebar_glance_body: 'IPT Research berfokus pada penelitian inovatif di bidang Aplikasi AI dan Data Science.',
+        footer_contact_heading: 'Kontak',
+        footer_copyright: '© 2026 IPT Research. Seluruh hak cipta dilindungi.',
+        footer_sheets_badge: 'Dihubungkan dengan Google Sheets System.',
+        modal_news_label: 'Berita Terkini • IPT Research',
+        modal_close_btn: 'Tutup Artikel',
+        event_form_heading: 'Pendaftaran Peserta Seminar / Konferensi',
+        dd_tim: 'Tim',
+        dd_profil: 'Profil Pusat Riset',
+        dd_mitra: 'Mitra & Kolaborasi',
+        dd_asosiasi: 'Asosiasi & Jejaring',
+        dd_sdg: 'Tujuan Pembangunan Berkelanjutan (SDG)',
+        dd_standar: 'Standar Mutu & Keamanan Informasi',
+        dd_kontak: 'Kontak',
+        hero: {
+          home: {
+            h1: 'IPT Research adalah pusat penelitian untuk aplikasi AI dan Data Science',
+            sub: 'Pusat Riset dan Inovasi aplikasi AI dan Data Science di Indonesia.'
+          },
+          tim: {
+            h1: 'Tim Peneliti & Manajemen IPT Research',
+            sub: 'Para peneliti, dewan ilmiah, dan tenaga ahli di balik inovasi AI dan Data Science di Iman Paryudi Team.'
+          },
+          riset: {
+            h1: 'Riset Fundamental & Publikasi Ilmiah',
+            sub: 'Eksplorasi metodologi Kecerdasan Buatan (AI), Data Science, Computer Vision, dan Keamanan Informasi.'
+          },
+          terapan: {
+            h1: 'Penelitian Terapan & Hilirisasi Teknologi',
+            sub: 'Menjembatani hasil riset laboratorium menjadi solusi prototipe siap pakai bagi industri dan institusi.'
+          },
+          layanan: {
+            h1: 'Layanan Profesional & Konsultasi AI',
+            sub: 'Pendampingan arsitektur data, audit sistem cerdas, dan pengembangan model analitik terukur.'
+          },
+          pelatihan: {
+            h1: 'Pelatihan Keamanan Informasi & Kesadaran Siber',
+            sub: 'Workshop teknis dan pelatihan praktis perlindungan aset digital, mitigasi phishing, serta tata kelola keamanan.'
+          },
+          acara: {
+            h1: 'Acara, Konferensi & Seminar Ilmiah @ IPT',
+            sub: 'Forum pertukaran gagasan akademik, lokakarya Data Science, dan simposium internasional.'
+          },
+          karir: {
+            h1: 'Bekerja & Berkolaborasi di IPT Research',
+            sub: 'Peluang bergabung sebagai peneliti, asisten riset, maupun mitra akademik di Iman Paryudi Team.'
+          },
+          tentang: {
+            h1: 'Tentang Iman Paryudi Team (IPT) Research',
+            sub: 'Profil institusi, visi riset terapan, dan pusat koordinasi ilmiah di Jakarta, Indonesia.'
+          }
+        }
+      },
+      en: {
+        nav_home: 'Home',
+        nav_riset: 'Research',
+        nav_terapan: 'Applied Research',
+        nav_layanan: 'Professional Services',
+        nav_pelatihan: 'Security Training',
+        nav_acara: 'Events',
+        nav_karir: 'Careers at IPT',
+        nav_tentang: 'About',
+        news_heading: 'Latest News:',
+        read_more: 'Read More',
+        sidebar_events_title: 'Upcoming Events @ IPT',
+        sidebar_glance_title: 'IPT Research at a Glance',
+        sidebar_glance_body: 'IPT Research focuses on innovative research in Applied AI and Data Science.',
+        footer_contact_heading: 'Contact',
+        footer_copyright: '© 2026 IPT Research. All rights reserved.',
+        footer_sheets_badge: 'Connected with Google Sheets System.',
+        modal_news_label: 'Latest News • IPT Research',
+        modal_close_btn: 'Close Article',
+        event_form_heading: 'Seminar / Conference Participant Registration',
+        dd_tim: 'Team',
+        dd_profil: 'Research Center Profile',
+        dd_mitra: 'Partners',
+        dd_asosiasi: 'Associations & Networks',
+        dd_sdg: 'Sustainable Development Goals (SDG)',
+        dd_standar: 'Information Security & Quality Standards',
+        dd_kontak: 'Contact',
+        hero: {
+          home: {
+            h1: 'IPT Research is a research center for AI and Data Science applications',
+            sub: 'Center for Research and Innovation in Applied AI and Data Science in Indonesia.'
+          },
+          tim: {
+            h1: 'IPT Research Team & Leadership',
+            sub: 'Meet the researchers, scientific board, and specialists driving AI and Data Science innovation at Iman Paryudi Team.'
+          },
+          riset: {
+            h1: 'Fundamental Research & Scientific Publications',
+            sub: 'Advancing Artificial Intelligence, Data Science, Computer Vision, and Information Security methodologies.'
+          },
+          terapan: {
+            h1: 'Applied Research & Technology Transfer',
+            sub: 'Bridging laboratory breakthroughs into production-ready prototypes for industry and public institutions.'
+          },
+          layanan: {
+            h1: 'Professional Services & AI Consulting',
+            sub: 'Enterprise data architecture advisory, intelligent system audits, and bespoke predictive modeling.'
+          },
+          pelatihan: {
+            h1: 'Information Security & Cyber Awareness Training',
+            sub: 'Hands-on technical workshops on digital asset protection, phishing defense, and security governance.'
+          },
+          acara: {
+            h1: 'Events, Conferences & Scientific Seminars @ IPT',
+            sub: 'Academic exchange forums, Data Science workshops, and international research symposia.'
+          },
+          karir: {
+            h1: 'Careers & Fellowships at IPT Research',
+            sub: 'Join Iman Paryudi Team as a research fellow, practicum assistant, or visiting academic scholar.'
+          },
+          tentang: {
+            h1: 'About Iman Paryudi Team (IPT) Research',
+            sub: 'Institutional profile, applied research mission, and scientific coordination hub in Jakarta, Indonesia.'
+          }
+        }
+      }
+    };
+
+    // -------------------------------------------------------------------------
+    // 3. LANGUAGE SWITCHING & TAB NAVIGATION LOGIC
+    // -------------------------------------------------------------------------
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+
+      const btnId = document.getElementById('btn-lang-id');
+      const btnEn = document.getElementById('btn-lang-en');
+      if (lang === 'id') {
+        btnId.className = 'inline-flex items-center gap-1.5 px-1.5 py-0.5 rounded text-[11px] font-bold text-[#1F2937] hover:text-[#0077B6] transition-colors';
+        btnEn.className = 'inline-flex items-center gap-1.5 px-1.5 py-0.5 rounded text-[11px] font-normal text-[#6B7280] hover:text-[#0077B6] transition-colors';
+      } else {
+        btnEn.className = 'inline-flex items-center gap-1.5 px-1.5 py-0.5 rounded text-[11px] font-bold text-[#1F2937] hover:text-[#0077B6] transition-colors';
+        btnId.className = 'inline-flex items-center gap-1.5 px-1.5 py-0.5 rounded text-[11px] font-normal text-[#6B7280] hover:text-[#0077B6] transition-colors';
+      }
+
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+
+      updateHeroForTab(activeTab);
+      renderTabContent(activeTab);
+    }
+
+    function switchTab(tabKey) {
+      activeTab = tabKey;
+
+      // Update desktop nav active underline
+      document.querySelectorAll('.nav-item').forEach((btn) => {
+        if (btn.getAttribute('data-nav') === tabKey) {
+          btn.classList.add('nav-tab-active');
+        } else {
+          btn.classList.remove('nav-tab-active');
+        }
+      });
+
+      updateHeroForTab(tabKey);
+      renderTabContent(tabKey);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateHeroForTab(tabKey) {
+      const heroData = translations[currentLang].hero[tabKey] || translations[currentLang].hero.home;
+      const h1El = document.getElementById('hero-headline');
+      const subEl = document.getElementById('hero-subheadline');
+      if (h1El) h1El.textContent = heroData.h1;
+      if (subEl) subEl.textContent = heroData.sub;
+    }
+
+    // -------------------------------------------------------------------------
+    // 4. RENDER VIEWS (Default Home View + 7 Institutional Sub-Pages)
+    // -------------------------------------------------------------------------
+    function renderTabContent(tabKey) {
+      const main = document.getElementById('main-content-area');
+      if (!main) return;
+
+      if (tabKey === 'home') {
+        renderHomeView(main);
+      } else if (tabKey === 'tim') {
+        renderTimView(main);
+      } else if (tabKey === 'riset') {
+        renderRisetView(main);
+      } else if (tabKey === 'terapan') {
+        renderTerapanView(main);
+      } else if (tabKey === 'layanan') {
+        renderLayananView(main);
+      } else if (tabKey === 'pelatihan') {
+        renderPelatihanView(main);
+      } else if (tabKey === 'acara') {
+        renderAcaraView(main);
+      } else if (tabKey === 'karir') {
+        renderKarirView(main);
+      } else if (tabKey === 'tentang') {
+        renderTentangView(main);
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // ABOUT DROPDOWN CONTROLS & DEDICATED TEAM (TIM) VIEW (SBA RESEARCH STYLE)
+    // -------------------------------------------------------------------------
+    function openAboutDropdown() {
+      cancelCloseAboutDropdown();
+      const menu = document.getElementById('desktop-about-menu');
+      const trigger = document.getElementById('desktop-about-trigger');
+      const chevron = document.getElementById('desktop-about-chevron');
+      menu?.classList.remove('hidden');
+      trigger?.setAttribute('aria-expanded', 'true');
+      if (chevron) chevron.style.transform = 'rotate(180deg)';
+    }
+
+    function closeAboutDropdown() {
+      const menu = document.getElementById('desktop-about-menu');
+      const trigger = document.getElementById('desktop-about-trigger');
+      const chevron = document.getElementById('desktop-about-chevron');
+      menu?.classList.add('hidden');
+      trigger?.setAttribute('aria-expanded', 'false');
+      if (chevron) chevron.style.transform = 'rotate(0deg)';
+    }
+
+    function scheduleCloseAboutDropdown() {
+      aboutDropdownTimer = setTimeout(closeAboutDropdown, 160);
+    }
+
+    function cancelCloseAboutDropdown() {
+      if (aboutDropdownTimer) {
+        clearTimeout(aboutDropdownTimer);
+        aboutDropdownTimer = null;
+      }
+    }
+
+    function toggleAboutDropdown(e) {
+      e.stopPropagation();
+      const menu = document.getElementById('desktop-about-menu');
+      if (menu && menu.classList.contains('hidden')) {
+        openAboutDropdown();
+      } else {
+        closeAboutDropdown();
+      }
+    }
+
+    function toggleMobileAboutSubmenu() {
+      const sub = document.getElementById('mobile-about-submenu');
+      const chev = document.getElementById('mobile-about-chevron');
+      if (!sub) return;
+      const isHidden = sub.classList.contains('hidden');
+      if (isHidden) {
+        sub.classList.remove('hidden');
+        if (chev) chev.style.transform = 'rotate(180deg)';
+      } else {
+        sub.classList.add('hidden');
+        if (chev) chev.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    function navigateToAboutSub(subKey) {
+      closeAboutDropdown();
+      if (subKey === 'tim') {
+        switchTab('tim');
+        // Keep "Tentang" highlighted in nav bar as parent menu
+        document.querySelectorAll('.nav-item').forEach((btn) => {
+          btn.classList.toggle('nav-tab-active', btn.getAttribute('data-nav') === 'tentang');
+        });
+        return;
+      }
+      switchTab('tentang');
+      if (subKey && subKey !== 'profil') {
+        setTimeout(() => {
+          const targetEl = document.getElementById(`tentang-sec-${subKey}`);
+          if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 80);
+      }
+    }
+
+    function toggleTeamAccordion(categoryName) {
+      openAccordionCategories[categoryName] = !openAccordionCategories[categoryName];
+      const listEl = document.getElementById(`acc-list-${slugifyCategory(categoryName)}`);
+      const iconEl = document.getElementById(`acc-icon-${slugifyCategory(categoryName)}`);
+      if (listEl) {
+        listEl.classList.toggle('hidden', !openAccordionCategories[categoryName]);
+      }
+      if (iconEl) {
+        iconEl.style.transform = openAccordionCategories[categoryName] ? 'rotate(180deg)' : 'rotate(0deg)';
+      }
+    }
+
+    function slugifyCategory(str) {
+      return String(str).toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    }
+
+    function scrollToMemberCard(memberId) {
+      const card = document.getElementById(`member-card-${memberId}`);
+      if (!card) return;
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.classList.remove('highlight-member-card');
+      void card.offsetWidth;
+      card.classList.add('highlight-member-card');
+    }
+
+    function openMemberModal(memberId) {
+      const idx = teamMembers.findIndex((m) => m.id === memberId);
+      const m = teamMembers[idx];
+      if (!m) return;
+
+      const isId = currentLang === 'id';
+      const fallbackAvatar = getMemberAvatarFallback(m.name, idx);
+      const photoEl = document.getElementById('member-modal-photo');
+      photoEl.src = m.photo && m.photo.trim() ? m.photo.trim() : fallbackAvatar;
+      photoEl.onerror = function () {
+        this.onerror = null;
+        this.src = fallbackAvatar;
+      };
+
+      document.getElementById('member-modal-category').textContent = m.category;
+      document.getElementById('member-modal-name').textContent = m.name;
+      document.getElementById('member-modal-role').textContent =
+        typeof m.role === 'object' ? (isId ? m.role.id : m.role.en || m.role.id) : m.role;
+      document.getElementById('member-modal-bio').textContent =
+        typeof m.bio === 'object' ? (isId ? m.bio.id : m.bio.en || m.bio.id) : m.bio || '';
+
+      document.getElementById('member-modal-expertise-label').textContent = isId
+        ? 'Bidang Keahlian & Sertifikasi'
+        : 'Research Expertise & Certifications';
+
+      const tags = Array.isArray(m.expertise)
+        ? m.expertise
+        : String(m.expertise || '')
+            .split(',')
+            .map((s) => s.trim())
+            .filter(Boolean);
+
+      document.getElementById('member-modal-tags').innerHTML =
+        tags.length > 0
+          ? tags
+              .map(
+                (tag) =>
+                  `<span class="px-2.5 py-1 rounded-md bg-gray-100 text-[#374151] text-xs font-medium border border-gray-200">${tag}</span>`
+              )
+              .join('')
+          : `<span class="text-xs text-gray-400">Applied AI &amp; Data Science</span>`;
+
+      const links = [];
+      if (m.email) {
+        links.push(
+          `<a href="mailto:${m.email}" class="inline-flex items-center gap-1 text-[#0077B6] font-semibold hover:underline">Email: ${m.email}</a>`
+        );
+      }
+      if (m.scholar) {
+        links.push(
+          `<a href="${m.scholar}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[#0077B6] font-semibold hover:underline">Google Scholar ↗</a>`
+        );
+      }
+      if (m.linkedin) {
+        links.push(
+          `<a href="${m.linkedin}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[#0077B6] font-semibold hover:underline">LinkedIn ↗</a>`
+        );
+      }
+      document.getElementById('member-modal-links').innerHTML = links.join('');
+
+      const modal = document.getElementById('member-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeMemberModal() {
+      const modal = document.getElementById('member-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // DEDICATED TEAM VIEW (Exact SBA Research /team/ 2-Column Asymmetric Layout)
+    function renderTimView(container) {
+      const isId = currentLang === 'id';
+      const activeMembers = teamMembers
+        .filter((m) => (m.status || 'Active') === 'Active')
+        .sort((a, b) => (Number(a.order) || 99) - (Number(b.order) || 99));
+
+      const categories = [
+        { key: 'Management', label: isId ? 'Management' : 'Management' },
+        { key: 'Scientific & Innovation Board', label: isId ? 'Scientific & Innovation Board' : 'Scientific & Innovation Board' },
+        { key: 'Key Researchers', label: isId ? 'Key Researchers' : 'Key Researchers' },
+        { key: 'Senior Staff', label: isId ? 'Senior Staff' : 'Senior Staff' }
+      ];
+
+      const groupPhotoUrl =
+        teamGroupConfig.groupPhoto && teamGroupConfig.groupPhoto.trim()
+          ? teamGroupConfig.groupPhoto.trim()
+          : FALLBACK_GROUP_TEAM_PHOTO;
+
+      const paragraphs =
+        (teamGroupConfig.introParagraphs && teamGroupConfig.introParagraphs[currentLang]) ||
+        teamGroupConfig.introParagraphs.id;
+
+      // Build Left Main Column Categorized 4-Column Portrait Grids
+      const gridsHtml = categories
+        .map((cat) => {
+          const membersInCat = activeMembers.filter((m) => m.category === cat.key);
+          if (membersInCat.length === 0) return '';
+
+          const cardsHtml = membersInCat
+            .map((m, i) => {
+              const fallback = getMemberAvatarFallback(m.name, i);
+              const imgSrc = m.photo && m.photo.trim() ? m.photo.trim() : fallback;
+              const roleText = typeof m.role === 'object' ? (isId ? m.role.id : m.role.en || m.role.id) : m.role;
+              return `
+                <button
+                  type="button"
+                  id="member-card-${m.id}"
+                  onclick="openMemberModal('${m.id}')"
+                  class="group text-center flex flex-col items-center rounded-lg p-1.5 border border-transparent hover:border-gray-200 hover:bg-gray-50/70 transition-all focus:outline-none"
+                >
+                  <div class="w-full aspect-[4/4.6] bg-slate-200 overflow-hidden mb-2.5 border border-gray-200/80">
+                    <img
+                      src="${imgSrc}"
+                      onerror="this.onerror=null; this.src='${fallback}';"
+                      alt="${m.name}"
+                      class="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-300"
+                      loading="lazy"
+                    />
+                  </div>
+                  <span class="text-[13.5px] font-medium text-[#0077B6] group-hover:underline leading-snug">
+                    ${m.name}
+                  </span>
+                  <span class="text-[11px] text-[#6B7280] mt-0.5 line-clamp-1">
+                    ${roleText || ''}
+                  </span>
+                </button>`;
+            })
+            .join('');
+
+          return `
+            <section class="mt-9 first:mt-6">
+              <h2 class="text-[18px] font-bold text-[#1E293B] mb-4">
+                ${cat.label}
+              </h2>
+              <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-4 gap-y-6">
+                ${cardsHtml}
+              </div>
+            </section>`;
+        })
+        .join('');
+
+      // Build Right Sticky Sidebar Accordion Directory
+      const sidebarAccordionHtml = categories
+        .map((cat) => {
+          const membersInCat = activeMembers.filter((m) => m.category === cat.key);
+          if (membersInCat.length === 0) return '';
+          const slug = slugifyCategory(cat.key);
+          const isOpen = openAccordionCategories[cat.key] !== false;
+
+          const namesListHtml = membersInCat
+            .map(
+              (m) => `
+              <li>
+                <button
+                  type="button"
+                  onclick="scrollToMemberCard('${m.id}')"
+                  class="w-full text-left py-2 px-1 text-[12.5px] text-[#374151] hover:text-[#0077B6] transition-colors border-b border-gray-200/80 last:border-b-0"
+                >
+                  ${m.name}
+                </button>
+              </li>`
+            )
+            .join('');
+
+          return `
+            <div class="border-b border-gray-200">
+              <button
+                type="button"
+                onclick="toggleTeamAccordion('${cat.key}')"
+                class="w-full flex items-center justify-between py-2.5 px-1 text-left text-[13px] font-semibold text-[#1F2937] hover:text-[#0077B6] transition-colors"
+              >
+                <span>${cat.label}</span>
+                <svg
+                  id="acc-icon-${slug}"
+                  style="transform: ${isOpen ? 'rotate(180deg)' : 'rotate(0deg)'}"
+                  class="w-3.5 h-3.5 text-gray-500 transition-transform duration-150 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </button>
+              <ul id="acc-list-${slug}" class="${isOpen ? '' : 'hidden'} pb-2 pl-2">
+                ${namesListHtml}
+              </ul>
+            </div>`;
+        })
+        .join('');
+
+      container.innerHTML = `
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10 bg-white animate-view">
+          <!-- Subtle Institutional Breadcrumb -->
+          <nav class="flex items-center gap-1.5 text-xs text-[#6B7280] mb-6" aria-label="Breadcrumb">
+            <button type="button" onclick="switchTab('home')" class="hover:text-[#0077B6] hover:underline">Home</button>
+            <span>/</span>
+            <button type="button" onclick="switchTab('tentang')" class="hover:text-[#0077B6] hover:underline">${isId ? 'Tentang' : 'About'}</button>
+            <span>/</span>
+            <span class="font-semibold text-[#1F2937]">${isId ? 'Tim' : 'Team'}</span>
+          </nav>
+
+          <!-- Asymmetric 2-Column Layout (~72% Main Left / ~28% Sticky Right Sidebar) -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            <!-- Left Main Column (8.5 / 12 cols -> 8 cols with generous spacing) -->
+            <div class="lg:col-span-8">
+              <!-- 1. Wide Group Team Photo Banner -->
+              <div class="w-full aspect-[16/8.5] bg-slate-200 overflow-hidden border border-gray-200 mb-6">
+                <img
+                  src="${groupPhotoUrl}"
+                  onerror="this.onerror=null; this.src='${FALLBACK_GROUP_TEAM_PHOTO}';"
+                  alt="Tim Peneliti IPT Research"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+
+              <!-- 2. Three Narrative Paragraphs -->
+              <div class="space-y-4 text-[14.5px] text-[#334155] leading-[1.75]">
+                ${paragraphs.map((p) => `<p>${p}</p>`).join('')}
+              </div>
+
+              <!-- 3. Categorized 4-Column Portrait Grids -->
+              <div class="mt-8">
+                ${gridsHtml}
+              </div>
+            </div>
+
+            <!-- Right Sticky Sidebar (~28% / 4 cols) -->
+            <aside class="lg:col-span-4 lg:sticky lg:top-24">
+              <div class="border-t-2 border-[#0077B6] pt-3">
+                <h2 class="text-[15px] font-bold text-[#1F2937] pb-2 border-b border-gray-200">
+                  ${isId ? 'Tim' : 'Team'}
+                </h2>
+                <div>
+                  ${sidebarAccordionHtml}
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      `;
+    }
+
+    // Hydrate from localStorage written by admin.html so Admin edits reflect automatically
+    function hydrateFromCmsLocalStorage() {
+      try {
+        const raw = localStorage.getItem(CMS_STORAGE_KEY);
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+
+        if (Array.isArray(parsed.berita) && parsed.berita.length > 0) {
+          const pub = parsed.berita.filter((b) => (b.status || 'Published') === 'Published');
+          if (pub.length > 0) {
+            newsArticles = pub.map((b, idx) => ({
+              id: b.id || `news-${idx + 1}`,
+              title: { id: b.judul_id || '', en: b.judul_en || b.judul_id || '' },
+              date: b.tanggal || '',
+              excerpt: { id: b.excerpt_id || '', en: b.excerpt_en || b.excerpt_id || '' },
+              fullText: {
+                id: String(b.konten_id || b.excerpt_id || '').split(/\n+/).filter(Boolean),
+                en: String(b.konten_en || b.excerpt_en || b.excerpt_id || '').split(/\n+/).filter(Boolean)
+              },
+              image: b.gambar || '',
+              fallback: idx % 2 === 0 ? FALLBACK_THUMB_CLOCK : FALLBACK_THUMB_AI
+            }));
+          }
+        }
+
+        if (Array.isArray(parsed.acara) && parsed.acara.length > 0) {
+          const up = parsed.acara.filter((a) => (a.status || 'Upcoming') === 'Upcoming');
+          if (up.length > 0) {
+            upcomingEvents = up.map((a, idx) => ({
+              id: a.id || `evt-${idx + 1}`,
+              title: { id: a.judul_id || '', en: a.judul_en || a.judul_id || '' },
+              dateRange: a.tanggal_rentang || '',
+              location: a.lokasi || 'Jakarta – lantai 2, 12640 Indonesia',
+              description: { id: a.deskripsi || '', en: a.deskripsi || '' }
+            }));
+          }
+        }
+
+        if (Array.isArray(parsed.tim) && parsed.tim.length > 0) {
+          teamMembers = parsed.tim.map((m, idx) => ({
+            id: m.id || `TIM-${idx + 1}`,
+            order: Number(m.order) || idx + 1,
+            category: m.category || 'Key Researchers',
+            name: m.name || '',
+            role: { id: m.role_id || m.role || '', en: m.role_en || m.role_id || m.role || '' },
+            expertise: Array.isArray(m.expertise)
+              ? m.expertise
+              : String(m.expertise || '')
+                  .split(',')
+                  .map((s) => s.trim())
+                  .filter(Boolean),
+            bio: { id: m.bio_id || '', en: m.bio_en || m.bio_id || '' },
+            email: m.email || '',
+            scholar: m.scholar || '',
+            linkedin: m.linkedin || '',
+            photo: m.photo || '',
+            status: m.status || 'Active'
+          }));
+        }
+
+        if (parsed.profil && typeof parsed.profil === 'object') {
+          const p = parsed.profil;
+          if (p.hero_title_id) translations.id.hero.home.h1 = p.hero_title_id;
+          if (p.hero_title_en) translations.en.hero.home.h1 = p.hero_title_en;
+          if (p.hero_sub_id) translations.id.hero.home.sub = p.hero_sub_id;
+          if (p.hero_sub_en) translations.en.hero.home.sub = p.hero_sub_en;
+          if (p.sekilas_id) translations.id.sidebar_glance_body = p.sekilas_id;
+          if (p.sekilas_en) translations.en.sidebar_glance_body = p.sekilas_en;
+          if (p.team_group_photo !== undefined) teamGroupConfig.groupPhoto = p.team_group_photo;
+          if (p.team_intro_1_id || p.team_intro_2_id || p.team_intro_3_id) {
+            teamGroupConfig.introParagraphs.id = [
+              p.team_intro_1_id || teamGroupConfig.introParagraphs.id[0],
+              p.team_intro_2_id || teamGroupConfig.introParagraphs.id[1],
+              p.team_intro_3_id || teamGroupConfig.introParagraphs.id[2]
+            ];
+          }
+          if (p.team_intro_1_en || p.team_intro_2_en || p.team_intro_3_en) {
+            teamGroupConfig.introParagraphs.en = [
+              p.team_intro_1_en || teamGroupConfig.introParagraphs.en[0],
+              p.team_intro_2_en || teamGroupConfig.introParagraphs.en[1],
+              p.team_intro_3_en || teamGroupConfig.introParagraphs.en[2]
+            ];
+          }
+        }
+      } catch (e) {}
+    }
+
+    // EXACT DEFAULT HOME VIEW (2-Column Asymmetric Layout: 66% Berita Terkini | 33% Sidebar)
+    function renderHomeView(container) {
+      const t = translations[currentLang];
+
+      const articlesHtml = newsArticles
+        .map(
+          (art) => `
+          <article class="border-b border-gray-200 pb-6 mb-6 last:border-b-0 last:pb-0 last:mb-0">
+            <div class="flex flex-col sm:flex-row items-start justify-between gap-5">
+              <!-- Left Text Block -->
+              <div class="flex-1 min-w-0">
+                <h3 class="text-[16.5px] font-bold text-[#0077B6] leading-snug mb-1.5">
+                  <button type="button" onclick="openArticleModal('${art.id}')" class="text-left hover:underline focus:outline-none">
+                    ${art.title[currentLang]}
+                  </button>
+                </h3>
+
+                <!-- Date Row with Calendar Icon -->
+                <div class="flex items-center gap-1.5 text-[11.5px] text-[#6B7280] mb-2.5">
+                  <svg class="w-3.5 h-3.5 text-gray-400 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                  </svg>
+                  <span>${art.date}</span>
+                </div>
+
+                <!-- Excerpt + Inline Blue Underlined Read More -->
+                <p class="text-[13.5px] text-[#4B5563] leading-relaxed">
+                  ${art.excerpt[currentLang]}
+                  <button
+                    type="button"
+                    onclick="openArticleModal('${art.id}')"
+                    class="text-[#0077B6] underline hover:text-[#005F94] font-medium ml-0.5 focus:outline-none"
+                  >
+                    ${t.read_more}
+                  </button>
+                </p>
+              </div>
+
+              <!-- Right Crisp 165px x 105px Rectangular Thumbnail -->
+              <button
+                type="button"
+                onclick="openArticleModal('${art.id}')"
+                class="w-full sm:w-[165px] h-[160px] sm:h-[105px] shrink-0 overflow-hidden bg-gray-100 border border-gray-200 focus:outline-none group"
+                title="${art.title[currentLang]}"
+              >
+                <img
+                  src="${art.image}"
+                  onerror="this.onerror=null; this.src='${art.fallback}';"
+                  alt="${art.title[currentLang]}"
+                  class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
+                  loading="lazy"
+                />
+              </button>
+            </div>
+          </article>`
+        )
+        .join('');
+
+      const eventsHtml = upcomingEvents
+        .map(
+          (evt) => `
+          <div class="mb-4 last:mb-0">
+            <button
+              type="button"
+              onclick="openEventModal('${evt.id}')"
+              class="text-left text-[14px] font-semibold text-[#0077B6] leading-snug hover:underline focus:outline-none"
+            >
+              ${evt.title[currentLang]}
+            </button>
+            <div class="text-[12px] text-[#6B7280] mt-1.5">
+              ${evt.dateRange}
+            </div>
+          </div>`
+        )
+        .join('');
+
+      container.innerHTML = `
+        <div id="berita" class="max-w-6xl mx-auto px-4 sm:px-6 py-10 bg-white animate-view">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <!-- Left Column (~66% / 8 cols): Berita Terkini -->
+            <section class="lg:col-span-8">
+              <h2 class="text-[18px] font-bold text-[#1F2937] pb-2.5 border-b border-gray-200 mb-6">
+                ${t.news_heading}
+              </h2>
+              <div>
+                ${articlesHtml}
+              </div>
+            </section>
+
+            <!-- Right Sidebar (~33% / 4 cols) -->
+            <aside class="lg:col-span-4">
+              <!-- Block 1: Acara mendatang @ IPT -->
+              <div>
+                <h2 class="text-[17px] font-bold text-[#1F2937] pb-2.5 border-b border-gray-200 mb-4">
+                  ${t.sidebar_events_title}
+                </h2>
+                ${eventsHtml}
+              </div>
+
+              <!-- Block 2: IPT Research sekilas -->
+              <div class="mt-8 pt-6 border-t border-gray-200">
+                <h2 class="text-[16px] font-bold text-[#1F2937] mb-2.5">
+                  ${t.sidebar_glance_title}
+                </h2>
+                <p class="text-[13px] text-[#4B5563] leading-relaxed">
+                  ${t.sidebar_glance_body}
+                </p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      `;
+    }
+
+    // TAB 2: RISET (Focus Areas + Searchable Publications Repository)
+    function renderRisetView(container) {
+      const isId = currentLang === 'id';
+      const clusters = [
+        {
+          code: 'Fokus 01',
+          title: isId ? 'Kecerdasan Buatan & Pembelajaran Mesin (Applied AI)' : 'Artificial Intelligence & Machine Learning',
+          desc: isId
+            ? 'Pengembangan model pembelajaran mendalam (deep learning), pemrosesan bahasa alami (NLP), dan sistem pendukung keputusan cerdas.'
+            : 'Development of deep learning architectures, natural language processing (NLP), and intelligent decision support systems.'
+        },
+        {
+          code: 'Fokus 02',
+          title: isId ? 'Data Science & Analitik Prediktif' : 'Data Science & Predictive Analytics',
+          desc: isId
+            ? 'Pemodelan statistik, penambangan data skala besar (big data mining), dan deteksi anomali real-time pada aliran data kompleks.'
+            : 'Statistical modeling, large-scale data mining, and real-time anomaly detection across complex data streams.'
+        },
+        {
+          code: 'Fokus 03',
+          title: isId ? 'Computer Vision & Pengenalan Citra' : 'Computer Vision & Image Recognition',
+          desc: isId
+            ? 'Analisis citra medis, inspeksi visual otomatis berbasis AI, dan pengenalan pola visual berlatensi rendah.'
+            : 'Medical imaging diagnostics, AI-driven automated visual inspection, and low-latency pattern recognition.'
+        },
+        {
+          code: 'Fokus 04',
+          title: isId ? 'Keamanan Informasi & Ketahanan Siber' : 'Information Security & Cyber Resilience',
+          desc: isId
+            ? 'Deteksi intrusi berbasis pembelajaran mesin, perlindungan privasi data, serta analisis kerentanan infrastruktur digital.'
+            : 'Machine-learning-assisted intrusion detection, data privacy preservation, and digital infrastructure security analysis.'
+        }
+      ];
+
+      const pubsHtml = publicationsList
+        .map(
+          (p, idx) => `
+          <div class="pub-card border-b border-gray-200 pb-5 mb-5 last:border-b-0 last:pb-0 last:mb-0" data-search="${(p.title + ' ' + p.authors + ' ' + p.venue + ' ' + p.year).toLowerCase()}">
+            <div class="flex flex-wrap items-center gap-2 mb-1">
+              <span class="px-2 py-0.5 rounded bg-[#0077B6] text-white text-[11px] font-semibold">${p.venue}</span>
+              <span class="px-2 py-0.5 rounded bg-gray-100 text-gray-700 text-[11px] font-medium">${p.year}</span>
+            </div>
+            <h4 class="text-[15.5px] font-bold text-[#0077B6] leading-snug">${p.title}</h4>
+            <p class="text-xs text-[#1F2937] font-medium mt-1">${p.authors}</p>
+            <div class="flex flex-wrap items-center justify-between gap-2 mt-1.5">
+              <span class="text-xs italic text-[#6B7280]">${p.journal}</span>
+              <button type="button" onclick="copyBibtex(${idx})" class="text-xs font-semibold text-[#0077B6] hover:underline">
+                ${isId ? 'Salin BibTeX' : 'Copy BibTeX'}
+              </button>
+            </div>
+          </div>`
+        )
+        .join('');
+
+      container.innerHTML = `
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 bg-white animate-view">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <div class="lg:col-span-8">
+              <h2 class="text-[18px] font-bold text-[#1F2937] pb-2.5 border-b border-gray-200 mb-6">
+                ${isId ? 'Bidang Fokus Riset Utama:' : 'Core Research Focus Areas:'}
+              </h2>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+                ${clusters
+                  .map(
+                    (c) => `
+                  <div class="p-4 rounded-lg border border-gray-200 bg-white hover:border-[#0077B6] transition-colors">
+                    <span class="text-[11px] font-semibold text-[#0077B6] uppercase">${c.code}</span>
+                    <h3 class="text-[15px] font-bold text-[#1F2937] mt-1 mb-1.5">${c.title}</h3>
+                    <p class="text-[13px] text-[#4B5563] leading-relaxed">${c.desc}</p>
+                  </div>`
+                  )
+                  .join('')}
+              </div>
+
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2.5 border-b border-gray-200 mb-6">
+                <h2 class="text-[18px] font-bold text-[#1F2937]">
+                  ${isId ? 'Publikasi Terpilih:' : 'Selected Publications:'}
+                </h2>
+                <input
+                  type="text"
+                  oninput="filterRisetPubs(this.value)"
+                  placeholder="${isId ? 'Cari judul, penulis, tahun...' : 'Search title, author, year...'}"
+                  class="px-3 py-1.5 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6] sm:w-64"
+                />
+              </div>
+              <div id="riset-pub-container">
+                ${pubsHtml}
+              </div>
+            </div>
+
+            <aside class="lg:col-span-4">
+              <div class="p-5 rounded-lg bg-[#F3F4F6] border border-gray-200">
+                <h3 class="text-[16px] font-bold text-[#1F2937] mb-2">
+                  ${isId ? 'Kolaborasi Akademik' : 'Academic Collaboration'}
+                </h3>
+                <p class="text-[13px] text-[#4B5563] leading-relaxed mb-4">
+                  ${
+                    isId
+                      ? 'IPT Research terbuka untuk penulisan makalah bersama, hibah penelitian kompetitif, serta pertukaran data riset.'
+                      : 'IPT Research welcomes joint paper authorship, competitive research grants, and open dataset benchmarks.'
+                  }
+                </p>
+                <button type="button" onclick="switchTab('tentang')" class="text-xs font-semibold text-[#0077B6] hover:underline">
+                  ${isId ? 'Hubungi Tim Peneliti →' : 'Contact Research Team →'}
+                </button>
+              </div>
+            </aside>
+          </div>
+        </div>
+      `;
+    }
+
+    function filterRisetPubs(q) {
+      const term = q.trim().toLowerCase();
+      document.querySelectorAll('#riset-pub-container .pub-card').forEach((card) => {
+        const text = card.getAttribute('data-search') || '';
+        card.style.display = !term || text.includes(term) ? '' : 'none';
+      });
+    }
+
+    function copyBibtex(idx) {
+      const bib = publicationsList[idx]?.bibtex || '';
+      const ta = document.createElement('textarea');
+      ta.value = bib;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast(currentLang === 'id' ? 'Sitasi BibTeX berhasil disalin.' : 'BibTeX citation copied to clipboard.');
+      } catch (e) {
+        showToast(currentLang === 'id' ? 'Gagal menyalin BibTeX.' : 'Unable to copy BibTeX.');
+      }
+      document.body.removeChild(ta);
+    }
+
+    // TAB 3: PENELITIAN TERAPAN
+    function renderTerapanView(container) {
+      const isId = currentLang === 'id';
+      container.innerHTML = `
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 bg-white animate-view">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <div class="lg:col-span-8 space-y-6">
+              <h2 class="text-[18px] font-bold text-[#1F2937] pb-2.5 border-b border-gray-200">
+                ${isId ? 'Program Penelitian Terapan & Prototipe:' : 'Applied Research & Prototype Programs:'}
+              </h2>
+              <div class="border-b border-gray-200 pb-6">
+                <span class="text-[11px] font-semibold text-[#0077B6] uppercase">PROTOTYPE // COMPUTER VISION</span>
+                <h3 class="text-[16.5px] font-bold text-[#0077B6] mt-1 mb-2">
+                  ${isId ? 'Sistem Deteksi Cacat Produksi Real-Time Berbasis Deep Learning' : 'Deep Learning Real-Time Manufacturing Defect Detection System'}
+                </h3>
+                <p class="text-[13.5px] text-[#4B5563] leading-relaxed">
+                  ${
+                    isId
+                      ? 'Implementasi model Convolutional & Vision Transformer ringan untuk inspeksi kualitas otomatis pada lini produksi industri dengan akurasi tinggi dan latensi rendah.'
+                      : 'Deployment of lightweight Convolutional and Vision Transformer models for automated quality inspection on industrial assembly lines.'
+                  }
+                </p>
+              </div>
+              <div class="border-b border-gray-200 pb-6">
+                <span class="text-[11px] font-semibold text-[#0077B6] uppercase">PROTOTYPE // NLP & KNOWLEDGE SYSTEMS</span>
+                <h3 class="text-[16.5px] font-bold text-[#0077B6] mt-1 mb-2">
+                  ${isId ? 'Asisten Pengetahuan Dokumen Teknis Berbahasa Indonesia (RAG Terverifikasi)' : 'Indonesian Technical Document Knowledge Assistant (Verified RAG)'}
+                </h3>
+                <p class="text-[13.5px] text-[#4B5563] leading-relaxed">
+                  ${
+                    isId
+                      ? 'Arsitektur Retrieval-Augmented Generation (RAG) berbasis domain tertutup yang memastikan setiap jawaban memiliki rujukan dokumen sumber yang dapat diaudit.'
+                      : 'Closed-domain Retrieval-Augmented Generation architecture ensuring every synthesized response includes auditable source citations.'
+                  }
+                </p>
+              </div>
+            </div>
+            <aside class="lg:col-span-4">
+              <div class="p-5 rounded-lg bg-[#F3F4F6] border border-gray-200">
+                <h3 class="text-[16px] font-bold text-[#1F2937] mb-2">
+                  ${isId ? 'Skema Kemitraan Industri' : 'Industry Partnership Scheme'}
+                </h3>
+                <p class="text-[13px] text-[#4B5563] leading-relaxed mb-4">
+                  ${
+                    isId
+                      ? 'Kami membantu organisasi merancang Proof-of-Concept (PoC) berbasis riset sebelum skala produksi penuh.'
+                      : 'We partner with enterprises to validate research-backed Proof-of-Concepts (PoCs) prior to full production rollout.'
+                  }
+                </p>
+                <button type="button" onclick="switchTab('layanan')" class="text-xs font-semibold text-[#0077B6] hover:underline">
+                  ${isId ? 'Lihat Layanan Profesional →' : 'Explore Professional Services →'}
+                </button>
+              </div>
+            </aside>
+          </div>
+        </div>
+      `;
+    }
+
+    // TAB 4: LAYANAN PROFESIONAL
+    function renderLayananView(container) {
+      const isId = currentLang === 'id';
+      const services = [
+        {
+          title: isId ? 'Konsultasi Strategi AI & Data Science' : 'AI & Data Science Strategy Advisory',
+          desc: isId
+            ? 'Penyusunan peta jalan adopsi AI, evaluasi kesiapan infrastruktur data, serta pemilihan arsitektur model yang efisien.'
+            : 'AI adoption roadmaps, data readiness assessments, and cost-efficient model architecture selection.'
+        },
+        {
+          title: isId ? 'Audit Model & Evaluasi Kualitas Data' : 'Model Auditing & Data Quality Evaluation',
+          desc: isId
+            ? 'Pengujian bias algoritma, validasi akurasi pada distribusi data nyata, serta peningkatan tata kelola pipeline data.'
+            : 'Algorithmic bias testing, real-world distribution validation, and data pipeline governance improvements.'
+        },
+        {
+          title: isId ? 'Pengembangan Solusi Analitik Kustom' : 'Custom Intelligent Analytics Development',
+          desc: isId
+            ? 'Perancangan sistem prediksi permintaan, analitik teks, dan pengenalan citra yang disesuaikan dengan kebutuhan spesifik mitra.'
+            : 'Bespoke demand forecasting, text analytics, and image recognition systems tailored to partner requirements.'
+        }
+      ];
+
+      container.innerHTML = `
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 bg-white animate-view">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <div class="lg:col-span-8">
+              <h2 class="text-[18px] font-bold text-[#1F2937] pb-2.5 border-b border-gray-200 mb-6">
+                ${isId ? 'Layanan Profesional & Pendampingan Teknis:' : 'Professional Services & Technical Advisory:'}
+              </h2>
+              <div class="space-y-5">
+                ${services
+                  .map(
+                    (s) => `
+                  <div class="p-5 rounded-lg border border-gray-200 bg-white">
+                    <h3 class="text-[16px] font-bold text-[#0077B6] mb-1.5">${s.title}</h3>
+                    <p class="text-[13.5px] text-[#4B5563] leading-relaxed">${s.desc}</p>
+                  </div>`
+                  )
+                  .join('')}
+              </div>
+            </div>
+            <aside class="lg:col-span-4">
+              <div class="p-5 rounded-lg bg-[#F3F4F6] border border-gray-200">
+                <h3 class="text-[16px] font-bold text-[#1F2937] mb-2">
+                  ${isId ? 'Konsultasi Awal' : 'Initial Consultation'}
+                </h3>
+                <p class="text-[13px] text-[#4B5563] leading-relaxed mb-4">
+                  ${
+                    isId
+                      ? 'Diskusikan kebutuhan proyek AI atau Data Science organisasi Anda bersama tim pakar kami.'
+                      : 'Discuss your organization’s AI or Data Science objectives directly with our senior specialists.'
+                  }
+                </p>
+                <button type="button" onclick="switchTab('tentang')" class="px-4 py-2 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold transition-colors">
+                  ${isId ? 'Hubungi Kami' : 'Contact Us'}
+                </button>
+              </div>
+            </aside>
+          </div>
+        </div>
+      `;
+    }
+
+    // TAB 5: PELATIHAN KEAMANAN
+    function renderPelatihanView(container) {
+      const isId = currentLang === 'id';
+      const modules = [
+        {
+          code: 'MODUL SEC-01',
+          title: isId ? 'Kesadaran Keamanan Informasi & Mitigasi Social Engineering' : 'Information Security Awareness & Social Engineering Defense',
+          desc: isId
+            ? 'Pelatihan interaktif bagi staf dan manajemen dalam mengenali serangan phishing modern, deepfake rekayasa sosial, dan kebocoran kredensial.'
+            : 'Interactive training for staff and executives on identifying modern phishing campaigns, deepfake social engineering, and credential leaks.'
+        },
+        {
+          code: 'MODUL SEC-02',
+          title: isId ? 'Keamanan Sistem AI & Perlindungan Privasi Data' : 'AI System Security & Data Privacy Protection',
+          desc: isId
+            ? 'Workshop teknis mengenai mitigasi prompt injection, keracunan data latih (data poisoning), dan anonimisasi dataset sensitif.'
+            : 'Technical workshop covering prompt injection mitigation, training data poisoning defense, and sensitive dataset anonymization.'
+        },
+        {
+          code: 'MODUL SEC-03',
+          title: isId ? 'Praktikum Analisis Log & Deteksi Anomali Jaringan' : 'Hands-On Log Analysis & Network Anomaly Detection Lab',
+          desc: isId
+            ? 'Sesi laboratorium berbasis studi kasus nyata menggunakan teknik Data Science untuk mengidentifikasi aktivitas mencurigakan pada trafik jaringan.'
+            : 'Case-study lab sessions applying Data Science techniques to identify suspicious patterns in enterprise network telemetry.'
+        }
+      ];
+
+      container.innerHTML = `
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 bg-white animate-view">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <div class="lg:col-span-8">
+              <h2 class="text-[18px] font-bold text-[#1F2937] pb-2.5 border-b border-gray-200 mb-6">
+                ${isId ? 'Program Pelatihan Keamanan Informasi:' : 'Information Security Training Programs:'}
+              </h2>
+              <div class="space-y-5">
+                ${modules
+                  .map(
+                    (m) => `
+                  <div class="border-b border-gray-200 pb-5 last:border-b-0">
+                    <span class="text-[11px] font-semibold text-[#0077B6]">${m.code}</span>
+                    <h3 class="text-[16px] font-bold text-[#1F2937] mt-0.5 mb-1.5">${m.title}</h3>
+                    <p class="text-[13.5px] text-[#4B5563] leading-relaxed">${m.desc}</p>
+                  </div>`
+                  )
+                  .join('')}
+              </div>
+            </div>
+            <aside class="lg:col-span-4">
+              <div class="p-5 rounded-lg bg-[#F3F4F6] border border-gray-200">
+                <h3 class="text-[16px] font-bold text-[#1F2937] mb-2">
+                  ${isId ? 'Pelatihan In-House' : 'In-House Corporate Training'}
+                </h3>
+                <p class="text-[13px] text-[#4B5563] leading-relaxed mb-4">
+                  ${
+                    isId
+                      ? 'Seluruh modul pelatihan keamanan dapat disesuaikan untuk kebutuhan tim IT maupun karyawan umum di instansi Anda.'
+                      : 'All security training modules can be tailored for both technical engineering teams and general corporate staff.'
+                  }
+                </p>
+                <button type="button" onclick="switchTab('tentang')" class="text-xs font-semibold text-[#0077B6] hover:underline">
+                  ${isId ? 'Ajukan Jadwal Pelatihan →' : 'Request Training Schedule →'}
+                </button>
+              </div>
+            </aside>
+          </div>
+        </div>
+      `;
+    }
+
+    // TAB 6: ACARA
+    function renderAcaraView(container) {
+      const isId = currentLang === 'id';
+      const evt = upcomingEvents[0];
+      container.innerHTML = `
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 bg-white animate-view">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <div class="lg:col-span-8">
+              <h2 class="text-[18px] font-bold text-[#1F2937] pb-2.5 border-b border-gray-200 mb-6">
+                ${isId ? 'Kalender Konferensi & Seminar @ IPT:' : 'Conferences & Seminars Calendar @ IPT:'}
+              </h2>
+              <div class="p-5 rounded-lg border border-gray-200 bg-white">
+                <span class="inline-block px-2 py-0.5 rounded bg-blue-50 text-[#0077B6] text-[11px] font-semibold mb-2">
+                  INTERNATIONAL CONFERENCE • OKTOBER 2026
+                </span>
+                <h3 class="text-[17px] font-bold text-[#0077B6] leading-snug mb-2">
+                  ${evt.title[currentLang]}
+                </h3>
+                <div class="text-xs text-[#6B7280] mb-3">
+                  <strong>${isId ? 'Tanggal:' : 'Date:'}</strong> ${evt.dateRange} &nbsp;|&nbsp; <strong>${isId ? 'Lokasi:' : 'Location:'}</strong> ${evt.location}
+                </div>
+                <p class="text-[13.5px] text-[#4B5563] leading-relaxed mb-4">
+                  ${evt.description[currentLang]}
+                </p>
+                <button type="button" onclick="openEventModal('${evt.id}')" class="px-4 py-2 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold transition-colors">
+                  ${isId ? 'Detail & Pendaftaran Peserta' : 'Event Details & Registration'}
+                </button>
+              </div>
+            </div>
+            <aside class="lg:col-span-4">
+              <div class="p-5 rounded-lg bg-[#F3F4F6] border border-gray-200">
+                <h3 class="text-[16px] font-bold text-[#1F2937] mb-2">
+                  ${isId ? 'Kolokium Riset Bulanan' : 'Monthly Research Colloquium'}
+                </h3>
+                <p class="text-[13px] text-[#4B5563] leading-relaxed">
+                  ${
+                    isId
+                      ? 'IPT Research menyelenggarakan diskusi terbuka secara berkala mengenai perkembangan mutakhir AI dan Data Science.'
+                      : 'IPT Research hosts regular open colloquia covering state-of-the-art developments in AI and Data Science.'
+                  }
+                </p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      `;
+    }
+
+    // TAB 7: BEKERJA DI IPT
+    function renderKarirView(container) {
+      const isId = currentLang === 'id';
+      container.innerHTML = `
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 bg-white animate-view">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <div class="lg:col-span-8 space-y-6">
+              <h2 class="text-[18px] font-bold text-[#1F2937] pb-2.5 border-b border-gray-200">
+                ${isId ? 'Peluang Riset & Karier di IPT Research:' : 'Research & Career Opportunities at IPT Research:'}
+              </h2>
+              <div class="border-b border-gray-200 pb-5">
+                <span class="text-[11px] font-semibold text-[#0077B6]">FELLOWSHIP // FULL-TIME / HYBRID</span>
+                <h3 class="text-[16px] font-bold text-[#1F2937] mt-1 mb-1.5">
+                  ${isId ? 'Peneliti AI & Machine Learning (Applied AI Researcher)' : 'Applied AI & Machine Learning Researcher'}
+                </h3>
+                <p class="text-[13.5px] text-[#4B5563] leading-relaxed">
+                  ${
+                    isId
+                      ? 'Merancang eksperimen pembelajaran mesin, menulis publikasi ilmiah bereputasi, serta mengembangkan prototipe aplikasi AI.'
+                      : 'Design machine learning experiments, author peer-reviewed publications, and build applied AI prototypes.'
+                  }
+                </p>
+              </div>
+              <div class="border-b border-gray-200 pb-5">
+                <span class="text-[11px] font-semibold text-[#0077B6]">ACADEMIC INTERNSHIP // MAHASISWA TINGKAT AKHIR</span>
+                <h3 class="text-[16px] font-bold text-[#1F2937] mt-1 mb-1.5">
+                  ${isId ? 'Asisten Peneliti & Praktikum Data Science' : 'Data Science Research Assistant & Practicum Fellow'}
+                </h3>
+                <p class="text-[13.5px] text-[#4B5563] leading-relaxed">
+                  ${
+                    isId
+                      ? 'Program pembimbingan riset skripsi/tesis bagi mahasiswa ilmu komputer, statistika, dan teknik informatika.'
+                      : 'Guided thesis and research mentorship program for computer science, statistics, and informatics students.'
+                  }
+                </p>
+              </div>
+            </div>
+            <aside class="lg:col-span-4">
+              <div class="p-5 rounded-lg bg-[#F3F4F6] border border-gray-200">
+                <h3 class="text-[16px] font-bold text-[#1F2937] mb-2">
+                  ${isId ? 'Cara Melamar' : 'How to Apply'}
+                </h3>
+                <p class="text-[13px] text-[#4B5563] leading-relaxed mb-3">
+                  ${
+                    isId
+                      ? 'Kirimkan CV akademik, daftar publikasi (jika ada), dan minat topik riset Anda ke alamat email resmi kami:'
+                      : 'Send your academic CV, list of publications (if any), and research statement to our official email:'
+                  }
+                </p>
+                <a href="mailto:imanparyudi@gmail.com" class="text-xs font-bold text-[#0077B6] hover:underline">
+                  imanparyudi@gmail.com
+                </a>
+              </div>
+            </aside>
+          </div>
+        </div>
+      `;
+    }
+
+    // TAB 8: TENTANG
+    function renderTentangView(container) {
+      const isId = currentLang === 'id';
+      container.innerHTML = `
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 bg-white animate-view">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <div class="lg:col-span-7 space-y-5">
+              <h2 class="text-[18px] font-bold text-[#1F2937] pb-2.5 border-b border-gray-200">
+                ${isId ? 'Tentang Iman Paryudi Team (IPT) Research:' : 'About Iman Paryudi Team (IPT) Research:'}
+              </h2>
+              <p class="text-[13.5px] text-[#4B5563] leading-relaxed">
+                ${
+                  isId
+                    ? 'IPT Research (Iman Paryudi Team Research) adalah pusat penelitian independen yang berfokus pada pengembangan dan penerapan Kecerdasan Buatan (AI), Data Science, dan Keamanan Informasi di Indonesia.'
+                    : 'IPT Research (Iman Paryudi Team Research) is an independent research center dedicated to advancing applied Artificial Intelligence, Data Science, and Information Security in Indonesia.'
+                }
+              </p>
+              <p class="text-[13.5px] text-[#4B5563] leading-relaxed">
+                ${
+                  isId
+                    ? 'Mengadopsi standar keunggulan ilmiah internasional, IPT Research menjembatani riset akademik yang teruji dengan kebutuhan inovasi nyata di sektor industri, pendidikan, dan pelayanan publik.'
+                    : 'Guided by rigorous international scholarly standards, IPT Research bridges peer-reviewed academic inquiry with practical innovation across industry, higher education, and public institutions.'
+                }
+              </p>
+
+              <!-- Direct Contact Form -->
+              <div id="tentang-sec-kontak" class="pt-4">
+                <h3 class="text-[16px] font-bold text-[#1F2937] mb-3">
+                  ${isId ? 'Kirim Pesan ke IPT Research' : 'Send an Inquiry to IPT Research'}
+                </h3>
+                <form onsubmit="handleContactSubmit(event)" class="space-y-3 bg-gray-50 p-5 rounded-lg border border-gray-200">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <input type="text" required placeholder="${isId ? 'Nama Lengkap' : 'Full Name'}" class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-white text-xs focus:outline-none focus:border-[#0077B6]" />
+                    <input type="email" required placeholder="${isId ? 'Alamat Email' : 'Email Address'}" class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-white text-xs focus:outline-none focus:border-[#0077B6]" />
+                  </div>
+                  <textarea rows="3" required placeholder="${isId ? 'Tuliskan pertanyaan riset atau rencana kolaborasi Anda...' : 'Write your research question or collaboration proposal...'}" class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-white text-xs focus:outline-none focus:border-[#0077B6]"></textarea>
+                  <button type="submit" class="px-4 py-2 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold transition-colors">
+                    ${isId ? 'Kirim Pesan' : 'Send Message'}
+                  </button>
+                </form>
+              </div>
+
+              <!-- Additional Institutional Sections referenced from Tentang Dropdown -->
+              <div id="tentang-sec-mitra" class="pt-5 border-t border-gray-200 space-y-2">
+                <h3 class="text-[15.5px] font-bold text-[#1F2937]">${isId ? 'Mitra & Kolaborasi Riset' : 'Partners & Research Collaboration'}</h3>
+                <p class="text-[13px] text-[#4B5563] leading-relaxed">
+                  ${isId ? 'IPT Research bermitra dengan perguruan tinggi, laboratorium komputasi, serta institusi industri untuk mempercepat adopsi solusi AI dan Data Science yang teruji.' : 'IPT Research collaborates with universities, computing laboratories, and industry partners to accelerate validated AI and Data Science adoption.'}
+                </p>
+              </div>
+
+              <div id="tentang-sec-asosiasi" class="pt-4 border-t border-gray-200 space-y-2">
+                <h3 class="text-[15.5px] font-bold text-[#1F2937]">${isId ? 'Asosiasi & Jejaring Ilmiah' : 'Associations & Scientific Networks'}</h3>
+                <p class="text-[13px] text-[#4B5563] leading-relaxed">
+                  ${isId ? 'Aktif berpartisipasi dalam komunitas riset internasional IEEE, ACM, serta konsorsium konferensi ilmiah ICIIRDS.' : 'Actively engaged in international IEEE and ACM scholarly communities and the ICIIRDS scientific conference consortium.'}
+                </p>
+              </div>
+
+              <div id="tentang-sec-sdg" class="pt-4 border-t border-gray-200 space-y-2">
+                <h3 class="text-[15.5px] font-bold text-[#1F2937]">${isId ? 'Tujuan Pembangunan Berkelanjutan (SDG)' : 'Sustainable Development Goals (SDG)'}</h3>
+                <p class="text-[13px] text-[#4B5563] leading-relaxed">
+                  ${isId ? 'Mendukung SDG 4 (Pendidikan Berkualitas), SDG 9 (Industri, Inovasi, dan Infrastruktur), serta SDG 16 melalui riset kecerdasan buatan yang etis dan inklusif.' : 'Supporting UN SDG 4 (Quality Education), SDG 9 (Industry, Innovation, and Infrastructure), and SDG 16 through ethical, inclusive AI research.'}
+                </p>
+              </div>
+
+              <div id="tentang-sec-standar" class="pt-4 border-t border-gray-200 space-y-2">
+                <h3 class="text-[15.5px] font-bold text-[#1F2937]">${isId ? 'Standar Mutu & Keamanan Informasi' : 'Information Security & Quality Standards'}</h3>
+                <p class="text-[13px] text-[#4B5563] leading-relaxed">
+                  ${isId ? 'Seluruh pengelolaan dataset eksperimen dan sistem informasi IPT Research mengikuti praktik terbaik tata kelola keamanan informasi dan privasi data.' : 'All experimental datasets and information systems at IPT Research adhere to strict information security governance and data privacy practices.'}
+                </p>
+              </div>
+            </div>
+
+            <aside class="lg:col-span-5">
+              <div class="p-5 rounded-lg bg-[#F3F4F6] border border-gray-200 space-y-3 text-xs text-[#4B5563]">
+                <h3 class="text-[16px] font-bold text-[#1F2937]">
+                  ${isId ? 'Informasi Sekretariat' : 'Secretariat Information'}
+                </h3>
+                <div>
+                  <strong class="text-[#1F2937] block">Iman Paryudi Team (IPT) Research</strong>
+                  <span>Jakarta – lantai 2, 12640 Jakarta, Indonesia</span>
+                </div>
+                <div>
+                  <strong class="text-[#1F2937] block">Domain Resmi:</strong>
+                  <span class="text-[#0077B6] font-medium">imanparyudi.com/research</span>
+                </div>
+                <div>
+                  <strong class="text-[#1F2937] block">Email & Telepon:</strong>
+                  <span>imanparyudi@gmail.com • +43 (1) 505 36 88</span>
+                </div>
+                <div class="pt-2 border-t border-gray-200">
+                  <button type="button" onclick="navigateToAboutSub('tim')" class="text-xs font-bold text-[#0077B6] hover:underline">
+                    ${isId ? 'Lihat Direktori Tim Peneliti IPT →' : 'View IPT Research Team Directory →'}
+                  </button>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      `;
+    }
+
+    // -------------------------------------------------------------------------
+    // 5. MODALS, MOBILE DRAWER & TOAST FEEDBACK
+    // -------------------------------------------------------------------------
+    function openArticleModal(articleId) {
+      const art = newsArticles.find((a) => a.id === articleId);
+      if (!art) return;
+
+      document.getElementById('article-modal-title').textContent = art.title[currentLang];
+      document.getElementById('article-modal-date').textContent = art.date;
+
+      const imgEl = document.getElementById('article-modal-img');
+      imgEl.src = art.image;
+      imgEl.onerror = function () {
+        this.onerror = null;
+        this.src = art.fallback;
+      };
+
+      const bodyEl = document.getElementById('article-modal-body');
+      bodyEl.innerHTML = art.fullText[currentLang].map((p) => `<p>${p}</p>`).join('');
+
+      const modal = document.getElementById('article-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeArticleModal() {
+      const modal = document.getElementById('article-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function openEventModal(eventId) {
+      const evt = upcomingEvents.find((e) => e.id === eventId) || upcomingEvents[0];
+      if (!evt) return;
+
+      document.getElementById('event-modal-title').textContent = evt.title[currentLang];
+      document.getElementById('event-modal-date').textContent = evt.dateRange;
+      document.getElementById('event-modal-location').textContent = evt.location;
+      document.getElementById('event-modal-desc').textContent = evt.description[currentLang];
+
+      const modal = document.getElementById('event-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeEventModal() {
+      const modal = document.getElementById('event-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function submitEventRegistration(e) {
+      e.preventDefault();
+      closeEventModal();
+      e.target.reset();
+      showToast(
+        currentLang === 'id'
+          ? 'Pendaftaran acara berhasil dicatat oleh sistem IPT Research.'
+          : 'Event registration successfully recorded by IPT Research.'
+      );
+    }
+
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      e.target.reset();
+      showToast(
+        currentLang === 'id'
+          ? 'Pesan Anda telah diteruskan ke sekretariat IPT Research.'
+          : 'Your message has been forwarded to the IPT Research secretariat.'
+      );
+    }
+
+    function toggleMobileMenu() {
+      const drawer = document.getElementById('mobile-nav-drawer');
+      const btn = document.getElementById('mobile-menu-btn');
+      const isHidden = drawer.classList.contains('hidden');
+      if (isHidden) {
+        drawer.classList.remove('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+      } else {
+        drawer.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+
+    function showToast(msg) {
+      const box = document.getElementById('toast-box');
+      const el = document.createElement('div');
+      el.className = 'pointer-events-auto px-4 py-2.5 rounded-lg bg-[#1F2937] text-white text-xs font-medium shadow-lg border border-gray-700 animate-view';
+      el.textContent = msg;
+      box.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = '0';
+        el.style.transition = 'opacity 0.25s ease';
+        setTimeout(() => el.remove(), 260);
+      }, 3200);
+    }
+
+    // Optional live sync from Google Sheets System when SHEETS_API_URL is configured
+    async function syncGoogleSheetsData() {
+      if (!SHEETS_API_URL || !SHEETS_API_URL.trim()) return;
+      try {
+        const res = await fetch(SHEETS_API_URL);
+        if (!res.ok) return;
+        const payload = await res.json();
+        if (Array.isArray(payload.news) && payload.news.length > 0) {
+          newsArticles = payload.news;
+        }
+        if (Array.isArray(payload.events) && payload.events.length > 0) {
+          upcomingEvents = payload.events;
+        }
+        if (Array.isArray(payload.tim) && payload.tim.length > 0) {
+          teamMembers = payload.tim.map((m, idx) => ({
+            id: m.id || `TIM-${idx + 1}`,
+            order: Number(m.order) || idx + 1,
+            category: m.category || 'Key Researchers',
+            name: m.name || '',
+            role: { id: m.role_id || m.role || '', en: m.role_en || m.role_id || m.role || '' },
+            expertise: Array.isArray(m.expertise)
+              ? m.expertise
+              : String(m.expertise || '')
+                  .split(',')
+                  .map((s) => s.trim())
+                  .filter(Boolean),
+            bio: { id: m.bio_id || '', en: m.bio_en || m.bio_id || '' },
+            email: m.email || '',
+            scholar: m.scholar || '',
+            linkedin: m.linkedin || '',
+            photo: m.photo || '',
+            status: m.status || 'Active'
+          }));
+        }
+        if (activeTab === 'home' || activeTab === 'tim') {
+          renderTabContent(activeTab);
+        }
+      } catch (err) {
+        // Silently retain pre-loaded content if offline or endpoint unreachable
+      }
+    }
+
+    // Close modals & dropdown on Escape key or outside click
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeArticleModal();
+        closeEventModal();
+        closeMemberModal();
+        closeAboutDropdown();
+      }
+    });
+    document.addEventListener('click', (e) => {
+      const wrapper = document.getElementById('desktop-about-dropdown-wrapper');
+      if (wrapper && !wrapper.contains(e.target)) {
+        closeAboutDropdown();
+      }
+    });
+    document.getElementById('article-modal')?.addEventListener('click', (e) => {
+      if (e.target.id === 'article-modal') closeArticleModal();
+    });
+    document.getElementById('event-modal')?.addEventListener('click', (e) => {
+      if (e.target.id === 'event-modal') closeEventModal();
+    });
+    document.getElementById('member-modal')?.addEventListener('click', (e) => {
+      if (e.target.id === 'member-modal') closeMemberModal();
+    });
+
+    // Initialize on window load
+    window.onload = function () {
+      hydrateFromCmsLocalStorage();
+      setLanguage('id');
+      if (window.location.hash === '#tim' || window.location.hash === '#team') {
+        navigateToAboutSub('tim');
+      }
+      syncGoogleSheetsData();
+    };
+  </script>
+</body>
+</html>
