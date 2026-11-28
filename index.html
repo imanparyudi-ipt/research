@@ -9,7 +9,7 @@
   <!-- Google Fonts: Plus Jakarta Sans & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet" />
 
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -43,34 +43,32 @@
       overflow-x: hidden;
     }
 
-    /* Dotted Cerulean Blue Matrix Hero Banner */
+    /* Cerulean Blue Geometric Network & Matrix Hero Banner */
     .ipt-hero-matrix {
-      background-color: #007EC6;
+      background-color: #0082C8;
       background-image:
-        radial-gradient(rgba(255, 255, 255, 0.28) 1.25px, transparent 1.25px),
-        linear-gradient(135deg, #0084CE 0%, #0072B5 100%);
-      background-size: 16px 16px, 100% 100%;
+        radial-gradient(rgba(255, 255, 255, 0.24) 1.25px, transparent 1.25px),
+        linear-gradient(125deg, #008BD2 0%, #0073B5 60%, #0066A2 100%);
+      background-size: 18px 18px, 100% 100%;
       background-position: 0 0, 0 0;
+      position: relative;
+      overflow: hidden;
     }
 
-    /* Active Navigation Item Underline */
+    .ipt-hero-network-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.22;
+    }
+
     .nav-tab-active {
       color: #0077B6 !important;
       font-weight: 600;
-      position: relative;
-    }
-    .nav-tab-active::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: -8px;
-      height: 2px;
-      background-color: #0077B6;
-      border-radius: 1px;
     }
 
-    /* Smooth View Transition */
     @keyframes fadeSlideIn {
       from {
         opacity: 0;
@@ -85,59 +83,56 @@
       animation: fadeSlideIn 0.22s ease-out forwards;
     }
 
-    /* Researcher Card Highlight Pulse */
-    @keyframes memberHighlight {
-      0% { box-shadow: 0 0 0 0 rgba(0, 119, 182, 0.55); }
+    @keyframes cardHighlightPulse {
+      0% { box-shadow: 0 0 0 0 rgba(0, 119, 182, 0.45); }
       70% { box-shadow: 0 0 0 10px rgba(0, 119, 182, 0); }
       100% { box-shadow: 0 0 0 0 rgba(0, 119, 182, 0); }
     }
-    .member-card-focused {
-      animation: memberHighlight 1.3s ease-out;
+    .card-focused-pulse {
+      animation: cardHighlightPulse 1.3s ease-out;
       outline: 2px solid #0077B6;
-      outline-offset: 4px;
-      border-radius: 4px;
+      outline-offset: 6px;
+      border-radius: 6px;
     }
   </style>
 </head>
 <body class="min-h-screen flex flex-col bg-white text-[#1F2937] antialiased selection:bg-[#0077B6] selection:text-white">
 
   <!-- =====================================================================
-       1. TOP UTILITY BAR (Address on Left, Monochrome Icons & ID/EN on Right)
+       1. TOP UTILITY BAR (Address on Left, Social Icons & ID/EN Toggle on Right)
        ===================================================================== -->
   <div class="bg-white border-b border-gray-100">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 h-8 flex items-center justify-between text-[11px] text-[#6B7280]">
-      <!-- Left Address -->
       <div id="topbar-address-text" class="truncate">
         Jakarta – lantai 2, 12640 Indonesia
       </div>
 
-      <!-- Right Utility Icons + Language Flag Toggles -->
       <div class="flex items-center gap-3.5 shrink-0">
-        <!-- Social / Academic Monochrome Links -->
+        <!-- Monochrome Academic / Social Icons -->
         <div class="hidden sm:flex items-center gap-2.5 text-gray-400">
-          <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="hover:text-[#0077B6] transition-colors">
+          <a id="topbar-linkedin-link" href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="hover:text-[#0077B6] transition-colors">
             <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
           </a>
-          <a href="https://scholar.google.com" target="_blank" rel="noopener noreferrer" aria-label="Google Scholar" class="hover:text-[#0077B6] transition-colors">
+          <a id="topbar-scholar-link" href="https://scholar.google.com" target="_blank" rel="noopener noreferrer" aria-label="Google Scholar" class="hover:text-[#0077B6] transition-colors">
             <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
           </a>
-          <a href="#rss" onclick="switchTab('home'); return false;" aria-label="RSS Feed" class="hover:text-[#0077B6] transition-colors">
+          <a href="#rss" onclick="navigateTo('home'); return false;" aria-label="RSS Feed" class="hover:text-[#0077B6] transition-colors">
             <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1Z"/></svg>
           </a>
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="hover:text-[#0077B6] transition-colors">
+          <a id="topbar-github-link" href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="hover:text-[#0077B6] transition-colors">
             <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5c.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34c-.46-1.16-1.11-1.47-1.11-1.47c-.91-.62.07-.6.07-.6c1 .07 1.53 1.03 1.53 1.03c.87 1.52 2.34 1.07 2.91.83c.09-.65.35-1.09.63-1.34c-2.22-.25-4.55-1.11-4.55-4.92c0-1.11.38-2 1.03-2.71c-.1-.25-.45-1.29.1-2.64c0 0 .84-.27 2.75 1.02c.79-.22 1.65-.33 2.5-.33c.85 0 1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02c.55 1.35.2 2.39.1 2.64c.65.71 1.03 1.6 1.03 2.71c0 3.82-2.34 4.66-4.57 4.91c.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg>
           </a>
         </div>
 
         <span class="hidden sm:inline text-gray-200">|</span>
 
-        <!-- Language Switcher: Indonesian (ID) & English (EN) -->
-        <div class="flex items-center gap-2" role="group" aria-label="Language Switcher">
+        <!-- Bilingual Toggle: ID & EN -->
+        <div class="flex items-center gap-1.5" role="group" aria-label="Language Switcher">
           <button
             type="button"
             id="btn-lang-id"
             onclick="setLanguage('id')"
-            class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-semibold text-[#1F2937] hover:text-[#0077B6] transition-colors"
+            class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-bold text-[#0077B6] bg-blue-50/80 transition-colors"
             title="Bahasa Indonesia"
           >
             <svg class="w-3.5 h-2.5 rounded-[1px] border border-gray-200 shrink-0" viewBox="0 0 3 2">
@@ -168,12 +163,12 @@
   </div>
 
   <!-- =====================================================================
-       2. MAIN HEADER & HORIZONTAL NAVIGATION MENU (With Tentang Dropdown)
+       2. MAIN HEADER & SBA-STYLE DROPDOWN NAVIGATION BAR + SEARCH ICON
        ===================================================================== -->
   <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-xs border-b border-gray-100">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
       <!-- Brand Lockup -->
-      <a href="#home" onclick="switchTab('home'); return false;" class="flex items-center gap-3 group shrink-0">
+      <a href="#home" onclick="navigateTo('home'); return false;" class="flex items-center gap-3 group shrink-0">
         <div class="w-[44px] h-[44px] rounded-xl bg-[#0077B6] group-hover:bg-[#0082C8] transition-colors flex items-center justify-center shadow-xs shrink-0">
           <svg class="w-7 h-7" viewBox="0 0 36 36" fill="none" aria-hidden="true">
             <circle cx="9" cy="9" r="1.8" fill="#BAE6FD"/>
@@ -196,196 +191,349 @@
         </div>
       </a>
 
-      <!-- Desktop Horizontal Navigation Menu -->
-      <nav aria-label="Main Navigation" class="hidden lg:flex items-center gap-5 xl:gap-6 text-[13px] text-[#374151]">
-        <button type="button" data-nav="home" onclick="switchTab('home')" class="nav-item nav-tab-active hover:text-[#0077B6] transition-colors py-1" data-i18n="nav_home">
+      <!-- Desktop Horizontal Navigation Menu (SBA Research Dropdown Structure) -->
+      <nav aria-label="Main Navigation" class="hidden lg:flex items-center gap-5 xl:gap-6 text-[13.5px] text-[#374151]">
+        <!-- Home -->
+        <button
+          type="button"
+          data-nav="home"
+          onclick="navigateTo('home')"
+          class="nav-item nav-tab-active hover:text-[#0077B6] transition-colors py-1.5"
+          data-i18n="nav_home"
+        >
           Home
         </button>
-        <button type="button" data-nav="riset" onclick="switchTab('riset')" class="nav-item hover:text-[#0077B6] transition-colors py-1" data-i18n="nav_riset">
-          Riset
-        </button>
-        <button type="button" data-nav="terapan" onclick="switchTab('terapan')" class="nav-item hover:text-[#0077B6] transition-colors py-1" data-i18n="nav_terapan">
-          Penelitian Terapan
-        </button>
-        <button type="button" data-nav="layanan" onclick="switchTab('layanan')" class="nav-item hover:text-[#0077B6] transition-colors py-1" data-i18n="nav_layanan">
+
+        <!-- Riset (Research) + SBA-Style Dropdown -->
+        <div
+          class="relative nav-dropdown-group"
+          onmouseenter="openNavDropdown('dd-riset')"
+          onmouseleave="scheduleCloseNavDropdown('dd-riset')"
+        >
+          <button
+            type="button"
+            data-nav="riset"
+            onclick="navigateTo('riset-publikasi')"
+            class="nav-item hover:text-[#0077B6] transition-colors py-1.5"
+            data-i18n="nav_riset"
+          >
+            Riset
+          </button>
+          <div
+            id="dd-riset"
+            class="nav-dropdown-panel hidden absolute left-0 top-full mt-2 w-72 bg-white border border-gray-200 shadow-lg py-2 z-40"
+          >
+            <button type="button" onclick="navigateTo('riset-publikasi')" class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors" data-i18n="sub_publikasi">
+              Publikasi Ilmiah
+            </button>
+            <button type="button" onclick="navigateTo('riset-pusat')" class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors" data-i18n="sub_pusat">
+              Pusat Riset AI &amp; Data Science
+            </button>
+            <button type="button" onclick="navigateTo('riset-proyek')" class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors" data-i18n="sub_proyek">
+              Proyek Riset
+            </button>
+            <button type="button" onclick="navigateTo('riset-kelompok')" class="w-full text-left px-5 py-2.5 text-[13px] font-medium text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors" data-i18n="sub_kelompok">
+              Kelompok Riset
+            </button>
+            <button type="button" onclick="navigateTo('riset-advisori')" class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors" data-i18n="sub_advisori">
+              Kajian &amp; Advisori AI
+            </button>
+            <button type="button" onclick="navigateTo('riset-pengajaran')" class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors" data-i18n="sub_pengajaran">
+              Pengajaran &amp; Mata Kuliah
+            </button>
+            <button type="button" onclick="navigateTo('riset-bimbingan')" class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors leading-snug" data-i18n="sub_bimbingan">
+              Bimbingan Skripsi | Tesis | Disertasi
+            </button>
+            <button type="button" onclick="navigateTo('riset-konferensi')" class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors" data-i18n="sub_konferensi">
+              Konferensi Ilmiah
+            </button>
+          </div>
+        </div>
+
+        <!-- Penelitian Terapan (Applied Research) + SBA-Style Dropdown -->
+        <div
+          class="relative nav-dropdown-group"
+          onmouseenter="openNavDropdown('dd-terapan')"
+          onmouseleave="scheduleCloseNavDropdown('dd-terapan')"
+        >
+          <button
+            type="button"
+            data-nav="terapan"
+            onclick="navigateTo('terapan')"
+            class="nav-item hover:text-[#0077B6] transition-colors py-1.5"
+            data-i18n="nav_terapan"
+          >
+            Penelitian Terapan
+          </button>
+          <div
+            id="dd-terapan"
+            class="nav-dropdown-panel hidden absolute left-0 top-full mt-2 w-80 bg-white border border-gray-200 shadow-lg py-2 z-40"
+          >
+            <button type="button" onclick="navigateTo('terapan')" class="w-full text-left px-5 py-2.5 text-[13px] font-semibold text-[#0077B6] hover:bg-blue-50/70 transition-colors leading-snug" data-i18n="terapan_dd_1">
+              Evaluasi Ekosistem Perangkat Lunak Cerdas (I-SEE)
+            </button>
+            <button type="button" onclick="navigateTo('terapan')" class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors leading-snug" data-i18n="terapan_dd_2">
+              Pelatihan Evaluasi Sistem AI Terintegrasi
+            </button>
+            <button type="button" onclick="navigateTo('terapan')" class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors leading-snug" data-i18n="terapan_dd_3">
+              Implementasi Analitik &amp; SOC Berbasis Open-Source
+            </button>
+            <button type="button" onclick="navigateTo('terapan')" class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors leading-snug" data-i18n="terapan_dd_4">
+              Asisten Pengetahuan Dokumen Teknis (Verified RAG)
+            </button>
+            <button type="button" onclick="navigateTo('terapan')" class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors leading-snug" data-i18n="terapan_dd_5">
+              Deteksi Anomali &amp; Threat Hunting Berbasis AI
+            </button>
+            <button type="button" onclick="navigateTo('terapan')" class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors leading-snug" data-i18n="terapan_dd_6">
+              Penilaian Kedaulatan Digital Sistem Perangkat Lunak
+            </button>
+          </div>
+        </div>
+
+        <!-- Layanan Profesional -->
+        <button
+          type="button"
+          data-nav="layanan"
+          onclick="navigateTo('layanan')"
+          class="nav-item hover:text-[#0077B6] transition-colors py-1.5"
+          data-i18n="nav_layanan"
+        >
           Layanan Profesional
         </button>
-        <button type="button" data-nav="pelatihan" onclick="switchTab('pelatihan')" class="nav-item hover:text-[#0077B6] transition-colors py-1" data-i18n="nav_pelatihan">
+
+        <!-- Pelatihan -->
+        <button
+          type="button"
+          data-nav="pelatihan"
+          onclick="navigateTo('pelatihan')"
+          class="nav-item hover:text-[#0077B6] transition-colors py-1.5"
+          data-i18n="nav_pelatihan"
+        >
           Pelatihan
         </button>
-        <button type="button" data-nav="acara" onclick="switchTab('acara')" class="nav-item hover:text-[#0077B6] transition-colors py-1" data-i18n="nav_acara">
+
+        <!-- Acara -->
+        <button
+          type="button"
+          data-nav="acara"
+          onclick="navigateTo('acara')"
+          class="nav-item hover:text-[#0077B6] transition-colors py-1.5"
+          data-i18n="nav_acara"
+        >
           Acara
         </button>
-        <button type="button" data-nav="karir" onclick="switchTab('karir')" class="nav-item hover:text-[#0077B6] transition-colors py-1" data-i18n="nav_karir">
+
+        <!-- Bekerja di IPT -->
+        <button
+          type="button"
+          data-nav="karir"
+          onclick="navigateTo('karir')"
+          class="nav-item hover:text-[#0077B6] transition-colors py-1.5"
+          data-i18n="nav_karir"
+        >
           Bekerja di IPT
         </button>
 
-        <!-- Tentang (About) Dropdown -->
+        <!-- Tentang (About) + SBA-Style Dropdown -->
         <div
-          id="desktop-about-dropdown-wrapper"
-          class="relative"
-          onmouseenter="openAboutDropdown()"
-          onmouseleave="scheduleCloseAboutDropdown()"
+          class="relative nav-dropdown-group"
+          onmouseenter="openNavDropdown('dd-tentang')"
+          onmouseleave="scheduleCloseNavDropdown('dd-tentang')"
         >
           <button
             type="button"
             data-nav="tentang"
-            id="desktop-about-btn"
-            onclick="toggleAboutDropdown()"
-            aria-expanded="false"
-            aria-haspopup="true"
-            class="nav-item inline-flex items-center gap-1 hover:text-[#0077B6] transition-colors py-1"
+            onclick="navigateTo('tentang')"
+            class="nav-item hover:text-[#0077B6] transition-colors py-1.5"
+            data-i18n="nav_tentang"
           >
-            <span data-i18n="nav_tentang">Tentang</span>
-            <svg class="w-3 h-3 opacity-70" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-            </svg>
+            Tentang
           </button>
 
-          <!-- Elevation White Dropdown Card -->
           <div
-            id="desktop-about-dropdown"
-            class="hidden absolute right-0 top-full mt-2 w-72 bg-white border border-gray-200 shadow-lg py-2 z-40"
+            id="dd-tentang"
+            class="nav-dropdown-panel hidden absolute right-0 top-full mt-2 w-72 bg-white border border-gray-200 shadow-lg py-2 z-40"
           >
-            <button
-              type="button"
-              onclick="navigateToAboutSub('tim')"
-              class="w-full text-left px-5 py-2.5 text-[13px] font-semibold text-[#0077B6] hover:bg-blue-50/70 transition-colors"
-              data-i18n="dd_tim"
-            >
+            <button type="button" onclick="navigateTo('tim')" class="w-full text-left px-5 py-2.5 text-[13px] font-semibold text-[#0077B6] hover:bg-blue-50/70 transition-colors" data-i18n="dd_tim">
               Tim
             </button>
-            <button
-              type="button"
-              onclick="navigateToAboutSub('tentang-profil')"
-              class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors"
-              data-i18n="dd_profil"
-            >
+            <button type="button" onclick="navigateToAboutSection('tentang-profil')" class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors" data-i18n="dd_profil">
               Profil Pusat Riset
             </button>
-            <button
-              type="button"
-              onclick="navigateToAboutSub('tentang-mitra')"
-              class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors"
-              data-i18n="dd_mitra"
-            >
+            <button type="button" onclick="navigateToAboutSection('tentang-mitra')" class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors" data-i18n="dd_mitra">
               Mitra &amp; Kolaborasi
             </button>
-            <button
-              type="button"
-              onclick="navigateToAboutSub('tentang-jejaring')"
-              class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors"
-              data-i18n="dd_jejaring"
-            >
+            <button type="button" onclick="navigateToAboutSection('tentang-jejaring')" class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors" data-i18n="dd_jejaring">
               Asosiasi &amp; Jejaring
             </button>
-            <button
-              type="button"
-              onclick="navigateToAboutSub('tentang-sdg')"
-              class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors"
-              data-i18n="dd_sdg"
-            >
+            <button type="button" onclick="navigateToAboutSection('tentang-sdg')" class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors" data-i18n="dd_sdg">
               Tujuan Pembangunan Berkelanjutan (SDG)
             </button>
-            <button
-              type="button"
-              onclick="navigateToAboutSub('tentang-standar')"
-              class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors"
-              data-i18n="dd_standar"
-            >
+            <button type="button" onclick="navigateToAboutSection('tentang-standar')" class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors" data-i18n="dd_standar">
               Standar Mutu &amp; Keamanan Informasi
             </button>
-            <button
-              type="button"
-              onclick="navigateToAboutSub('tentang-kontak')"
-              class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors border-t border-gray-100 mt-1 pt-2.5"
-              data-i18n="dd_kontak"
-            >
+            <button type="button" onclick="navigateToAboutSection('tentang-kontak')" class="w-full text-left px-5 py-2.5 text-[13px] text-[#374151] hover:text-[#0077B6] hover:bg-gray-50 transition-colors border-t border-gray-100 mt-1 pt-2.5" data-i18n="dd_kontak">
               Kontak
             </button>
           </div>
         </div>
+
+        <!-- Magnifying Glass Search Icon -->
+        <button
+          type="button"
+          onclick="toggleGlobalSearchBar()"
+          aria-label="Pencarian"
+          title="Cari di IPT Research"
+          class="p-1.5 text-[#374151] hover:text-[#0077B6] transition-colors"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </button>
       </nav>
 
-      <!-- Mobile Hamburger Toggle -->
-      <button
-        type="button"
-        id="mobile-menu-btn"
-        onclick="toggleMobileMenu()"
-        aria-label="Toggle Menu"
-        aria-expanded="false"
-        class="lg:hidden p-2 rounded-lg text-gray-600 hover:text-[#0077B6] hover:bg-gray-50 border border-gray-200"
-      >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
+      <!-- Mobile Search & Hamburger Toggle -->
+      <div class="flex items-center gap-2 lg:hidden">
+        <button
+          type="button"
+          onclick="toggleGlobalSearchBar()"
+          aria-label="Pencarian"
+          class="p-2 rounded-lg text-gray-600 hover:text-[#0077B6] hover:bg-gray-50 border border-gray-200"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </button>
+        <button
+          type="button"
+          id="mobile-menu-btn"
+          onclick="toggleMobileMenu()"
+          aria-label="Toggle Menu"
+          aria-expanded="false"
+          class="p-2 rounded-lg text-gray-600 hover:text-[#0077B6] hover:bg-gray-50 border border-gray-200"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Expandable Global Search Bar -->
+    <div id="global-search-bar" class="hidden bg-gray-50 border-t border-gray-200">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3">
+        <div class="relative flex items-center gap-2">
+          <input
+            type="text"
+            id="global-search-input"
+            oninput="runGlobalSearch(this.value)"
+            placeholder="Ketik kata kunci (misal: AI, Computer Vision, ICIIRDS, Dr. Iman Paryudi)..."
+            class="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-xs sm:text-sm focus:outline-none focus:border-[#0077B6]"
+          />
+          <button type="button" onclick="toggleGlobalSearchBar()" class="px-3 py-2 text-xs font-semibold text-gray-500 hover:text-gray-800">
+            Tutup
+          </button>
+        </div>
+        <div id="global-search-results" class="hidden mt-3 bg-white rounded-lg border border-gray-200 divide-y divide-gray-100 max-h-72 overflow-y-auto shadow-sm"></div>
+      </div>
     </div>
 
     <!-- Mobile Navigation Drawer -->
-    <div id="mobile-nav-drawer" class="hidden lg:hidden bg-white border-t border-gray-100 px-4 py-3 shadow-md">
+    <div id="mobile-nav-drawer" class="hidden lg:hidden bg-white border-t border-gray-100 px-4 py-3 shadow-md max-h-[80vh] overflow-y-auto">
       <div class="flex flex-col space-y-1 text-sm font-medium text-[#374151]">
-        <button type="button" onclick="switchTab('home'); toggleMobileMenu();" class="text-left px-3 py-2.5 rounded-lg hover:bg-blue-50 hover:text-[#0077B6]" data-i18n="nav_home">Home</button>
-        <button type="button" onclick="switchTab('riset'); toggleMobileMenu();" class="text-left px-3 py-2.5 rounded-lg hover:bg-blue-50 hover:text-[#0077B6]" data-i18n="nav_riset">Riset</button>
-        <button type="button" onclick="switchTab('terapan'); toggleMobileMenu();" class="text-left px-3 py-2.5 rounded-lg hover:bg-blue-50 hover:text-[#0077B6]" data-i18n="nav_terapan">Penelitian Terapan</button>
-        <button type="button" onclick="switchTab('layanan'); toggleMobileMenu();" class="text-left px-3 py-2.5 rounded-lg hover:bg-blue-50 hover:text-[#0077B6]" data-i18n="nav_layanan">Layanan Profesional</button>
-        <button type="button" onclick="switchTab('pelatihan'); toggleMobileMenu();" class="text-left px-3 py-2.5 rounded-lg hover:bg-blue-50 hover:text-[#0077B6]" data-i18n="nav_pelatihan">Pelatihan</button>
-        <button type="button" onclick="switchTab('acara'); toggleMobileMenu();" class="text-left px-3 py-2.5 rounded-lg hover:bg-blue-50 hover:text-[#0077B6]" data-i18n="nav_acara">Acara</button>
-        <button type="button" onclick="switchTab('karir'); toggleMobileMenu();" class="text-left px-3 py-2.5 rounded-lg hover:bg-blue-50 hover:text-[#0077B6]" data-i18n="nav_karir">Bekerja di IPT</button>
+        <button type="button" onclick="navigateTo('home'); toggleMobileMenu();" class="text-left px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-[#0077B6]" data-i18n="nav_home">Home</button>
         <div class="pt-1 border-t border-gray-100">
-          <div class="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-400" data-i18n="nav_tentang">Tentang</div>
-          <button type="button" onclick="navigateToAboutSub('tim'); toggleMobileMenu();" class="w-full text-left px-5 py-2 rounded-lg text-[#0077B6] font-semibold hover:bg-blue-50" data-i18n="dd_tim">Tim</button>
-          <button type="button" onclick="navigateToAboutSub('tentang-profil'); toggleMobileMenu();" class="w-full text-left px-5 py-2 rounded-lg hover:bg-blue-50 hover:text-[#0077B6]" data-i18n="dd_profil">Profil Pusat Riset</button>
-          <button type="button" onclick="navigateToAboutSub('tentang-mitra'); toggleMobileMenu();" class="w-full text-left px-5 py-2 rounded-lg hover:bg-blue-50 hover:text-[#0077B6]" data-i18n="dd_mitra">Mitra &amp; Kolaborasi</button>
-          <button type="button" onclick="navigateToAboutSub('tentang-kontak'); toggleMobileMenu();" class="w-full text-left px-5 py-2 rounded-lg hover:bg-blue-50 hover:text-[#0077B6]" data-i18n="dd_kontak">Kontak</button>
+          <div class="px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-gray-400" data-i18n="nav_riset">Riset</div>
+          <button type="button" onclick="navigateTo('riset-publikasi'); toggleMobileMenu();" class="w-full text-left px-5 py-1.5 text-xs hover:text-[#0077B6]" data-i18n="sub_publikasi">Publikasi Ilmiah</button>
+          <button type="button" onclick="navigateTo('riset-kelompok'); toggleMobileMenu();" class="w-full text-left px-5 py-1.5 text-xs hover:text-[#0077B6]" data-i18n="sub_kelompok">Kelompok Riset</button>
+          <button type="button" onclick="navigateTo('riset-pengajaran'); toggleMobileMenu();" class="w-full text-left px-5 py-1.5 text-xs hover:text-[#0077B6]" data-i18n="sub_pengajaran">Pengajaran &amp; Mata Kuliah</button>
+          <button type="button" onclick="navigateTo('riset-proyek'); toggleMobileMenu();" class="w-full text-left px-5 py-1.5 text-xs hover:text-[#0077B6]" data-i18n="sub_proyek">Proyek Riset</button>
+        </div>
+        <button type="button" onclick="navigateTo('terapan'); toggleMobileMenu();" class="text-left px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-[#0077B6]" data-i18n="nav_terapan">Penelitian Terapan</button>
+        <button type="button" onclick="navigateTo('layanan'); toggleMobileMenu();" class="text-left px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-[#0077B6]" data-i18n="nav_layanan">Layanan Profesional</button>
+        <button type="button" onclick="navigateTo('pelatihan'); toggleMobileMenu();" class="text-left px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-[#0077B6]" data-i18n="nav_pelatihan">Pelatihan</button>
+        <button type="button" onclick="navigateTo('acara'); toggleMobileMenu();" class="text-left px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-[#0077B6]" data-i18n="nav_acara">Acara</button>
+        <button type="button" onclick="navigateTo('karir'); toggleMobileMenu();" class="text-left px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-[#0077B6]" data-i18n="nav_karir">Bekerja di IPT</button>
+        <div class="pt-1 border-t border-gray-100">
+          <div class="px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-gray-400" data-i18n="nav_tentang">Tentang</div>
+          <button type="button" onclick="navigateTo('tim'); toggleMobileMenu();" class="w-full text-left px-5 py-1.5 text-xs font-semibold text-[#0077B6]" data-i18n="dd_tim">Tim</button>
+          <button type="button" onclick="navigateToAboutSection('tentang-profil'); toggleMobileMenu();" class="w-full text-left px-5 py-1.5 text-xs hover:text-[#0077B6]" data-i18n="dd_profil">Profil Pusat Riset</button>
+          <button type="button" onclick="navigateToAboutSection('tentang-kontak'); toggleMobileMenu();" class="w-full text-left px-5 py-1.5 text-xs hover:text-[#0077B6]" data-i18n="dd_kontak">Kontak</button>
         </div>
       </div>
     </div>
   </header>
 
   <!-- =====================================================================
-       3. DOTTED CERULEAN BLUE MATRIX HERO BANNER
+       3. HERO BANNER (Home Full Headline vs Inner Page Title + Right Breadcrumb)
        ===================================================================== -->
-  <section aria-label="Banner Utama IPT Research" class="ipt-hero-matrix w-full py-12 sm:py-16 md:py-[68px] text-white">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <div class="max-w-3xl">
-        <h1 id="hero-headline" class="text-2xl sm:text-3xl md:text-[34px] font-bold leading-[1.24] tracking-tight text-white">
+  <section id="hero-banner-section" aria-label="Banner Utama IPT Research" class="ipt-hero-matrix w-full py-10 sm:py-12 md:py-[54px] text-white">
+    <svg class="ipt-hero-network-svg" viewBox="0 0 1200 220" preserveAspectRatio="none" aria-hidden="true">
+      <g stroke="#FFFFFF" stroke-width="1">
+        <line x1="680" y1="20" x2="840" y2="110" />
+        <line x1="840" y1="110" x2="1030" y2="35" />
+        <line x1="840" y1="110" x2="960" y2="195" />
+        <line x1="1030" y1="35" x2="1170" y2="140" />
+        <line x1="960" y1="195" x2="1170" y2="140" />
+        <line x1="540" y1="180" x2="680" y2="20" />
+      </g>
+      <g fill="#FFFFFF">
+        <circle cx="680" cy="20" r="3.5" />
+        <circle cx="840" cy="110" r="4.5" />
+        <circle cx="1030" cy="35" r="3.5" />
+        <circle cx="960" cy="195" r="3.5" />
+        <circle cx="1170" cy="140" r="4" />
+        <circle cx="540" cy="180" r="3" />
+      </g>
+    </svg>
+
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
+      <!-- Home Hero Layout -->
+      <div id="hero-home-content" class="max-w-3xl py-2 sm:py-4">
+        <h1 id="hero-headline" class="text-2xl sm:text-3xl md:text-[33px] font-bold leading-[1.24] tracking-tight text-white">
           IPT Research adalah pusat penelitian untuk aplikasi AI dan Data Science
         </h1>
-        <p id="hero-subheadline" class="mt-3.5 text-sm sm:text-[15px] font-normal text-[#F0F9FF] leading-relaxed">
+        <p id="hero-subheadline" class="mt-3 text-sm sm:text-[15px] font-normal text-[#F0F9FF] leading-relaxed">
           Pusat Riset dan Inovasi aplikasi AI dan Data Science di Indonesia.
         </p>
+      </div>
+
+      <!-- Inner Page Hero Layout (Left Page Title + Right Breadcrumb) -->
+      <div id="hero-inner-content" class="hidden flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <h1 id="hero-inner-title" class="text-2xl sm:text-[28px] font-bold tracking-tight text-white">
+          Kelompok Riset
+        </h1>
+        <nav aria-label="Breadcrumb" id="hero-inner-breadcrumb" class="flex flex-wrap items-center gap-1.5 text-xs sm:text-[13px] text-white/95">
+          <!-- Populated dynamically -->
+        </nav>
       </div>
     </div>
   </section>
 
   <!-- =====================================================================
-       4. MAIN CONTENT WORKSPACE (Dynamic Views Controlled by Navigation)
+       4. MAIN CONTENT WORKSPACE
        ===================================================================== -->
   <main id="main-workspace" class="flex-1 bg-white">
     <!-- Populated dynamically on load -->
   </main>
 
   <!-- =====================================================================
-       5. FOOTER (3-Column Layout on #F3F4F6)
+       5. FOOTER (3-Column Layout on #F3F4F6 + Live Google Sheets Refresh)
        ===================================================================== -->
   <footer class="bg-[#F3F4F6] border-t border-gray-200 py-8 mt-12">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-xs text-gray-600">
-      <!-- Column 1 -->
       <div>
         <h2 class="font-bold text-[#0077B6] text-sm mb-1.5">IPT Research</h2>
         <p id="footer-address-line1" class="leading-relaxed">Jakarta – lantai 2</p>
         <p id="footer-address-line2" class="leading-relaxed">12640 Jakarta, Indonesia</p>
       </div>
 
-      <!-- Column 2 -->
       <div>
         <h2 class="font-bold text-[#0077B6] text-sm mb-1.5" data-i18n="footer_contact_heading">Kontak</h2>
         <p class="leading-relaxed">Email: <a id="footer-email-link" href="mailto:imanparyudi@gmail.com" class="hover:text-[#0077B6] hover:underline">imanparyudi@gmail.com</a></p>
         <p class="leading-relaxed">Telp: <span id="footer-phone-text">+43 (1) 505 36 88</span></p>
       </div>
 
-      <!-- Column 3 -->
       <div class="md:text-right flex flex-col md:items-end justify-between">
         <div>
           <p class="leading-relaxed" data-i18n="footer_copyright">© 2026 IPT Research. Seluruh hak cipta dilindungi.</p>
@@ -415,7 +563,7 @@
   <!-- =====================================================================
        MODAL 1: NEWS ARTICLE READER ("Read More")
        ===================================================================== -->
-  <div id="article-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-gray-900/60 backdrop-blur-[1px]" role="dialog" aria-modal="true" aria-labelledby="article-modal-title">
+  <div id="article-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-gray-900/60 backdrop-blur-[1px]" role="dialog" aria-modal="true">
     <div class="bg-white rounded-xl max-w-2xl w-full max-h-[88vh] overflow-y-auto shadow-2xl border border-gray-200 animate-view">
       <div class="p-5 sm:p-6 border-b border-gray-200 flex items-start justify-between gap-4 sticky top-0 bg-white z-10">
         <div>
@@ -423,12 +571,10 @@
             Berita Terkini • IPT Research
           </span>
           <h3 id="article-modal-title" class="text-lg sm:text-xl font-bold text-[#1F2937] leading-snug"></h3>
-          <div id="article-modal-date" class="flex items-center gap-1.5 text-xs text-[#6B7280] mt-1.5"></div>
+          <div id="article-modal-date" class="text-xs text-[#6B7280] mt-1.5"></div>
         </div>
-        <button type="button" onclick="closeArticleModal()" class="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors" aria-label="Tutup">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
+        <button type="button" onclick="closeModalById('article-modal')" class="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100" aria-label="Tutup">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
       <div class="p-5 sm:p-6 space-y-4">
@@ -439,7 +585,7 @@
       </div>
       <div class="px-5 py-3.5 bg-gray-50 border-t border-gray-200 flex items-center justify-between text-xs text-gray-500">
         <span>IPT Research — Iman Paryudi Team</span>
-        <button type="button" onclick="closeArticleModal()" class="px-4 py-1.5 rounded-md bg-[#0077B6] hover:bg-[#0082C8] text-white font-semibold transition-colors" data-i18n="modal_close_btn">
+        <button type="button" onclick="closeModalById('article-modal')" class="px-4 py-1.5 rounded-md bg-[#0077B6] hover:bg-[#0082C8] text-white font-semibold" data-i18n="modal_close_btn">
           Tutup Artikel
         </button>
       </div>
@@ -449,7 +595,7 @@
   <!-- =====================================================================
        MODAL 2: EVENT DETAILS & REGISTRATION
        ===================================================================== -->
-  <div id="event-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-gray-900/60 backdrop-blur-[1px]" role="dialog" aria-modal="true" aria-labelledby="event-modal-title">
+  <div id="event-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-gray-900/60 backdrop-blur-[1px]" role="dialog" aria-modal="true">
     <div class="bg-white rounded-xl max-w-xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-200 animate-view">
       <div class="p-5 sm:p-6 border-b border-gray-200 flex items-start justify-between gap-4">
         <div>
@@ -459,10 +605,8 @@
           <h3 id="event-modal-title" class="text-lg font-bold text-[#0077B6] leading-snug"></h3>
           <p id="event-modal-date" class="text-xs text-[#6B7280] mt-1"></p>
         </div>
-        <button type="button" onclick="closeEventModal()" class="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100" aria-label="Tutup">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
+        <button type="button" onclick="closeModalById('event-modal')" class="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100" aria-label="Tutup">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
       <div class="p-5 sm:p-6 space-y-4">
@@ -472,14 +616,12 @@
             Pendaftaran Peserta Seminar / Konferensi
           </h4>
           <form onsubmit="handleEventRegistration(event)" class="space-y-3">
-            <div>
-              <input type="text" required id="evt-reg-name" placeholder="Nama Lengkap & Gelar" class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-white text-xs focus:outline-none focus:border-[#0077B6]" />
-            </div>
+            <input type="text" required id="evt-reg-name" placeholder="Nama Lengkap & Gelar" class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-white text-xs focus:outline-none focus:border-[#0077B6]" />
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <input type="email" required id="evt-reg-email" placeholder="Email Institusi / Pribadi" class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-white text-xs focus:outline-none focus:border-[#0077B6]" />
               <input type="text" required id="evt-reg-org" placeholder="Universitas / Perusahaan" class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-white text-xs focus:outline-none focus:border-[#0077B6]" />
             </div>
-            <button type="submit" class="w-full py-2 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold transition-colors" data-i18n="event_submit_btn">
+            <button type="submit" class="w-full py-2 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold" data-i18n="event_submit_btn">
               Konfirmasi Kehadiran
             </button>
           </form>
@@ -491,7 +633,7 @@
   <!-- =====================================================================
        MODAL 3: TEAM MEMBER PROFILE MODAL
        ===================================================================== -->
-  <div id="member-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-gray-900/60 backdrop-blur-[1px]" role="dialog" aria-modal="true" aria-labelledby="member-modal-name">
+  <div id="member-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-gray-900/60 backdrop-blur-[1px]" role="dialog" aria-modal="true">
     <div class="bg-white rounded-xl max-w-xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-200 animate-view">
       <div class="p-5 sm:p-6 border-b border-gray-200 flex items-start justify-between gap-4">
         <div class="flex items-center gap-4">
@@ -504,10 +646,8 @@
             <p id="member-modal-role" class="text-xs font-medium text-[#0077B6] mt-0.5"></p>
           </div>
         </div>
-        <button type="button" onclick="closeMemberModal()" class="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100" aria-label="Tutup">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
+        <button type="button" onclick="closeModalById('member-modal')" class="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100" aria-label="Tutup">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
       <div class="p-5 sm:p-6 space-y-4">
@@ -522,7 +662,7 @@
         <div id="member-modal-links" class="pt-3 border-t border-gray-100 flex flex-wrap items-center gap-3 text-xs"></div>
       </div>
       <div class="px-5 py-3 bg-gray-50 border-t border-gray-200 flex justify-end">
-        <button type="button" onclick="closeMemberModal()" class="px-4 py-1.5 rounded-md bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold transition-colors" data-i18n="modal_close_btn">
+        <button type="button" onclick="closeModalById('member-modal')" class="px-4 py-1.5 rounded-md bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold" data-i18n="modal_close_btn">
           Tutup Profil
         </button>
       </div>
@@ -530,9 +670,9 @@
   </div>
 
   <!-- =====================================================================
-       MODAL 4: PROGRAM / RISET / LAYANAN / PELATIHAN / KARIR DETAIL MODAL
+       MODAL 4: PROGRAM / RISET / RESEARCH GROUP DETAIL MODAL
        ===================================================================== -->
-  <div id="program-detail-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-gray-900/60 backdrop-blur-[1px]" role="dialog" aria-modal="true" aria-labelledby="program-modal-title">
+  <div id="program-detail-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-gray-900/60 backdrop-blur-[1px]" role="dialog" aria-modal="true">
     <div class="bg-white rounded-xl max-w-2xl w-full max-h-[88vh] overflow-y-auto shadow-2xl border border-gray-200 animate-view">
       <div class="p-5 sm:p-6 border-b border-gray-200 flex items-start justify-between gap-4 sticky top-0 bg-white z-10">
         <div>
@@ -543,10 +683,8 @@
           <h3 id="program-modal-title" class="text-lg sm:text-xl font-bold text-[#1F2937] leading-snug"></h3>
           <div id="program-modal-meta" class="text-xs text-[#6B7280] mt-1.5"></div>
         </div>
-        <button type="button" onclick="closeProgramDetailModal()" class="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors" aria-label="Tutup">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
+        <button type="button" onclick="closeModalById('program-detail-modal')" class="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100" aria-label="Tutup">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
       <div class="p-5 sm:p-6 space-y-4">
@@ -554,8 +692,8 @@
         <div id="program-modal-link-box" class="hidden pt-3 border-t border-gray-100"></div>
       </div>
       <div class="px-5 py-3.5 bg-gray-50 border-t border-gray-200 flex items-center justify-between text-xs text-gray-500">
-        <span>IPT Research • Google Sheets Database</span>
-        <button type="button" onclick="closeProgramDetailModal()" class="px-4 py-1.5 rounded-md bg-[#0077B6] hover:bg-[#0082C8] text-white font-semibold transition-colors" data-i18n="program_modal_close">
+        <span>IPT Research — Iman Paryudi Team</span>
+        <button type="button" onclick="closeModalById('program-detail-modal')" class="px-4 py-1.5 rounded-md bg-[#0077B6] hover:bg-[#0082C8] text-white font-semibold" data-i18n="program_modal_close">
           Tutup Detail
         </button>
       </div>
@@ -566,15 +704,12 @@
   <div id="toast-notification" class="fixed bottom-5 right-5 z-50 hidden max-w-sm bg-[#1F2937] text-white text-xs px-4 py-3 rounded-lg shadow-xl border border-gray-700"></div>
 
   <!-- =====================================================================
-       APPLICATION LOGIC & BILINGUAL CONTENT + GOOGLE SHEETS SYNC
+       JAVASCRIPT: SBA-STYLE ARCHITECTURE + LIVE GOOGLE SHEETS SYNC
        ===================================================================== -->
   <script>
     /**
      * =========================================================================
-     * KONFIGURASI KONEKSI GOOGLE SPREADSHEETS (WAJIB DIISI UNTUK LIVE PUBLIC)
-     * Tempel URL Web App Google Apps Script (/exec) Anda di antara tanda kutip
-     * pada variabel DEFAULT_SHEETS_API_URL di bawah ini agar seluruh pengunjung
-     * dari perangkat manapun langsung menerima data terbaru dari Google Sheets.
+     * KONFIGURASI GOOGLE SPREADSHEETS (TEMPEL URL /exec APPS SCRIPT DI SINI)
      * =========================================================================
      */
     const DEFAULT_SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbw6i9CuqAMD82O-EPMonVYZ8-C_acvHu13yV7vdhfqbB-phzqcyp8zq3RpA0wSAuhkqyg/exec"; // <-- TEMPEL URL /exec GOOGLE APPS SCRIPT ANDA DI SINI
@@ -597,14 +732,7 @@
 
       try {
         const directUrl = localStorage.getItem('ipt_sheets_api_url');
-        if (directUrl && directUrl.trim().startsWith('https://')) {
-          return directUrl.trim();
-        }
-
-        const altUrl = localStorage.getItem('ipt_research_sheets_url');
-        if (altUrl && altUrl.trim().startsWith('https://')) {
-          return altUrl.trim();
-        }
+        if (directUrl && directUrl.trim().startsWith('https://')) return directUrl.trim();
 
         const adminCfgRaw = localStorage.getItem(CMS_CONFIG_KEY);
         if (adminCfgRaw) {
@@ -619,10 +747,11 @@
     }
 
     let currentLang = 'id';
-    let activeTab = 'home';
-    let aboutDropdownTimer = null;
+    let activeRoute = 'home';
+    let dropdownCloseTimers = {};
     let isFetchingSheets = false;
-    let openAccordionCategories = {
+    let researchGroupsSidebarOpen = true;
+    let openTeamAccordions = {
       'Management': true,
       'Scientific & Innovation Board': true,
       'Key Researchers': true,
@@ -630,19 +759,13 @@
     };
 
     // -------------------------------------------------------------------------
-    // 1. FALLBACK SVG GRAPHICS & INITIAL INSTITUTIONAL DATA
+    // 1. CUSTOM SVG FALLBACKS & DEFAULT INSTITUTIONAL DATA
     // -------------------------------------------------------------------------
     const FALLBACK_THUMB_CLOCK =
       "data:image/svg+xml;utf8," +
       encodeURIComponent(
         `<svg xmlns="http://www.w3.org/2000/svg" width="330" height="210" viewBox="0 0 330 210">
-          <defs>
-            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#0F2942"/>
-              <stop offset="100%" stop-color="#1E4976"/>
-            </linearGradient>
-          </defs>
-          <rect width="330" height="210" fill="url(#g1)"/>
+          <rect width="330" height="210" fill="#0F2942"/>
           <circle cx="165" cy="105" r="76" fill="none" stroke="#D4AF37" stroke-width="3.5"/>
           <circle cx="165" cy="105" r="58" fill="none" stroke="#93C5FD" stroke-width="1.2" stroke-dasharray="4 3"/>
           <circle cx="165" cy="105" r="4" fill="#FBBF24"/>
@@ -655,28 +778,17 @@
       "data:image/svg+xml;utf8," +
       encodeURIComponent(
         `<svg xmlns="http://www.w3.org/2000/svg" width="330" height="210" viewBox="0 0 330 210">
-          <defs>
-            <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#0B2239"/>
-              <stop offset="100%" stop-color="#005F94"/>
-            </linearGradient>
-          </defs>
-          <rect width="330" height="210" fill="url(#g2)"/>
+          <rect width="330" height="210" fill="#0B2239"/>
           <g stroke="#38BDF8" stroke-opacity="0.35" stroke-width="1.2">
-            <line x1="45" y1="45" x2="130" y2="95"/>
-            <line x1="130" y1="95" x2="220" y2="55"/>
-            <line x1="130" y1="95" x2="195" y2="155"/>
-            <line x1="220" y1="55" x2="285" y2="115"/>
+            <line x1="45" y1="45" x2="130" y2="95"/><line x1="130" y1="95" x2="220" y2="55"/>
+            <line x1="130" y1="95" x2="195" y2="155"/><line x1="220" y1="55" x2="285" y2="115"/>
             <line x1="195" y1="155" x2="285" y2="115"/>
           </g>
           <g fill="#7DD3FC">
-            <circle cx="45" cy="45" r="4"/>
-            <circle cx="130" cy="95" r="5"/>
-            <circle cx="220" cy="55" r="4"/>
-            <circle cx="195" cy="155" r="4"/>
-            <circle cx="285" cy="115" r="4"/>
+            <circle cx="45" cy="45" r="4"/><circle cx="130" cy="95" r="5"/>
+            <circle cx="220" cy="55" r="4"/><circle cx="195" cy="155" r="4"/><circle cx="285" cy="115" r="4"/>
           </g>
-          <text x="165" y="186" fill="#E0F2FE" font-family="monospace" font-size="11" text-anchor="middle">01001001 AI &amp; DATA SCIENCE 01010000</text>
+          <text x="165" y="186" fill="#E0F2FE" font-family="monospace" font-size="11" text-anchor="middle">IPT AI &amp; DATA SCIENCE</text>
         </svg>`
       );
 
@@ -684,13 +796,7 @@
       "data:image/svg+xml;utf8," +
       encodeURIComponent(
         `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="380" viewBox="0 0 320 380">
-          <defs>
-            <linearGradient id="bgAv" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#D1D5DB"/>
-              <stop offset="100%" stop-color="#9CA3AF"/>
-            </linearGradient>
-          </defs>
-          <rect width="320" height="380" fill="url(#bgAv)"/>
+          <rect width="320" height="380" fill="#CBD5E1"/>
           <circle cx="160" cy="132" r="54" fill="#64748B"/>
           <path d="M72 345c0-54 39-92 88-92s88 38 88 92v35H72v-35z" fill="#0077B6"/>
           <path d="M136 253l24 38 24-38" fill="#FFFFFF" opacity="0.9"/>
@@ -700,34 +806,47 @@
     const FALLBACK_GROUP_BANNER =
       "data:image/svg+xml;utf8," +
       encodeURIComponent(
-        `<svg xmlns="http://www.w3.org/2000/svg" width="960" height="440" viewBox="0 0 960 440">
+        `<svg xmlns="http://www.w3.org/2000/svg" width="960" height="420" viewBox="0 0 960 420">
           <defs>
             <linearGradient id="grpGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#1E3A5F"/>
-              <stop offset="55%" stop-color="#0077B6"/>
-              <stop offset="100%" stop-color="#0F172A"/>
+              <stop offset="0%" stop-color="#1E3A5F"/><stop offset="55%" stop-color="#0077B6"/><stop offset="100%" stop-color="#0F172A"/>
             </linearGradient>
           </defs>
-          <rect width="960" height="440" fill="url(#grpGrad)"/>
-          <g stroke="#7DD3FC" stroke-opacity="0.22" stroke-width="1">
-            <line x1="0" y1="90" x2="960" y2="90"/><line x1="0" y1="180" x2="960" y2="180"/>
-            <line x1="0" y1="270" x2="960" y2="270"/><line x1="0" y1="360" x2="960" y2="360"/>
-            <line x1="160" y1="0" x2="160" y2="440"/><line x1="320" y1="0" x2="320" y2="440"/>
-            <line x1="480" y1="0" x2="480" y2="440"/><line x1="640" y1="0" x2="640" y2="440"/>
-            <line x1="800" y1="0" x2="800" y2="440"/>
-          </g>
+          <rect width="960" height="420" fill="url(#grpGrad)"/>
           <g fill="#E0F2FE" opacity="0.88">
-            <circle cx="240" cy="215" r="24"/><rect x="206" y="246" width="68" height="90" rx="18"/>
-            <circle cx="360" cy="200" r="26"/><rect x="324" y="233" width="72" height="103" rx="18"/>
-            <circle cx="480" cy="192" r="28"/><rect x="441" y="227" width="78" height="109" rx="20"/>
-            <circle cx="600" cy="200" r="26"/><rect x="564" y="233" width="72" height="103" rx="18"/>
-            <circle cx="720" cy="215" r="24"/><rect x="686" y="246" width="68" height="90" rx="18"/>
+            <circle cx="240" cy="200" r="24"/><rect x="206" y="232" width="68" height="86" rx="18"/>
+            <circle cx="360" cy="186" r="26"/><rect x="324" y="220" width="72" height="98" rx="18"/>
+            <circle cx="480" cy="178" r="28"/><rect x="441" y="214" width="78" height="104" rx="20"/>
+            <circle cx="600" cy="186" r="26"/><rect x="564" y="220" width="72" height="98" rx="18"/>
+            <circle cx="720" cy="200" r="24"/><rect x="686" y="232" width="68" height="86" rx="18"/>
           </g>
-          <rect x="0" y="336" width="960" height="104" fill="#0F172A" opacity="0.55"/>
-          <text x="480" y="382" fill="#FFFFFF" font-family="sans-serif" font-size="22" font-weight="700" text-anchor="middle">Iman Paryudi Team (IPT Research)</text>
-          <text x="480" y="408" fill="#BAE6FD" font-family="sans-serif" font-size="13" text-anchor="middle">Applied Artificial Intelligence &amp; Data Science Research Group • Jakarta, Indonesia</text>
+          <rect x="0" y="324" width="960" height="96" fill="#0F172A" opacity="0.58"/>
+          <text x="480" y="366" fill="#FFFFFF" font-family="sans-serif" font-size="21" font-weight="700" text-anchor="middle">Iman Paryudi Team (IPT Research)</text>
+          <text x="480" y="392" fill="#BAE6FD" font-family="sans-serif" font-size="13" text-anchor="middle">Applied Artificial Intelligence &amp; Data Science Research Group • Jakarta, Indonesia</text>
         </svg>`
       );
+
+    function createResearchGroupSvg(label, accent = '#0077B6') {
+      return (
+        "data:image/svg+xml;utf8," +
+        encodeURIComponent(
+          `<svg xmlns="http://www.w3.org/2000/svg" width="440" height="260" viewBox="0 0 440 260">
+            <rect width="440" height="260" fill="#F1F5F9"/>
+            <rect x="28" y="26" width="384" height="162" rx="10" fill="#0F2942"/>
+            <g stroke="#38BDF8" stroke-opacity="0.45" stroke-width="1.5">
+              <line x1="70" y1="68" x2="170" y2="115"/><line x1="170" y1="115" x2="275" y2="62"/>
+              <line x1="170" y1="115" x2="245" y2="155"/><line x1="275" y1="62" x2="365" y2="120"/>
+            </g>
+            <g fill="#7DD3FC">
+              <circle cx="70" cy="68" r="5"/><circle cx="170" cy="115" r="6"/>
+              <circle cx="275" cy="62" r="5"/><circle cx="245" cy="155" r="5"/><circle cx="365" cy="120" r="5"/>
+            </g>
+            <rect x="28" y="202" width="384" height="34" rx="6" fill="${accent}"/>
+            <text x="220" y="223" fill="#FFFFFF" font-family="sans-serif" font-size="12" font-weight="700" text-anchor="middle">${label}</text>
+          </svg>`
+        )
+      );
+    }
 
     let newsArticles = [
       {
@@ -797,6 +916,81 @@
           id: 'Konferensi internasional tahunan yang mempertemukan peneliti AI, pakar Computer Vision, dan praktisi Data Science untuk mempresentasikan riset terbaru dalam pengenalan citra berbasis kecerdasan buatan dan analitik data skala besar.',
           en: 'Annual international conference bringing together AI researchers, Computer Vision specialists, and Data Science practitioners to present peer-reviewed advances in AI-driven image recognition and large-scale data analytics.'
         }
+      }
+    ];
+
+    const researchGroupsData = [
+      {
+        id: 'rg-applied-ai',
+        title: {
+          id: 'Applied Artificial Intelligence & Machine Learning',
+          en: 'Applied Artificial Intelligence & Machine Learning'
+        },
+        p1: {
+          id: 'Kelompok riset Applied AI melakukan penelitian fundamental dan terapan di bidang pembelajaran mendalam (deep learning), sistem pendukung keputusan cerdas, serta pemrosesan bahasa alami Bahasa Indonesia.',
+          en: 'The Applied AI research group conducts basic and applied research in deep learning, intelligent decision support systems, and Indonesian natural language processing.'
+        },
+        p2: {
+          id: 'Aktivitas penelitian mencakup perancangan arsitektur Retrieval-Augmented Generation (RAG) terverifikasi, optimasi model ringan untuk edge computing, hingga kolaborasi konsultasi teknologi cerdas bersama mitra industri.',
+          en: 'Research activities span verified Retrieval-Augmented Generation (RAG) architectures, lightweight edge-AI optimization, and applied research consulting with industry partners.'
+        },
+        leadId: 'TIM-001',
+        leadName: 'Dr. Iman Paryudi',
+        svgLabel: 'APPLIED AI & MACHINE LEARNING'
+      },
+      {
+        id: 'rg-data-science',
+        title: {
+          id: 'Data Science & Predictive Analytics',
+          en: 'Data Science & Predictive Analytics'
+        },
+        p1: {
+          id: 'Kelompok riset Data Science & Predictive Analytics berfokus pada pemodelan statistik skala besar, penambangan data (data mining), serta analitik deret waktu untuk sistem kompleks.',
+          en: 'The Data Science & Predictive Analytics group focuses on large-scale statistical modeling, data mining, and time-series analytics for complex organizational systems.'
+        },
+        p2: {
+          id: 'Kami mengembangkan kerangka evaluasi kualitas data yang dapat diaudit, visualisasi analitik kognitif, serta pipeline machine learning otomatis untuk pengambilan keputusan berbasis bukti.',
+          en: 'We develop auditable data quality evaluation frameworks, cognitive visual analytics, and automated MLOps pipelines for evidence-based decision making.'
+        },
+        leadId: 'TIM-006',
+        leadName: 'Dr. Nadya Permatasari',
+        svgLabel: 'DATA SCIENCE & PREDICTIVE ANALYTICS'
+      },
+      {
+        id: 'rg-computer-vision',
+        title: {
+          id: 'Computer Vision & Intelligent Image Recognition',
+          en: 'Computer Vision & Intelligent Image Recognition'
+        },
+        p1: {
+          id: 'Kelompok riset Computer Vision meneliti pengenalan pola visual, segmentasi citra medis dan agrikultur, serta inspeksi kualitas industri otomatis secara real-time.',
+          en: 'The Computer Vision group investigates visual pattern recognition, medical and agricultural image segmentation, and real-time automated industrial quality inspection.'
+        },
+        p2: {
+          id: 'Menggabungkan Convolutional Neural Networks dan Vision Transformers, kelompok ini menghasilkan prototipe penglihatan komputer berlatensi rendah yang terintegrasi dengan konferensi internasional ICIIRDS.',
+          en: 'Combining Convolutional Neural Networks and Vision Transformers, the group delivers low-latency computer vision prototypes closely aligned with the international ICIIRDS conference.'
+        },
+        leadId: 'TIM-007',
+        leadName: 'Dr. Aditya Pratama',
+        svgLabel: 'COMPUTER VISION & IMAGE RECOGNITION'
+      },
+      {
+        id: 'rg-ai-security',
+        title: {
+          id: 'Information Security & AI System Resilience',
+          en: 'Information Security & AI System Resilience'
+        },
+        p1: {
+          id: 'Kelompok riset Information Security & AI System Resilience mengkaji ketahanan model pembelajaran mesin terhadap serangan adversarial, perlindungan privasi dataset, dan deteksi anomali jaringan.',
+          en: 'The Information Security & AI System Resilience group investigates machine learning robustness against adversarial attacks, dataset privacy preservation, and network anomaly detection.'
+        },
+        p2: {
+          id: 'Selain riset teoretis, kelompok ini menyusun pedoman tata kelola keamanan AI, audit kerentanan aplikasi, serta program pelatihan kesadaran keamanan siber bagi institusi.',
+          en: 'Alongside theoretical research, the group establishes AI security governance guidelines, application security audits, and cyber awareness training programs.'
+        },
+        leadId: 'TIM-009',
+        leadName: 'Dr. Reza Pahlevi',
+        svgLabel: 'INFORMATION SECURITY & AI RESILIENCE'
       }
     ];
 
@@ -1013,8 +1207,6 @@
       }
     ];
 
-    // Data untuk menu Riset, Penelitian Terapan, Layanan Profesional, Pelatihan, Bekerja di IPT
-    // Otomatis diperbarui dari Google Spreadsheets (Sheet: Riset) & admin.html
     let risetItems = [
       {
         id: 'RST-001',
@@ -1084,7 +1276,7 @@
     ];
 
     // -------------------------------------------------------------------------
-    // 2. BILINGUAL DICTIONARY & HERO METADATA PER TAB
+    // 2. BILINGUAL DICTIONARY & ROUTE METADATA
     // -------------------------------------------------------------------------
     const translations = {
       id: {
@@ -1096,6 +1288,20 @@
         nav_acara: 'Acara',
         nav_karir: 'Bekerja di IPT',
         nav_tentang: 'Tentang',
+        sub_publikasi: 'Publikasi Ilmiah',
+        sub_pusat: 'Pusat Riset AI & Data Science',
+        sub_proyek: 'Proyek Riset',
+        sub_kelompok: 'Kelompok Riset',
+        sub_advisori: 'Kajian & Advisori AI',
+        sub_pengajaran: 'Pengajaran & Mata Kuliah',
+        sub_bimbingan: 'Bimbingan Skripsi | Tesis | Disertasi',
+        sub_konferensi: 'Konferensi Ilmiah',
+        terapan_dd_1: 'Evaluasi Ekosistem Perangkat Lunak Cerdas (I-SEE)',
+        terapan_dd_2: 'Pelatihan Evaluasi Sistem AI Terintegrasi',
+        terapan_dd_3: 'Implementasi Analitik & SOC Berbasis Open-Source',
+        terapan_dd_4: 'Asisten Pengetahuan Dokumen Teknis (Verified RAG)',
+        terapan_dd_5: 'Deteksi Anomali & Threat Hunting Berbasis AI',
+        terapan_dd_6: 'Penilaian Kedaulatan Digital Sistem Perangkat Lunak',
         dd_tim: 'Tim',
         dd_profil: 'Profil Pusat Riset',
         dd_mitra: 'Mitra & Kolaborasi',
@@ -1119,44 +1325,8 @@
         event_submit_btn: 'Konfirmasi Kehadiran',
         member_bio_label: 'Profil & Fokus Penelitian',
         member_expertise_label: 'Bidang Keahlian',
-        hero: {
-          home: {
-            h1: 'IPT Research adalah pusat penelitian untuk aplikasi AI dan Data Science',
-            sub: 'Pusat Riset dan Inovasi aplikasi AI dan Data Science di Indonesia.'
-          },
-          riset: {
-            h1: 'Riset Fundamental & Publikasi Ilmiah',
-            sub: 'Eksplorasi metodologi mutakhir di bidang Artificial Intelligence, Machine Learning, Computer Vision, dan Data Science.'
-          },
-          terapan: {
-            h1: 'Penelitian Terapan & Hilirisasi Teknologi',
-            sub: 'Menjembatani hasil riset laboratorium menjadi solusi prototipe siap pakai bagi industri dan institusi.'
-          },
-          layanan: {
-            h1: 'Layanan Profesional & Konsultasi Pakar',
-            sub: 'Pendampingan audit model AI, tata kelola data, serta analitik prediktif berbasis bukti ilmiah.'
-          },
-          pelatihan: {
-            h1: 'Pelatihan Keamanan Informasi & Kecerdasan Buatan',
-            sub: 'Program peningkatan kapasitas teknis bagi praktisi TI, peneliti, dan pengambil kebijakan.'
-          },
-          acara: {
-            h1: 'Acara, Konferensi & Kolokium Ilmiah @ IPT',
-            sub: 'Forum pertukaran gagasan ilmiah internasional bersama komunitas peneliti AI dan Data Science.'
-          },
-          karir: {
-            h1: 'Bekerja di IPT Research',
-            sub: 'Bergabunglah bersama tim peneliti dan insinyur data kami untuk membangun inovasi AI berdampak di Indonesia.'
-          },
-          tim: {
-            h1: 'Tim Peneliti & Manajemen IPT Research',
-            sub: 'Para peneliti, dewan ilmiah, dan tenaga ahli di balik inovasi AI dan Data Science di Iman Paryudi Team.'
-          },
-          tentang: {
-            h1: 'Tentang IPT Research (Iman Paryudi Team)',
-            sub: 'Profil kelembagaan, kemitraan strategis, standar mutu, dan kontak resmi pusat penelitian kami di Jakarta.'
-          }
-        }
+        hero_home_h1: 'IPT Research adalah pusat penelitian untuk aplikasi AI dan Data Science',
+        hero_home_sub: 'Pusat Riset dan Inovasi aplikasi AI dan Data Science di Indonesia.'
       },
       en: {
         nav_home: 'Home',
@@ -1165,8 +1335,22 @@
         nav_layanan: 'Professional Services',
         nav_pelatihan: 'Trainings',
         nav_acara: 'Events',
-        nav_karir: 'Careers at IPT',
+        nav_karir: 'Working at IPT',
         nav_tentang: 'About',
+        sub_publikasi: 'Publications',
+        sub_pusat: 'AI & Data Science Research Center',
+        sub_proyek: 'Projects',
+        sub_kelompok: 'Research Groups',
+        sub_advisori: 'IPT AI & Security Advisories',
+        sub_pengajaran: 'Teaching | Courses',
+        sub_bimbingan: 'Bachelor | Master | PhD - Thesis Supervision',
+        sub_konferensi: 'Conferences',
+        terapan_dd_1: 'Integrated Software Ecosystem Evaluation (I-SEE)',
+        terapan_dd_2: 'Integrated AI System Evaluation Training',
+        terapan_dd_3: 'Open-Source-Based Analytics & SOC Implementation',
+        terapan_dd_4: 'Verified Technical Document Assistant (RAG)',
+        terapan_dd_5: 'AI-Driven Anomaly Detection & Threat Hunting',
+        terapan_dd_6: 'Assessment of Digital Sovereignty of Software Systems',
         dd_tim: 'Team',
         dd_profil: 'Research Center Profile',
         dd_mitra: 'Partners & Collaborations',
@@ -1174,65 +1358,108 @@
         dd_sdg: 'Sustainable Development Goals (SDG)',
         dd_standar: 'Quality & Information Security Standards',
         dd_kontak: 'Contact',
-        news_heading: 'Latest News:',
+        news_heading: 'Recent News:',
         read_more: 'Read More',
-        sidebar_events_title: 'Upcoming Events @ IPT',
-        sidebar_glance_title: 'IPT Research at a Glance',
+        sidebar_events_title: 'Upcoming events @ IPT',
+        sidebar_glance_title: 'IPT Research at a glance',
         sidebar_glance_body: 'IPT Research focuses on innovative research in Applied AI and Data Science.',
         footer_contact_heading: 'Contact',
         footer_copyright: '© 2026 IPT Research. All rights reserved.',
         footer_sheets_badge: 'Connected with Google Sheets System.',
         footer_refresh_btn: 'Refresh Data',
-        modal_news_label: 'Latest News • IPT Research',
+        modal_news_label: 'Recent News • IPT Research',
         modal_close_btn: 'Close Article',
         program_modal_close: 'Close Details',
         event_form_heading: 'Seminar / Conference Participant Registration',
         event_submit_btn: 'Confirm Attendance',
         member_bio_label: 'Profile & Research Focus',
         member_expertise_label: 'Areas of Expertise',
-        hero: {
-          home: {
-            h1: 'IPT Research is a research center for AI and Data Science applications',
-            sub: 'Center for Research and Innovation in Applied AI and Data Science in Indonesia.'
-          },
-          riset: {
-            h1: 'Fundamental Research & Scientific Publications',
-            sub: 'Advancing methodologies in Artificial Intelligence, Machine Learning, Computer Vision, and Data Science.'
-          },
-          terapan: {
-            h1: 'Applied Research & Technology Transfer',
-            sub: 'Bridging laboratory discoveries into production-ready prototypes for industry and public institutions.'
-          },
-          layanan: {
-            h1: 'Professional Services & Expert Advisory',
-            sub: 'Evidence-based AI model auditing, data governance, and predictive analytics consulting.'
-          },
-          pelatihan: {
-            h1: 'Information Security & AI Training Programs',
-            sub: 'Hands-on technical capacity building for IT practitioners, researchers, and institutional leaders.'
-          },
-          acara: {
-            h1: 'Events, Conferences & Colloquia @ IPT',
-            sub: 'International scientific exchange forums with the global AI and Data Science community.'
-          },
-          karir: {
-            h1: 'Working at IPT Research',
-            sub: 'Join our researchers and data engineers to advance impactful AI innovation in Indonesia.'
-          },
-          tim: {
-            h1: 'IPT Research Team & Leadership',
-            sub: 'Meet the researchers, scientific advisory board, and specialists driving AI and Data Science innovation.'
-          },
-          tentang: {
-            h1: 'About IPT Research (Iman Paryudi Team)',
-            sub: 'Institutional profile, strategic partnerships, quality standards, and official contact details in Jakarta.'
-          }
-        }
+        hero_home_h1: 'IPT Research is a research center for AI and Data Science applications',
+        hero_home_sub: 'Center for Research and Innovation in Applied AI and Data Science in Indonesia.'
+      }
+    };
+
+    const ROUTE_META = {
+      home: { nav: 'home' },
+      'riset-publikasi': {
+        nav: 'riset',
+        title: { id: 'Publikasi Ilmiah', en: 'Publications' },
+        crumbs: [{ label: { id: 'Riset', en: 'Research' }, route: 'riset-publikasi' }, { label: { id: 'Publikasi Ilmiah', en: 'Publications' } }]
+      },
+      'riset-pusat': {
+        nav: 'riset',
+        title: { id: 'Pusat Riset AI & Data Science', en: 'AI & Data Science Research Center' },
+        crumbs: [{ label: { id: 'Riset', en: 'Research' }, route: 'riset-publikasi' }, { label: { id: 'Pusat Riset AI & Data Science', en: 'AI & Data Science Research Center' } }]
+      },
+      'riset-proyek': {
+        nav: 'riset',
+        title: { id: 'Proyek Riset', en: 'Projects' },
+        crumbs: [{ label: { id: 'Riset', en: 'Research' }, route: 'riset-publikasi' }, { label: { id: 'Proyek Riset', en: 'Projects' } }]
+      },
+      'riset-kelompok': {
+        nav: 'riset',
+        title: { id: 'Kelompok Riset', en: 'Research Groups' },
+        crumbs: [{ label: { id: 'Riset', en: 'Research' }, route: 'riset-publikasi' }, { label: { id: 'Kelompok Riset', en: 'Research Groups' } }]
+      },
+      'riset-advisori': {
+        nav: 'riset',
+        title: { id: 'Kajian & Advisori AI', en: 'IPT AI & Security Advisories' },
+        crumbs: [{ label: { id: 'Riset', en: 'Research' }, route: 'riset-publikasi' }, { label: { id: 'Kajian & Advisori AI', en: 'IPT AI & Security Advisories' } }]
+      },
+      'riset-pengajaran': {
+        nav: 'riset',
+        title: { id: 'Pengajaran & Mata Kuliah', en: 'Teaching & Courses' },
+        crumbs: [{ label: { id: 'Riset', en: 'Research' }, route: 'riset-publikasi' }, { label: { id: 'Pengajaran & Mata Kuliah', en: 'Teaching & Courses' } }]
+      },
+      'riset-bimbingan': {
+        nav: 'riset',
+        title: { id: 'Bimbingan Skripsi | Tesis | Disertasi', en: 'Bachelor | Master | PhD - Thesis Supervision' },
+        crumbs: [{ label: { id: 'Riset', en: 'Research' }, route: 'riset-publikasi' }, { label: { id: 'Bimbingan Tugas Akhir', en: 'Thesis Supervision' } }]
+      },
+      'riset-konferensi': {
+        nav: 'riset',
+        title: { id: 'Konferensi Ilmiah', en: 'Conferences' },
+        crumbs: [{ label: { id: 'Riset', en: 'Research' }, route: 'riset-publikasi' }, { label: { id: 'Konferensi Ilmiah', en: 'Conferences' } }]
+      },
+      terapan: {
+        nav: 'terapan',
+        title: { id: 'Penelitian Terapan', en: 'Applied Research' },
+        crumbs: [{ label: { id: 'Penelitian Terapan', en: 'Applied Research' } }]
+      },
+      layanan: {
+        nav: 'layanan',
+        title: { id: 'Layanan Profesional', en: 'Professional Services' },
+        crumbs: [{ label: { id: 'Layanan Profesional', en: 'Professional Services' } }]
+      },
+      pelatihan: {
+        nav: 'pelatihan',
+        title: { id: 'Pelatihan Keamanan & AI', en: 'Security & AI Trainings' },
+        crumbs: [{ label: { id: 'Pelatihan', en: 'Trainings' } }]
+      },
+      acara: {
+        nav: 'acara',
+        title: { id: 'Acara @ IPT', en: 'Events @ IPT' },
+        crumbs: [{ label: { id: 'Acara', en: 'Events' } }]
+      },
+      karir: {
+        nav: 'karir',
+        title: { id: 'Bekerja di IPT', en: 'Working at IPT' },
+        crumbs: [{ label: { id: 'Bekerja di IPT', en: 'Working at IPT' } }]
+      },
+      tim: {
+        nav: 'tentang',
+        title: { id: 'Tim', en: 'Team' },
+        crumbs: [{ label: { id: 'Tentang', en: 'About' }, route: 'tentang' }, { label: { id: 'Tim', en: 'Team' } }]
+      },
+      tentang: {
+        nav: 'tentang',
+        title: { id: 'Tentang IPT Research', en: 'About IPT Research' },
+        crumbs: [{ label: { id: 'Tentang', en: 'About' } }]
       }
     };
 
     // -------------------------------------------------------------------------
-    // 3. LANGUAGE & NAVIGATION CONTROLLERS
+    // 3. NAVIGATION, DROPDOWN & HERO BANNER CONTROLLERS
     // -------------------------------------------------------------------------
     function setLanguage(lang) {
       currentLang = lang;
@@ -1241,96 +1468,100 @@
       const btnId = document.getElementById('btn-lang-id');
       const btnEn = document.getElementById('btn-lang-en');
       if (lang === 'id') {
-        btnId.className = 'inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-bold text-[#0077B6] bg-blue-50/70 transition-colors';
+        btnId.className = 'inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-bold text-[#0077B6] bg-blue-50/80 transition-colors';
         btnEn.className = 'inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-medium text-[#6B7280] hover:text-[#0077B6] transition-colors';
       } else {
-        btnEn.className = 'inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-bold text-[#0077B6] bg-blue-50/70 transition-colors';
+        btnEn.className = 'inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-bold text-[#0077B6] bg-blue-50/80 transition-colors';
         btnId.className = 'inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-medium text-[#6B7280] hover:text-[#0077B6] transition-colors';
       }
 
       document.querySelectorAll('[data-i18n]').forEach((el) => {
         const key = el.getAttribute('data-i18n');
-        if (dict[key]) {
-          el.textContent = dict[key];
-        }
+        if (dict[key]) el.textContent = dict[key];
       });
 
-      updateHeroForTab(activeTab);
-      renderTabContent(activeTab);
+      updateHeroBanner(activeRoute);
+      renderRouteView(activeRoute);
     }
 
-    function updateHeroForTab(tabKey) {
-      const heroKey = tabKey.startsWith('tentang') ? 'tentang' : tabKey;
-      const heroData = translations[currentLang].hero[heroKey] || translations[currentLang].hero.home;
-      document.getElementById('hero-headline').textContent = heroData.h1;
-      document.getElementById('hero-subheadline').textContent = heroData.sub;
+    function openNavDropdown(panelId) {
+      if (dropdownCloseTimers[panelId]) {
+        clearTimeout(dropdownCloseTimers[panelId]);
+        dropdownCloseTimers[panelId] = null;
+      }
+      document.querySelectorAll('.nav-dropdown-panel').forEach((panel) => {
+        if (panel.id !== panelId) panel.classList.add('hidden');
+      });
+      document.getElementById(panelId)?.classList.remove('hidden');
     }
 
-    function switchTab(tabKey) {
-      activeTab = tabKey;
+    function scheduleCloseNavDropdown(panelId) {
+      dropdownCloseTimers[panelId] = setTimeout(() => {
+        document.getElementById(panelId)?.classList.add('hidden');
+      }, 160);
+    }
 
-      const navHighlightKey = tabKey === 'tim' || tabKey.startsWith('tentang') ? 'tentang' : tabKey;
+    function closeAllNavDropdowns() {
+      document.querySelectorAll('.nav-dropdown-panel').forEach((panel) => panel.classList.add('hidden'));
+    }
+
+    function updateHeroBanner(routeKey) {
+      const homeBlock = document.getElementById('hero-home-content');
+      const innerBlock = document.getElementById('hero-inner-content');
+      const dict = translations[currentLang];
+
+      if (routeKey === 'home') {
+        homeBlock.classList.remove('hidden');
+        innerBlock.classList.add('hidden');
+        innerBlock.classList.remove('flex');
+        document.getElementById('hero-headline').textContent = dict.hero_home_h1;
+        document.getElementById('hero-subheadline').textContent = dict.hero_home_sub;
+      } else {
+        homeBlock.classList.add('hidden');
+        innerBlock.classList.remove('hidden');
+        innerBlock.classList.add('flex');
+
+        const meta = ROUTE_META[routeKey] || ROUTE_META.tentang;
+        document.getElementById('hero-inner-title').textContent = meta.title[currentLang] || meta.title.id;
+
+        const homeIcon = `<button type="button" onclick="navigateTo('home')" class="inline-flex items-center hover:underline" aria-label="Home"><svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg></button>`;
+        const crumbParts = [homeIcon];
+        (meta.crumbs || []).forEach((c) => {
+          const text = escapeHtmlSafe(c.label[currentLang] || c.label.id);
+          if (c.route) {
+            crumbParts.push(`<span>»</span><button type="button" onclick="navigateTo('${c.route}')" class="hover:underline">${text}</button>`);
+          } else {
+            crumbParts.push(`<span>»</span><span class="font-medium">${text}</span>`);
+          }
+        });
+        document.getElementById('hero-inner-breadcrumb').innerHTML = crumbParts.join('');
+      }
+    }
+
+    function navigateTo(routeKey) {
+      activeRoute = routeKey;
+      closeAllNavDropdowns();
+
+      const meta = ROUTE_META[routeKey] || { nav: 'home' };
       document.querySelectorAll('.nav-item').forEach((btn) => {
-        if (btn.getAttribute('data-nav') === navHighlightKey) {
+        if (btn.getAttribute('data-nav') === meta.nav) {
           btn.classList.add('nav-tab-active');
         } else {
           btn.classList.remove('nav-tab-active');
         }
       });
 
-      updateHeroForTab(tabKey);
-      renderTabContent(tabKey);
+      updateHeroBanner(routeKey);
+      renderRouteView(routeKey);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-
-      // Tarik data terbaru secara diam-diam saat berpindah tab
       syncGoogleSheetsData(true);
     }
 
-    function openAboutDropdown() {
-      if (aboutDropdownTimer) {
-        clearTimeout(aboutDropdownTimer);
-        aboutDropdownTimer = null;
-      }
-      const dd = document.getElementById('desktop-about-dropdown');
-      const btn = document.getElementById('desktop-about-btn');
-      dd?.classList.remove('hidden');
-      btn?.setAttribute('aria-expanded', 'true');
-    }
-
-    function scheduleCloseAboutDropdown() {
-      aboutDropdownTimer = setTimeout(() => {
-        closeAboutDropdown();
-      }, 160);
-    }
-
-    function closeAboutDropdown() {
-      const dd = document.getElementById('desktop-about-dropdown');
-      const btn = document.getElementById('desktop-about-btn');
-      dd?.classList.add('hidden');
-      btn?.setAttribute('aria-expanded', 'false');
-    }
-
-    function toggleAboutDropdown() {
-      const dd = document.getElementById('desktop-about-dropdown');
-      if (dd?.classList.contains('hidden')) {
-        openAboutDropdown();
-      } else {
-        closeAboutDropdown();
-      }
-    }
-
-    function navigateToAboutSub(subKey) {
-      closeAboutDropdown();
-      if (subKey === 'tim') {
-        switchTab('tim');
-        return;
-      }
-      switchTab('tentang');
+    function navigateToAboutSection(sectionId) {
+      navigateTo('tentang');
       setTimeout(() => {
-        const target = document.getElementById(subKey);
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        const el = document.getElementById(sectionId);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 60);
     }
 
@@ -1342,8 +1573,93 @@
       btn.setAttribute('aria-expanded', String(isHidden));
     }
 
+    function toggleGlobalSearchBar() {
+      const bar = document.getElementById('global-search-bar');
+      const input = document.getElementById('global-search-input');
+      const isHidden = bar.classList.contains('hidden');
+      bar.classList.toggle('hidden');
+      if (isHidden) {
+        input.value = '';
+        document.getElementById('global-search-results').classList.add('hidden');
+        input.focus();
+      }
+    }
+
+    function runGlobalSearch(query) {
+      const resultsBox = document.getElementById('global-search-results');
+      const term = query.trim().toLowerCase();
+      if (!term) {
+        resultsBox.classList.add('hidden');
+        resultsBox.innerHTML = '';
+        return;
+      }
+
+      const isId = currentLang === 'id';
+      const matches = [];
+
+      newsArticles.forEach((n) => {
+        const title = n.title[currentLang] || n.title.id;
+        if (title.toLowerCase().includes(term) || (n.excerpt[currentLang] || '').toLowerCase().includes(term)) {
+          matches.push({
+            badge: isId ? 'Berita' : 'News',
+            title,
+            action: `toggleGlobalSearchBar(); openArticleModal('${escapeHtmlSafe(n.id)}')`
+          });
+        }
+      });
+
+      researchGroupsData.forEach((rg) => {
+        const title = rg.title[currentLang] || rg.title.id;
+        if (title.toLowerCase().includes(term) || (rg.p1[currentLang] || '').toLowerCase().includes(term)) {
+          matches.push({
+            badge: isId ? 'Kelompok Riset' : 'Research Group',
+            title,
+            action: `toggleGlobalSearchBar(); navigateTo('riset-kelompok')`
+          });
+        }
+      });
+
+      risetItems.forEach((r) => {
+        const title = isId ? r.judul_id : (r.judul_en || r.judul_id);
+        if (title.toLowerCase().includes(term) || (r.ringkasan_id || '').toLowerCase().includes(term) || (r.penulis_id || '').toLowerCase().includes(term)) {
+          matches.push({
+            badge: r.kategori,
+            title,
+            action: `toggleGlobalSearchBar(); openProgramDetailModal('${escapeHtmlSafe(r.id)}')`
+          });
+        }
+      });
+
+      teamMembers.forEach((m) => {
+        if (m.name.toLowerCase().includes(term) || (m.role[currentLang] || '').toLowerCase().includes(term)) {
+          matches.push({
+            badge: isId ? 'Tim Peneliti' : 'Team',
+            title: `${m.name} — ${m.role[currentLang] || m.role.id}`,
+            action: `toggleGlobalSearchBar(); openMemberModal('${escapeHtmlSafe(m.id)}')`
+          });
+        }
+      });
+
+      resultsBox.classList.remove('hidden');
+      if (matches.length === 0) {
+        resultsBox.innerHTML = `<div class="px-4 py-3 text-xs text-gray-500">${isId ? 'Tidak ditemukan hasil yang cocok.' : 'No matching results found.'}</div>`;
+        return;
+      }
+
+      resultsBox.innerHTML = matches
+        .slice(0, 8)
+        .map(
+          (m) => `
+          <button type="button" onclick="${m.action}" class="w-full text-left px-4 py-2.5 hover:bg-blue-50/70 flex items-center justify-between gap-3 transition-colors">
+            <span class="text-xs font-medium text-[#1F2937] truncate">${escapeHtmlSafe(m.title)}</span>
+            <span class="px-2 py-0.5 rounded bg-blue-50 text-[#0077B6] text-[10.5px] font-semibold shrink-0">${escapeHtmlSafe(m.badge)}</span>
+          </button>`
+        )
+        .join('');
+    }
+
     // -------------------------------------------------------------------------
-    // 4. FLEXIBLE SPREADSHEET ROW NORMALIZATION & CACHE HYDRATION
+    // 4. SPREADSHEET ROW NORMALIZATION & CACHE HYDRATION
     // -------------------------------------------------------------------------
     function getSheetField(row, candidates, fallback = '') {
       if (!row || typeof row !== 'object') return fallback;
@@ -1364,183 +1680,195 @@
     function isVisibleStatus(statusVal) {
       const s = String(statusVal ?? '').trim().toLowerCase();
       if (!s) return true;
-      const hiddenStatuses = ['draft', 'inactive', 'nonaktif', 'non-aktif', 'archived', 'arsip', 'hidden', 'false', '0'];
-      return !hiddenStatuses.includes(s);
+      return !['draft', 'inactive', 'nonaktif', 'non-aktif', 'archived', 'arsip', 'hidden', 'false', '0'].includes(s);
     }
 
-    function matchesRisetCategory(itemCategory, tabKey) {
+    function matchesRisetCategory(itemCategory, targetKey) {
       const cat = String(itemCategory ?? '').trim().toLowerCase();
       const categoryGroups = {
-        riset: ['riset', 'research', 'publikasi', 'fundamental research'],
+        'riset-publikasi': ['riset', 'research', 'publikasi', 'publikasi ilmiah', 'riset - publikasi ilmiah', 'publications', 'fundamental research'],
+        'riset-pusat': ['riset', 'pusat riset', 'pusat riset ai & data science', 'riset - pusat riset ai & data science', 'riset - pusat riset'],
+        'riset-proyek': ['riset', 'proyek', 'proyek riset', 'riset - proyek riset', 'projects'],
+        'riset-kelompok': ['kelompok riset', 'riset - kelompok riset', 'research groups'],
+        'riset-advisori': ['kajian & advisori ai', 'riset - kajian & advisori ai', 'advisori', 'security advisories'],
+        'riset-pengajaran': ['pengajaran & mata kuliah', 'riset - pengajaran & mata kuliah', 'teaching', 'courses', 'teaching & courses'],
+        'riset-bimbingan': ['bimbingan skripsi | tesis | disertasi', 'bimbingan tugas akhir', 'riset - bimbingan tugas akhir', 'thesis supervision'],
+        'riset-konferensi': ['konferensi ilmiah', 'riset - konferensi ilmiah', 'conferences'],
         terapan: ['penelitian terapan', 'terapan', 'applied research', 'applied'],
         layanan: ['layanan profesional', 'layanan', 'professional services', 'konsultasi', 'consulting'],
         pelatihan: ['pelatihan keamanan', 'pelatihan', 'security trainings', 'security training', 'training', 'workshop'],
         karir: ['bekerja di ipt', 'karir', 'career', 'careers', 'working at ipt', 'lowongan', 'fellowship']
       };
-      const allowed = categoryGroups[tabKey] || [];
-      return allowed.includes(cat);
+      return (categoryGroups[targetKey] || []).includes(cat);
     }
 
     function normalizeRisetRows(rawRows) {
       if (!Array.isArray(rawRows)) return [];
-      return rawRows
-        .map((r, idx) => {
-          const judulId = getSheetField(r, ['judul_id', 'judul', 'title_id', 'title', 'nama'], '');
-          const judulEn = getSheetField(r, ['judul_en', 'title_en'], judulId);
-          const ringkasanId = getSheetField(r, ['ringkasan_id', 'ringkasan', 'deskripsi_id', 'deskripsi', 'description_id', 'description', 'konten_id', 'konten'], '');
-          const ringkasanEn = getSheetField(r, ['ringkasan_en', 'deskripsi_en', 'description_en', 'konten_en'], ringkasanId);
-          const penulisId = getSheetField(r, ['penulis_id', 'penulis', 'koordinator_id', 'koordinator', 'coordinator', 'authors', 'pic'], '');
-          const penulisEn = getSheetField(r, ['penulis_en', 'koordinator_en'], penulisId);
-          return {
-            id: getSheetField(r, ['id', 'kode', 'code'], `RST-${String(idx + 1).padStart(3, '0')}`),
-            kategori: getSheetField(r, ['kategori', 'category', 'jenis', 'type', 'menu'], 'Riset'),
-            judul_id: judulId,
-            judul_en: judulEn || judulId,
-            ringkasan_id: ringkasanId,
-            ringkasan_en: ringkasanEn || ringkasanId,
-            penulis_id: penulisId,
-            penulis_en: penulisEn || penulisId,
-            tahun: getSheetField(r, ['tahun', 'year', 'periode', 'period', 'tanggal'], '2026'),
-            link: getSheetField(r, ['link', 'url', 'tautan', 'doi', 'referensi'], ''),
-            status: getSheetField(r, ['status', 'state', 'aktif'], 'Active')
-          };
-        })
-        .filter((item) => item.judul_id !== '');
+      return rawRows.map((row, idx) => {
+        const kategori = getSheetField(row, ['kategori', 'category', 'menu', 'jenis'], 'Riset');
+        const judulId = getSheetField(row, ['judul_id', 'judul', 'title_id', 'title', 'nama'], `Program ${idx + 1}`);
+        const judulEn = getSheetField(row, ['judul_en', 'title_en'], judulId);
+        const ringkasanId = getSheetField(row, ['ringkasan_id', 'ringkasan', 'deskripsi_id', 'deskripsi', 'description', 'excerpt'], '');
+        const ringkasanEn = getSheetField(row, ['ringkasan_en', 'deskripsi_en', 'description_en'], ringkasanId);
+        const penulisId = getSheetField(row, ['penulis_id', 'penulis', 'koordinator', 'coordinator', 'author', 'authors', 'pic'], '');
+        const penulisEn = getSheetField(row, ['penulis_en', 'author_en'], penulisId);
+        const tahun = getSheetField(row, ['tahun', 'year', 'periode'], '2026');
+        const link = getSheetField(row, ['link', 'tautan', 'url', 'doi', 'kode'], '');
+        const status = getSheetField(row, ['status'], 'Active');
+        const id = getSheetField(row, ['id'], `RST-${String(idx + 1).padStart(3, '0')}`);
+
+        return {
+          id,
+          kategori,
+          judul_id: judulId,
+          judul_en: judulEn,
+          ringkasan_id: ringkasanId,
+          ringkasan_en: ringkasanEn,
+          penulis_id: penulisId,
+          penulis_en: penulisEn,
+          tahun,
+          link,
+          status
+        };
+      });
     }
 
     function normalizeBeritaRows(rawRows) {
       if (!Array.isArray(rawRows)) return [];
       return rawRows
-        .filter((b) => isVisibleStatus(getSheetField(b, ['status', 'state'], 'Published')))
-        .map((b, idx) => {
-          const judulId = getSheetField(b, ['judul_id', 'judul', 'title_id', 'title'], '');
-          const judulEn = getSheetField(b, ['judul_en', 'title_en'], judulId);
-          const excerptId = getSheetField(b, ['excerpt_id', 'excerpt', 'ringkasan_id', 'ringkasan', 'deskripsi'], '');
-          const excerptEn = getSheetField(b, ['excerpt_en', 'ringkasan_en'], excerptId);
-          const kontenId = getSheetField(b, ['konten_id', 'konten', 'isi', 'content_id', 'content'], excerptId);
-          const kontenEn = getSheetField(b, ['konten_en', 'content_en'], excerptEn);
+        .filter((row) => isVisibleStatus(getSheetField(row, ['status'], 'Published')))
+        .map((row, idx) => {
+          const id = getSheetField(row, ['id'], `BRT-${String(idx + 1).padStart(3, '0')}`);
+          const judulId = getSheetField(row, ['judul_id', 'judul', 'title_id', 'title'], 'Berita IPT Research');
+          const judulEn = getSheetField(row, ['judul_en', 'title_en'], judulId);
+          const date = getSheetField(row, ['tanggal', 'date', 'waktu'], new Date().toDateString());
+          const excerptId = getSheetField(row, ['excerpt_id', 'excerpt', 'ringkasan_id', 'ringkasan'], '');
+          const excerptEn = getSheetField(row, ['excerpt_en', 'ringkasan_en'], excerptId);
+          const kontenIdRaw = getSheetField(row, ['konten_id', 'konten', 'isi_id', 'isi', 'content'], excerptId);
+          const kontenEnRaw = getSheetField(row, ['konten_en', 'isi_en', 'content_en'], kontenIdRaw);
+          const image = getSheetField(row, ['gambar', 'image', 'thumbnail', 'foto'], '');
+
           return {
-            id: getSheetField(b, ['id'], `news-${idx + 1}`),
-            title: { id: judulId, en: judulEn || judulId },
-            date: getSheetField(b, ['tanggal', 'date', 'waktu'], ''),
-            excerpt: { id: excerptId, en: excerptEn || excerptId },
+            id,
+            title: { id: judulId, en: judulEn },
+            date,
+            excerpt: { id: excerptId, en: excerptEn },
             fullText: {
-              id: String(kontenId).split(/\n+/).filter(Boolean),
-              en: String(kontenEn).split(/\n+/).filter(Boolean)
+              id: String(kontenIdRaw).split(/\n+/).filter(Boolean),
+              en: String(kontenEnRaw).split(/\n+/).filter(Boolean)
             },
-            image: getSheetField(b, ['gambar', 'image', 'foto', 'thumbnail', 'url_gambar'], ''),
+            image,
             fallback: idx % 2 === 0 ? FALLBACK_THUMB_CLOCK : FALLBACK_THUMB_AI
           };
-        })
-        .filter((item) => item.title.id !== '');
+        });
     }
 
     function normalizeAcaraRows(rawRows) {
       if (!Array.isArray(rawRows)) return [];
       return rawRows
-        .filter((a) => isVisibleStatus(getSheetField(a, ['status', 'state'], 'Upcoming')))
-        .map((a, idx) => {
-          const judulId = getSheetField(a, ['judul_id', 'judul', 'title_id', 'title', 'nama_acara'], '');
-          const judulEn = getSheetField(a, ['judul_en', 'title_en'], judulId);
-          const deskId = getSheetField(a, ['deskripsi_id', 'deskripsi', 'description', 'keterangan'], '');
-          const deskEn = getSheetField(a, ['deskripsi_en', 'description_en'], deskId);
+        .filter((row) => isVisibleStatus(getSheetField(row, ['status'], 'Upcoming')))
+        .map((row, idx) => {
+          const id = getSheetField(row, ['id'], `ACR-${String(idx + 1).padStart(3, '0')}`);
+          const judulId = getSheetField(row, ['judul_id', 'judul', 'title_id', 'title'], 'Acara IPT Research');
+          const judulEn = getSheetField(row, ['judul_en', 'title_en'], judulId);
+          const dateRange = getSheetField(row, ['tanggal_rentang', 'tanggal', 'daterange', 'date'], '2026');
+          const location = getSheetField(row, ['lokasi', 'location', 'tempat'], 'Jakarta – lantai 2, 12640 Indonesia');
+          const descId = getSheetField(row, ['deskripsi', 'deskripsi_id', 'description'], '');
+          const descEn = getSheetField(row, ['deskripsi_en', 'description_en'], descId);
+
           return {
-            id: getSheetField(a, ['id'], `evt-${idx + 1}`),
-            title: { id: judulId, en: judulEn || judulId },
-            dateRange: getSheetField(a, ['tanggal_rentang', 'tanggal', 'date', 'waktu'], ''),
-            location: getSheetField(a, ['lokasi', 'location', 'tempat'], 'Jakarta – lantai 2, 12640 Indonesia'),
-            description: { id: deskId, en: deskEn || deskId }
+            id,
+            title: { id: judulId, en: judulEn },
+            dateRange,
+            location,
+            description: { id: descId, en: descEn }
           };
-        })
-        .filter((item) => item.title.id !== '');
+        });
     }
 
     function normalizeTimRows(rawRows) {
       if (!Array.isArray(rawRows)) return [];
       return rawRows
-        .map((m, idx) => {
-          const name = getSheetField(m, ['name', 'nama', 'nama_lengkap'], '');
-          const roleId = getSheetField(m, ['role_id', 'role', 'jabatan_id', 'jabatan', 'peran'], '');
-          const roleEn = getSheetField(m, ['role_en', 'jabatan_en'], roleId);
-          const bioId = getSheetField(m, ['bio_id', 'bio', 'biografi_id', 'biografi', 'deskripsi'], '');
-          const bioEn = getSheetField(m, ['bio_en', 'biografi_en'], bioId);
-          const expRaw = Array.isArray(m.expertise)
-            ? m.expertise.join(', ')
-            : getSheetField(m, ['expertise', 'keahlian', 'bidang_keahlian', 'tags'], '');
+        .filter((row) => isVisibleStatus(getSheetField(row, ['status'], 'Active')))
+        .map((row, idx) => {
+          const id = getSheetField(row, ['id'], `TIM-${String(idx + 1).padStart(3, '0')}`);
+          const order = Number(getSheetField(row, ['order', 'urutan'], String(idx + 1))) || idx + 1;
+          const category = getSheetField(row, ['category', 'kategori', 'divisi'], 'Key Researchers');
+          const name = getSheetField(row, ['name', 'nama'], `Peneliti ${idx + 1}`);
+          const roleId = getSheetField(row, ['role_id', 'role', 'jabatan_id', 'jabatan'], 'Peneliti');
+          const roleEn = getSheetField(row, ['role_en', 'jabatan_en'], roleId);
+          const expRaw = getSheetField(row, ['expertise', 'keahlian'], '');
+          const expertise = Array.isArray(expRaw)
+            ? expRaw
+            : String(expRaw).split(',').map((s) => s.trim()).filter(Boolean);
+          const bioId = getSheetField(row, ['bio_id', 'bio', 'biografi'], '');
+          const bioEn = getSheetField(row, ['bio_en'], bioId);
+
           return {
-            id: getSheetField(m, ['id'], `TIM-${String(idx + 1).padStart(3, '0')}`),
-            order: Number(getSheetField(m, ['order', 'urutan', 'no'], String(idx + 1))) || idx + 1,
-            category: getSheetField(m, ['category', 'kategori', 'divisi'], 'Key Researchers'),
+            id,
+            order,
+            category,
             name,
-            role: { id: roleId, en: roleEn || roleId },
-            expertise: String(expRaw)
-              .split(',')
-              .map((s) => s.trim())
-              .filter(Boolean),
-            bio: { id: bioId, en: bioEn || bioId },
-            email: getSheetField(m, ['email', 'surel'], ''),
-            scholar: getSheetField(m, ['scholar', 'google_scholar'], ''),
-            linkedin: getSheetField(m, ['linkedin'], ''),
-            photo: getSheetField(m, ['photo', 'foto', 'gambar', 'avatar'], ''),
-            status: getSheetField(m, ['status', 'state'], 'Active')
+            role: { id: roleId, en: roleEn },
+            expertise,
+            bio: { id: bioId, en: bioEn },
+            email: getSheetField(row, ['email'], ''),
+            scholar: getSheetField(row, ['scholar'], ''),
+            linkedin: getSheetField(row, ['linkedin'], ''),
+            photo: getSheetField(row, ['photo', 'foto'], ''),
+            status: 'Active'
           };
-        })
-        .filter((item) => item.name !== '');
+        });
     }
 
-    function applyProfileData(rawProfil) {
-      if (!rawProfil) return;
-      let p = rawProfil;
-      if (Array.isArray(rawProfil)) {
-        p = {};
-        rawProfil.forEach((row) => {
-          const k = getSheetField(row, ['key', 'kunci', 'parameter'], '');
-          const v = getSheetField(row, ['value', 'nilai', 'isi'], '');
-          if (k) p[k] = v;
-        });
-      }
-      if (typeof p !== 'object') return;
+    function applyProfileData(profil) {
+      if (!profil || typeof profil !== 'object') return;
+      if (profil.hero_title_id) translations.id.hero_home_h1 = profil.hero_title_id;
+      if (profil.hero_title_en) translations.en.hero_home_h1 = profil.hero_title_en;
+      if (profil.hero_sub_id) translations.id.hero_home_sub = profil.hero_sub_id;
+      if (profil.hero_sub_en) translations.en.hero_home_sub = profil.hero_sub_en;
+      if (profil.sekilas_id) translations.id.sidebar_glance_body = profil.sekilas_id;
+      if (profil.sekilas_en) translations.en.sidebar_glance_body = profil.sekilas_en;
 
-      if (p.hero_title_id) translations.id.hero.home.h1 = p.hero_title_id;
-      if (p.hero_title_en) translations.en.hero.home.h1 = p.hero_title_en;
-      if (p.hero_sub_id) translations.id.hero.home.sub = p.hero_sub_id;
-      if (p.hero_sub_en) translations.en.hero.home.sub = p.hero_sub_en;
-      if (p.sekilas_id) translations.id.sidebar_glance_body = p.sekilas_id;
-      if (p.sekilas_en) translations.en.sidebar_glance_body = p.sekilas_en;
-      if (p.team_group_photo !== undefined) teamGroupConfig.groupPhoto = p.team_group_photo;
-
-      if (p.team_intro_1_id || p.team_intro_2_id || p.team_intro_3_id) {
-        teamGroupConfig.introParagraphs.id = [
-          p.team_intro_1_id || teamGroupConfig.introParagraphs.id[0],
-          p.team_intro_2_id || teamGroupConfig.introParagraphs.id[1],
-          p.team_intro_3_id || teamGroupConfig.introParagraphs.id[2]
-        ];
-      }
-      if (p.team_intro_1_en || p.team_intro_2_en || p.team_intro_3_en) {
-        teamGroupConfig.introParagraphs.en = [
-          p.team_intro_1_en || teamGroupConfig.introParagraphs.en[0],
-          p.team_intro_2_en || teamGroupConfig.introParagraphs.en[1],
-          p.team_intro_3_en || teamGroupConfig.introParagraphs.en[2]
-        ];
-      }
-
-      if (p.alamat) {
+      if (profil.alamat) {
         const topAddr = document.getElementById('topbar-address-text');
         const footAddr1 = document.getElementById('footer-address-line1');
-        if (topAddr) topAddr.textContent = p.alamat;
-        if (footAddr1) footAddr1.textContent = p.alamat;
+        if (topAddr) topAddr.textContent = profil.alamat;
+        if (footAddr1) footAddr1.textContent = profil.alamat;
       }
-      if (p.email) {
+      if (profil.email) {
         const emailLink = document.getElementById('footer-email-link');
         if (emailLink) {
-          emailLink.textContent = p.email;
-          emailLink.href = `mailto:${p.email}`;
+          emailLink.textContent = profil.email;
+          emailLink.href = `mailto:${profil.email}`;
         }
       }
-      if (p.telepon) {
+      if (profil.telepon) {
         const phoneEl = document.getElementById('footer-phone-text');
-        if (phoneEl) phoneEl.textContent = p.telepon;
+        if (phoneEl) phoneEl.textContent = profil.telepon;
       }
+      if (profil.linkedin) {
+        const el = document.getElementById('topbar-linkedin-link');
+        if (el) el.href = profil.linkedin;
+      }
+      if (profil.scholar) {
+        const el = document.getElementById('topbar-scholar-link');
+        if (el) el.href = profil.scholar;
+      }
+      if (profil.github) {
+        const el = document.getElementById('topbar-github-link');
+        if (el) el.href = profil.github;
+      }
+
+      if (profil.team_group_photo !== undefined) {
+        teamGroupConfig.groupPhoto = profil.team_group_photo;
+      }
+      if (profil.team_intro_1_id) teamGroupConfig.introParagraphs.id[0] = profil.team_intro_1_id;
+      if (profil.team_intro_2_id) teamGroupConfig.introParagraphs.id[1] = profil.team_intro_2_id;
+      if (profil.team_intro_3_id) teamGroupConfig.introParagraphs.id[2] = profil.team_intro_3_id;
+      if (profil.team_intro_1_en) teamGroupConfig.introParagraphs.en[0] = profil.team_intro_1_en;
+      if (profil.team_intro_2_en) teamGroupConfig.introParagraphs.en[1] = profil.team_intro_2_en;
+      if (profil.team_intro_3_en) teamGroupConfig.introParagraphs.en[2] = profil.team_intro_3_en;
     }
 
     function hydrateFromCmsLocalStorage() {
@@ -1548,334 +1876,452 @@
         const raw = localStorage.getItem(CMS_STORAGE_KEY);
         if (!raw) return;
         const parsed = JSON.parse(raw);
-
         if (Array.isArray(parsed.berita) && parsed.berita.length > 0) {
-          const normalizedNews = normalizeBeritaRows(parsed.berita);
-          if (normalizedNews.length > 0) newsArticles = normalizedNews;
+          const normBerita = normalizeBeritaRows(parsed.berita);
+          if (normBerita.length > 0) newsArticles = normBerita;
         }
-
         if (Array.isArray(parsed.acara) && parsed.acara.length > 0) {
-          const normalizedEvents = normalizeAcaraRows(parsed.acara);
-          if (normalizedEvents.length > 0) upcomingEvents = normalizedEvents;
+          const normAcara = normalizeAcaraRows(parsed.acara);
+          if (normAcara.length > 0) upcomingEvents = normAcara;
         }
-
         if (Array.isArray(parsed.tim) && parsed.tim.length > 0) {
-          const normalizedTeam = normalizeTimRows(parsed.tim);
-          if (normalizedTeam.length > 0) teamMembers = normalizedTeam;
+          const normTim = normalizeTimRows(parsed.tim);
+          if (normTim.length > 0) teamMembers = normTim;
         }
-
         if (Array.isArray(parsed.riset)) {
           risetItems = normalizeRisetRows(parsed.riset);
         }
-
-        if (parsed.profil && typeof parsed.profil === 'object') {
+        if (parsed.profil) {
           applyProfileData(parsed.profil);
         }
       } catch (e) {}
     }
 
-    function escapeHtmlSafe(str) {
-      return String(str ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-    }
-
     // -------------------------------------------------------------------------
-    // 5. VIEW RENDERERS (Home, Riset, Terapan, Layanan, Pelatihan, Acara, Karir, Tim, Tentang)
+    // 5. SHARED SIDEBAR COMPONENTS & ROUTE VIEW DISPATCHER
     // -------------------------------------------------------------------------
-    function renderTabContent(tabKey) {
-      const container = document.getElementById('main-workspace');
-      if (!container) return;
-
-      if (tabKey === 'home') {
-        renderHomeView(container);
-      } else if (tabKey === 'riset') {
-        renderRisetView(container);
-      } else if (tabKey === 'terapan') {
-        renderTerapanView(container);
-      } else if (tabKey === 'layanan') {
-        renderLayananView(container);
-      } else if (tabKey === 'pelatihan') {
-        renderPelatihanView(container);
-      } else if (tabKey === 'acara') {
-        renderAcaraView(container);
-      } else if (tabKey === 'karir') {
-        renderKarirView(container);
-      } else if (tabKey === 'tim') {
-        renderTimView(container);
-      } else if (tabKey === 'tentang' || tabKey.startsWith('tentang-')) {
-        renderTentangView(container);
-      }
-    }
-
-    // TAB 1: HOME (Berita Terkini + Acara mendatang @ IPT + IPT Research sekilas)
-    function renderHomeView(container) {
+    function renderEventsAndGlanceSidebarHtml() {
       const dict = translations[currentLang];
-
-      const newsListHtml = newsArticles
-        .map(
-          (item) => `
-          <article class="border-b border-gray-200 pb-7 mb-7 last:border-b-0 last:pb-0 last:mb-0">
-            <div class="flex flex-col sm:flex-row items-start justify-between gap-4 sm:gap-6">
-              <div class="flex-1 min-w-0">
-                <h3 class="text-[17px] sm:text-[18px] font-bold leading-snug mb-1.5">
-                  <button
-                    type="button"
-                    onclick="openArticleModal('${escapeHtmlSafe(item.id)}')"
-                    class="text-left text-[#0077B6] hover:underline focus:outline-none"
-                  >
-                    ${escapeHtmlSafe(item.title[currentLang] || item.title.id)}
-                  </button>
-                </h3>
-
-                <div class="flex items-center gap-1.5 text-[11px] text-[#6B7280] mb-3">
-                  <svg class="w-3.5 h-3.5 text-gray-400 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
-                  </svg>
-                  <span>${escapeHtmlSafe(item.date)}</span>
-                </div>
-
-                <p class="text-[13.5px] text-[#4B5563] leading-[1.65]">
-                  ${escapeHtmlSafe(item.excerpt[currentLang] || item.excerpt.id)}
-                  <button
-                    type="button"
-                    onclick="openArticleModal('${escapeHtmlSafe(item.id)}')"
-                    class="text-[#0077B6] hover:text-[#005F94] underline font-medium ml-0.5 focus:outline-none"
-                  >
-                    ${dict.read_more}
-                  </button>
-                </p>
-              </div>
-
-              <button
-                type="button"
-                onclick="openArticleModal('${escapeHtmlSafe(item.id)}')"
-                class="w-full sm:w-[165px] h-[160px] sm:h-[105px] shrink-0 overflow-hidden bg-gray-100 border border-gray-200 group focus:outline-none"
-                aria-label="${escapeHtmlSafe(item.title[currentLang] || item.title.id)}"
-              >
-                <img
-                  src="${escapeHtmlSafe(item.image || item.fallback)}"
-                  onerror="this.onerror=null; this.src='${item.fallback}';"
-                  alt="${escapeHtmlSafe(item.title[currentLang] || item.title.id)}"
-                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </button>
-            </div>
-          </article>
-        `
-        )
-        .join('');
-
-      const eventsSidebarHtml = upcomingEvents
+      const eventsHtml = upcomingEvents
         .map(
           (evt) => `
-          <div class="mb-5 last:mb-0">
+          <div class="mb-4 last:mb-0">
             <button
               type="button"
               onclick="openEventModal('${escapeHtmlSafe(evt.id)}')"
-              class="text-left text-[14.5px] font-semibold text-[#0077B6] hover:underline leading-[1.45] block"
+              class="text-left text-[14px] font-semibold text-[#0077B6] hover:underline leading-snug"
             >
               ${escapeHtmlSafe(evt.title[currentLang] || evt.title.id)}
             </button>
-            <p class="text-[12px] text-[#6B7280] mt-1.5">
+            <div class="text-[12px] text-[#6B7280] mt-1">
               ${escapeHtmlSafe(evt.dateRange)}
+            </div>
+          </div>`
+        )
+        .join('');
+
+      return `
+        <div>
+          <h2 class="text-[18px] font-bold text-[#1F2937] pb-2.5 border-b border-gray-200 mb-4">
+            ${escapeHtmlSafe(dict.sidebar_events_title)}
+          </h2>
+          <div>${eventsHtml}</div>
+
+          <div class="mt-8 pt-6 border-t border-gray-200">
+            <h2 class="text-[16px] font-bold text-[#1F2937] mb-2">
+              ${escapeHtmlSafe(dict.sidebar_glance_title)}
+            </h2>
+            <p class="text-[13px] text-[#4B5563] leading-relaxed">
+              ${escapeHtmlSafe(dict.sidebar_glance_body)}
             </p>
           </div>
-        `
+        </div>`;
+    }
+
+    function renderRisetSubSidebarHtml(activeSubRoute) {
+      const isId = currentLang === 'id';
+      const menuItems = [
+        { key: 'riset-publikasi', label: isId ? 'Publikasi Ilmiah' : 'Publications' },
+        { key: 'riset-pusat', label: isId ? 'Pusat Riset AI & Data Science' : 'AI & Data Science Center' },
+        { key: 'riset-proyek', label: isId ? 'Proyek Riset' : 'Projects' },
+        { key: 'riset-kelompok', label: isId ? 'Kelompok Riset' : 'Research Groups', expandable: true },
+        { key: 'riset-advisori', label: isId ? 'Kajian & Advisori AI' : 'IPT Security & AI Advisories' },
+        { key: 'riset-pengajaran', label: isId ? 'Pengajaran & Mata Kuliah' : 'Teaching | Courses' },
+        { key: 'riset-bimbingan', label: isId ? 'Bimbingan Skripsi | Tesis | Disertasi' : 'Bachelor | Master | PhD - Thesis Supervision' },
+        { key: 'riset-konferensi', label: isId ? 'Konferensi Ilmiah' : 'Conferences' }
+      ];
+
+      const listHtml = menuItems
+        .map((item) => {
+          const isActive = activeSubRoute === item.key;
+          if (item.expandable) {
+            const subGroupsHtml = researchGroupsData
+              .map(
+                (rg) => `
+                <li class="border-b border-gray-100 last:border-b-0">
+                  <button
+                    type="button"
+                    onclick="scrollToResearchGroup('${rg.id}')"
+                    class="w-full text-left py-2 pl-4 pr-2 text-[12px] text-[#4B5563] hover:text-[#0077B6] leading-snug transition-colors"
+                  >
+                    ${escapeHtmlSafe(rg.title[currentLang] || rg.title.id)}
+                  </button>
+                </li>`
+              )
+              .join('');
+
+            return `
+              <li class="border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                  <button
+                    type="button"
+                    onclick="navigateTo('${item.key}')"
+                    class="flex-1 text-left py-2.5 px-2 text-[13px] ${isActive ? 'font-bold text-[#1F2937]' : 'text-[#374151] hover:text-[#0077B6]'} transition-colors"
+                  >
+                    ${escapeHtmlSafe(item.label)}
+                  </button>
+                  <button
+                    type="button"
+                    onclick="toggleResearchGroupsSidebar()"
+                    aria-label="Toggle Kelompok Riset"
+                    class="p-2 text-[#0077B6] hover:bg-gray-50"
+                  >
+                    <svg class="w-3.5 h-3.5 transition-transform ${researchGroupsSidebarOpen ? 'rotate-180' : ''}" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                  </button>
+                </div>
+                <ul class="${researchGroupsSidebarOpen ? 'block' : 'hidden'} pb-1.5">
+                  ${subGroupsHtml}
+                </ul>
+              </li>`;
+          }
+
+          return `
+            <li class="border-b border-gray-200 last:border-b-0">
+              <button
+                type="button"
+                onclick="navigateTo('${item.key}')"
+                class="w-full text-left py-2.5 px-2 text-[13px] ${isActive ? 'font-bold text-[#1F2937]' : 'text-[#374151] hover:text-[#0077B6]'} transition-colors leading-snug"
+              >
+                ${escapeHtmlSafe(item.label)}
+              </button>
+            </li>`;
+        })
+        .join('');
+
+      return `
+        <div class="lg:sticky lg:top-24">
+          <div class="text-[13px] font-semibold text-[#6B7280] px-2 pb-2.5 border-b border-gray-200">
+            ${isId ? 'Riset' : 'Research'}
+          </div>
+          <ul>${listHtml}</ul>
+        </div>`;
+    }
+
+    function toggleResearchGroupsSidebar() {
+      researchGroupsSidebarOpen = !researchGroupsSidebarOpen;
+      renderRouteView(activeRoute);
+    }
+
+    function scrollToResearchGroup(rgId) {
+      if (activeRoute !== 'riset-kelompok') {
+        navigateTo('riset-kelompok');
+      }
+      setTimeout(() => {
+        const el = document.getElementById(rgId);
+        if (!el) return;
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        el.classList.remove('card-focused-pulse');
+        void el.offsetWidth;
+        el.classList.add('card-focused-pulse');
+      }, 60);
+    }
+
+    function renderRouteView(routeKey) {
+      const container = document.getElementById('main-workspace');
+      if (!container) return;
+
+      if (routeKey === 'home') {
+        renderHomeView(container);
+      } else if (routeKey === 'riset-kelompok') {
+        renderResearchGroupsView(container);
+      } else if (routeKey === 'riset-pengajaran') {
+        renderTeachingCoursesView(container);
+      } else if (routeKey.startsWith('riset-')) {
+        renderRisetSubPageView(container, routeKey);
+      } else if (routeKey === 'terapan') {
+        renderTerapanView(container);
+      } else if (routeKey === 'layanan') {
+        renderLayananView(container);
+      } else if (routeKey === 'pelatihan') {
+        renderPelatihanView(container);
+      } else if (routeKey === 'acara') {
+        renderAcaraView(container);
+      } else if (routeKey === 'karir') {
+        renderKarirView(container);
+      } else if (routeKey === 'tim') {
+        renderTimView(container);
+      } else if (routeKey === 'tentang') {
+        renderTentangView(container);
+      } else {
+        renderHomeView(container);
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 6. INDIVIDUAL PAGE RENDERERS
+    // -------------------------------------------------------------------------
+    // VIEW 1: HOME (Berita Terkini on Left + Acara mendatang @ IPT & Sekilas on Right)
+    function renderHomeView(container) {
+      const dict = translations[currentLang];
+      const newsHtml = newsArticles
+        .map(
+          (art) => `
+          <article class="border-b border-gray-200 pb-6 mb-6 last:border-b-0 last:pb-0 last:mb-0 flex flex-col sm:flex-row items-start justify-between gap-4 sm:gap-5">
+            <div class="flex-1 min-w-0">
+              <h3 class="text-[17px] font-bold text-[#0077B6] leading-snug">
+                <button type="button" onclick="openArticleModal('${escapeHtmlSafe(art.id)}')" class="text-left hover:underline">
+                  ${escapeHtmlSafe(art.title[currentLang] || art.title.id)}
+                </button>
+              </h3>
+              <div class="flex items-center gap-1.5 text-[11.5px] text-[#6B7280] mt-1 mb-2.5">
+                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                <span>${escapeHtmlSafe(art.date)}</span>
+              </div>
+              <p class="text-[13.5px] text-[#4B5563] leading-[1.65]">
+                ${escapeHtmlSafe(art.excerpt[currentLang] || art.excerpt.id)}
+                <button type="button" onclick="openArticleModal('${escapeHtmlSafe(art.id)}')" class="text-[#0077B6] underline hover:text-[#005F94] font-medium ml-1">
+                  ${escapeHtmlSafe(dict.read_more)}
+                </button>
+              </p>
+            </div>
+            <button
+              type="button"
+              onclick="openArticleModal('${escapeHtmlSafe(art.id)}')"
+              class="w-full sm:w-[165px] h-[140px] sm:h-[105px] shrink-0 overflow-hidden bg-gray-100 border border-gray-200 block focus:outline-none"
+            >
+              <img
+                src="${escapeHtmlSafe(art.image || art.fallback)}"
+                onerror="this.onerror=null; this.src='${art.fallback}';"
+                alt="${escapeHtmlSafe(art.title[currentLang] || art.title.id)}"
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </button>
+          </article>`
         )
         .join('');
 
       container.innerHTML = `
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-12 bg-white animate-view">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
-            <!-- Left Primary Column (65% -> 8 of 12 cols) -->
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 bg-white animate-view">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
             <div class="lg:col-span-8">
               <h2 class="text-[18px] font-bold text-[#1F2937] pb-2.5 border-b border-gray-200 mb-6">
-                ${dict.news_heading}
+                ${escapeHtmlSafe(dict.news_heading)}
               </h2>
-              <div>
-                ${newsListHtml}
-              </div>
+              <div>${newsHtml}</div>
             </div>
-
-            <!-- Right Secondary Sidebar Column (35% -> 4 of 12 cols) -->
             <aside class="lg:col-span-4">
-              <div>
-                <h2 class="text-[17px] font-bold text-[#1F2937] pb-2.5 border-b border-gray-200 mb-4">
-                  ${dict.sidebar_events_title}
-                </h2>
-                <div>
-                  ${eventsSidebarHtml}
-                </div>
-              </div>
-
-              <div class="mt-8 pt-6 border-t border-gray-200">
-                <h2 class="text-[16px] font-bold text-[#1F2937] mb-2">
-                  ${dict.sidebar_glance_title}
-                </h2>
-                <p class="text-[13px] text-[#4B5563] leading-relaxed">
-                  ${escapeHtmlSafe(dict.sidebar_glance_body)}
-                </p>
-              </div>
+              ${renderEventsAndGlanceSidebarHtml()}
             </aside>
           </div>
         </div>
       `;
     }
 
-    // -------------------------------------------------------------------------
-    // DYNAMIC RENDERERS FOR ALL 5 PROGRAM/RISET TABS (Connected to Sheet: Riset)
-    // -------------------------------------------------------------------------
-    function getFilteredRisetItemsForTab(tabKey) {
-      return risetItems.filter(
-        (item) => isVisibleStatus(item.status) && matchesRisetCategory(item.kategori, tabKey)
+    // VIEW 2: KELOMPOK RISET (SBA Research "Research Groups" Layout)
+    function renderResearchGroupsView(container) {
+      const isId = currentLang === 'id';
+      const extraSheetGroups = risetItems.filter(
+        (item) => isVisibleStatus(item.status) && matchesRisetCategory(item.kategori, 'riset-kelompok')
       );
-    }
 
-    function openProgramDetailModal(itemId) {
-      const item = risetItems.find((r) => r.id === itemId);
-      if (!item) return;
-
-      const isId = currentLang === 'id';
-      const title = isId ? item.judul_id : (item.judul_en || item.judul_id);
-      const desc = isId ? item.ringkasan_id : (item.ringkasan_en || item.ringkasan_id);
-      const author = isId ? item.penulis_id : (item.penulis_en || item.penulis_id);
-
-      document.getElementById('program-modal-category').textContent = item.kategori || 'Riset';
-      document.getElementById('program-modal-id').textContent = item.id || '';
-      document.getElementById('program-modal-title').textContent = title;
-
-      const metaParts = [];
-      if (author) metaParts.push(`<strong>${isId ? 'Koordinator / Penulis:' : 'Coordinator / Authors:'}</strong> ${escapeHtmlSafe(author)}`);
-      if (item.tahun) metaParts.push(`<strong>${isId ? 'Tahun:' : 'Year:'}</strong> ${escapeHtmlSafe(item.tahun)}`);
-      document.getElementById('program-modal-meta').innerHTML = metaParts.join(' &nbsp;•&nbsp; ');
-
-      const paragraphs = String(desc || '')
-        .split(/\n+/)
-        .filter(Boolean);
-      document.getElementById('program-modal-body').innerHTML =
-        paragraphs.length > 0
-          ? paragraphs.map((p) => `<p>${escapeHtmlSafe(p)}</p>`).join('')
-          : `<p class="text-gray-400 italic">${isId ? 'Tidak ada deskripsi tambahan.' : 'No additional description provided.'}</p>`;
-
-      const linkBox = document.getElementById('program-modal-link-box');
-      const linkVal = String(item.link || '').trim();
-      if (linkVal) {
-        linkBox.classList.remove('hidden');
-        if (/^(https?:\/\/|mailto:)/i.test(linkVal)) {
-          linkBox.innerHTML = `
-            <a href="${escapeHtmlSafe(linkVal)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold transition-colors">
-              <span>${isId ? 'Buka Tautan / Referensi Terkait' : 'Open Related Link / Reference'}</span>
-              <span>↗</span>
-            </a>`;
-        } else {
-          linkBox.innerHTML = `
-            <div class="text-xs text-[#4B5563]">
-              <strong class="text-[#1F2937]">${isId ? 'Referensi / Kode Publikasi:' : 'Reference / Publication Code:'}</strong>
-              <span class="ml-1 px-2 py-0.5 rounded bg-gray-100 font-mono text-[#0077B6]">${escapeHtmlSafe(linkVal)}</span>
-            </div>`;
-        }
-      } else {
-        linkBox.classList.add('hidden');
-        linkBox.innerHTML = '';
-      }
-
-      const modal = document.getElementById('program-detail-modal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    }
-
-    function closeProgramDetailModal() {
-      const modal = document.getElementById('program-detail-modal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-    }
-
-    function renderDynamicRisetItemsList(items, emptyTextId, emptyTextEn, badgePrefix) {
-      const isId = currentLang === 'id';
-      if (!items || items.length === 0) {
-        return `
-          <div class="p-6 rounded-lg border border-dashed border-gray-300 bg-gray-50/70 text-center text-xs text-[#6B7280]">
-            ${isId ? emptyTextId : emptyTextEn}
-          </div>`;
-      }
-
-      return items
-        .map((item) => {
-          const title = isId ? item.judul_id : (item.judul_en || item.judul_id);
-          const summary = isId ? item.ringkasan_id : (item.ringkasan_en || item.ringkasan_id);
-          const author = isId ? item.penulis_id : (item.penulis_en || item.penulis_id);
-          const searchStr = `${title} ${summary} ${author} ${item.tahun} ${item.kategori}`.toLowerCase();
+      const groupsHtml = researchGroupsData
+        .map((rg) => {
+          const title = rg.title[currentLang] || rg.title.id;
+          const p1 = rg.p1[currentLang] || rg.p1.id;
+          const p2 = rg.p2[currentLang] || rg.p2.id;
+          const svgThumb = createResearchGroupSvg(rg.svgLabel);
 
           return `
-            <article
-              onclick="openProgramDetailModal('${escapeHtmlSafe(item.id)}')"
-              data-search="${escapeHtmlSafe(searchStr)}"
-              class="dynamic-riset-card group cursor-pointer border-b border-gray-200 pb-6 mb-6 last:border-b-0 last:pb-0 last:mb-0 hover:bg-gray-50/50 rounded-lg transition-colors p-2 -mx-2"
-            >
-              <div class="flex flex-wrap items-center gap-2 mb-1.5">
-                <span class="text-[11px] font-semibold text-[#0077B6] uppercase tracking-wide">
-                  ${escapeHtmlSafe(badgePrefix || item.kategori)}
-                </span>
-                ${item.tahun ? `<span class="px-2 py-0.5 rounded bg-gray-100 text-gray-600 text-[10.5px] font-medium">${escapeHtmlSafe(item.tahun)}</span>` : ''}
-                <span class="font-mono text-[10.5px] text-gray-400">${escapeHtmlSafe(item.id)}</span>
+            <article id="${rg.id}" class="pt-8 pb-8 border-b border-gray-200 last:border-b-0 scroll-mt-24">
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+                <div class="md:col-span-7 space-y-3.5">
+                  <h3 class="text-[19px] font-bold text-[#1F2937] leading-snug">
+                    ${escapeHtmlSafe(title)}
+                  </h3>
+                  <p class="text-[13.5px] text-[#374151] leading-[1.72]">
+                    ${escapeHtmlSafe(p1)}
+                  </p>
+                  <p class="text-[13.5px] text-[#374151] leading-[1.72]">
+                    ${escapeHtmlSafe(p2)}
+                  </p>
+                </div>
+
+                <div class="md:col-span-5 space-y-3">
+                  <div class="w-full aspect-[16/10] bg-gray-100 border border-gray-200 overflow-hidden">
+                    <img src="${svgThumb}" alt="${escapeHtmlSafe(title)}" class="w-full h-full object-cover" />
+                  </div>
+                  <div>
+                    <div class="text-xs font-bold text-[#1F2937]">
+                      ${isId ? 'Ketua Kelompok Riset' : 'Research Group Lead'}
+                    </div>
+                    <button
+                      type="button"
+                      onclick="openMemberModal('${rg.leadId}')"
+                      class="text-[13px] text-[#0077B6] underline hover:text-[#005F94] mt-0.5"
+                    >
+                      ${escapeHtmlSafe(rg.leadName)}
+                    </button>
+                  </div>
+                  <button
+                    type="button"
+                    onclick="openResearchGroupModal('${rg.id}')"
+                    class="w-full py-2.5 px-4 bg-[#0082C8] hover:bg-[#0077B6] text-white text-[13px] font-semibold transition-colors"
+                  >
+                    ${isId ? 'Informasi Kelompok' : 'Group Information'}
+                  </button>
+                </div>
               </div>
-              <h3 class="text-[16.5px] font-bold text-[#0077B6] group-hover:underline leading-snug mb-1.5">
-                ${escapeHtmlSafe(title)}
-              </h3>
-              ${
-                author
-                  ? `<div class="text-xs font-medium text-[#374151] mb-2">${escapeHtmlSafe(author)}${item.tahun ? ` • ${escapeHtmlSafe(item.tahun)}` : ''}</div>`
-                  : ''
-              }
-              <p class="text-[13.5px] text-[#4B5563] leading-relaxed">
-                ${escapeHtmlSafe(summary)}
-                <span class="text-[#0077B6] underline font-medium ml-1">${isId ? 'Detail →' : 'Details →'}</span>
-              </p>
             </article>`;
         })
         .join('');
+
+      container.innerHTML = `
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 bg-white animate-view">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+            <div class="lg:col-span-8">
+              <h2 class="text-[18px] font-bold text-[#1F2937] mb-3">
+                ${isId ? 'Sekilas Kelompok Riset Kami' : 'Our Research Groups at a Glance'}
+              </h2>
+              <p class="text-[14px] font-bold text-[#1F2937] leading-[1.68] pb-7 border-b border-gray-200">
+                ${
+                  isId
+                    ? 'Misi kami adalah memajukan pengembangan sistem cerdas dan rekayasa data yang andal dengan memadukan kecerdasan buatan terapan, analitik prediktif, serta prinsip privasi dan keamanan informasi sejak tahap perancangan.'
+                    : 'Our mission is to significantly advance the development of reliable intelligent systems and data engineering by uniting applied artificial intelligence, predictive analytics, and privacy-by-design principles.'
+                }
+              </p>
+              <div>${groupsHtml}</div>
+              ${
+                extraSheetGroups.length > 0
+                  ? `<div class="mt-8 pt-6 border-t border-gray-200">
+                      <h3 class="text-[16px] font-bold text-[#1F2937] mb-4">${isId ? 'Kelompok & Unit Riset Tambahan:' : 'Additional Research Units:'}</h3>
+                      ${renderDynamicRisetItemsList(extraSheetGroups, '', '', 'KELOMPOK RISET // IPT RESEARCH')}
+                    </div>`
+                  : ''
+              }
+            </div>
+
+            <aside class="lg:col-span-4">
+              ${renderRisetSubSidebarHtml('riset-kelompok')}
+            </aside>
+          </div>
+        </div>
+      `;
     }
 
-    // TAB 2: RISET (Focus Areas + Live Sheet: Riset [Kategori = Riset])
-    function renderRisetView(container) {
+    // VIEW 3: PENGAJARAN & MATA KULIAH (SBA Research "Teaching & Courses" Layout)
+    function renderTeachingCoursesView(container) {
       const isId = currentLang === 'id';
-      const clusters = [
-        {
-          code: 'Fokus 01',
-          title: isId ? 'Kecerdasan Buatan & Pembelajaran Mesin (Applied AI)' : 'Artificial Intelligence & Machine Learning',
-          desc: isId
-            ? 'Pengembangan model pembelajaran mendalam (deep learning), pemrosesan bahasa alami (NLP), dan sistem pendukung keputusan cerdas.'
-            : 'Development of deep learning architectures, natural language processing (NLP), and intelligent decision support systems.'
-        },
-        {
-          code: 'Fokus 02',
-          title: isId ? 'Data Science & Analitik Prediktif' : 'Data Science & Predictive Analytics',
-          desc: isId
-            ? 'Pemodelan statistik, penambangan data skala besar (big data mining), dan deteksi anomali real-time pada aliran data kompleks.'
-            : 'Statistical modeling, large-scale data mining, and real-time anomaly detection across complex data streams.'
-        },
-        {
-          code: 'Fokus 03',
-          title: isId ? 'Computer Vision & Pengenalan Citra' : 'Computer Vision & Image Recognition',
-          desc: isId
-            ? 'Analisis citra medis, inspeksi visual otomatis berbasis AI, dan pengenalan pola visual berlatensi rendah.'
-            : 'Medical imaging diagnostics, AI-driven automated visual inspection, and low-latency pattern recognition.'
-        },
-        {
-          code: 'Fokus 04',
-          title: isId ? 'Keamanan Informasi & Ketahanan Siber' : 'Information Security & Cyber Resilience',
-          desc: isId
-            ? 'Deteksi intrusi berbasis pembelajaran mesin, perlindungan privasi data, serta analisis kerentanan infrastruktur digital.'
-            : 'Machine-learning-assisted intrusion detection, data privacy preservation, and digital infrastructure security analysis.'
-        }
-      ];
+      const extraSheetCourses = risetItems.filter(
+        (item) => isVisibleStatus(item.status) && matchesRisetCategory(item.kategori, 'riset-pengajaran')
+      );
+      const courses = isId
+        ? [
+            'Kecerdasan Buatan Terapan & Pembelajaran Mesin (Applied AI & Machine Learning)',
+            'Data Science, Penambangan Data & Analitik Prediktif Skala Besar',
+            'Pengenalan Citra & Computer Vision Berbasis Deep Learning',
+            'Pemrosesan Bahasa Alami (NLP) & Arsitektur Retrieval-Augmented Generation (RAG)',
+            'Keamanan Sistem Informasi, Privasi Data & Ketahanan Model AI'
+          ]
+        : [
+            'Applied Artificial Intelligence & Machine Learning',
+            'Data Science, Large-Scale Data Mining & Predictive Analytics',
+            'Deep Learning Image Recognition & Computer Vision',
+            'Natural Language Processing & Verified RAG Architectures',
+            'Information Security, Data Privacy & AI Model Resilience'
+          ];
 
-      const sheetRisetRows = getFilteredRisetItemsForTab('riset');
-      const dynamicRisetHtml = renderDynamicRisetItemsList(
+      container.innerHTML = `
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 bg-white animate-view">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+            <div class="lg:col-span-8 space-y-5 text-[14px] text-[#374151] leading-[1.75]">
+              <h2 class="text-[19px] font-bold text-[#1F2937]">
+                ${isId ? 'Pendidikan Pakar Masa Depan' : 'Education of Future Experts'}
+              </h2>
+              <p>
+                ${
+                  isId
+                    ? 'Para peneliti di IPT Research bekerja pada persimpangan antara riset ilmiah mutakhir dan penerapan industri di bidang Kecerdasan Buatan serta Data Science. Mereka secara aktif mengajar dan membimbing mahasiswa, akademisi muda, serta praktisi profesional.'
+                    : 'Researchers at IPT Research work at the intersection of cutting-edge scientific inquiry and industrial application in Artificial Intelligence and Data Science. They actively teach and mentor students, young academics, and industry professionals.'
+                }
+              </p>
+              <p>
+                ${
+                  isId
+                    ? 'Pendidikan merupakan pilar utama aktivitas IPT Research yang melengkapi kegiatan penelitian intensif kami. Kami berkomitmen menyediakan pembelajaran berkualitas tinggi pada jenjang sarjana, pascasarjana, maupun <button type="button" onclick="navigateTo(\'pelatihan\')" class="text-[#0077B6] underline">program pelatihan</button> profesional berbasis pengalaman riset nyata.'
+                    : 'Education is a core activity of IPT Research that complements our research-intensive mission. We aim at providing high-quality education in undergraduate and postgraduate studies as well as specialized <button type="button" onclick="navigateTo(\'pelatihan\')" class="text-[#0077B6] underline">trainings</button>.'
+                }
+              </p>
+              <p>
+                ${
+                  isId
+                    ? 'Dalam kolaborasi bersama perguruan tinggi dan mitra akademik di Indonesia, peneliti IPT Research mengampu dan mengembangkan berbagai mata kuliah berikut:'
+                    : 'In collaboration with partner universities and academic institutions, IPT Research offers and contributes to the following courses:'
+                }
+              </p>
+              <ul class="list-disc pl-5 space-y-2 text-[#1F2937] font-medium">
+                ${courses.map((c) => `<li>${escapeHtmlSafe(c)}</li>`).join('')}
+              </ul>
+              ${
+                extraSheetCourses.length > 0
+                  ? `<div class="mt-8 pt-6 border-t border-gray-200">
+                      <h3 class="text-[16px] font-bold text-[#1F2937] mb-4">${isId ? 'Silabus & Program Pengajaran Terkini:' : 'Current Courses & Syllabi:'}</h3>
+                      ${renderDynamicRisetItemsList(extraSheetCourses, '', '', 'PENGAJARAN & MATA KULIAH')}
+                    </div>`
+                  : ''
+              }
+            </div>
+
+            <aside class="lg:col-span-4">
+              ${renderRisetSubSidebarHtml('riset-pengajaran')}
+            </aside>
+          </div>
+        </div>
+      `;
+    }
+
+    // VIEW 4: OTHER "RISET" SUB-PAGES
+    function renderRisetSubPageView(container, routeKey) {
+      const isId = currentLang === 'id';
+      const sheetRisetRows = risetItems.filter(
+        (item) => isVisibleStatus(item.status) && matchesRisetCategory(item.kategori, routeKey)
+      );
+
+      const introBySub = {
+        'riset-publikasi': isId
+          ? 'Publikasi ilmiah peer-reviewed yang dihasilkan oleh peneliti IPT Research pada jurnal internasional bereputasi dan prosiding konferensi terindeks.'
+          : 'Peer-reviewed scientific publications authored by IPT Research scholars in international journals and indexed conference proceedings.',
+        'riset-pusat': isId
+          ? 'IPT Research beroperasi sebagai pusat kompetensi untuk penelitian aplikasi Kecerdasan Buatan (AI) dan Data Science yang menghubungkan akademisi dan industri.'
+          : 'IPT Research operates as a competence center for Applied AI and Data Science research bridging academia and industry.',
+        'riset-proyek': isId
+          ? 'Portofolio proyek penelitian fundamental dan kolaboratif yang sedang berjalan di bawah koordinasi kelompok riset IPT Research.'
+          : 'Portfolio of ongoing fundamental and collaborative research projects coordinated by IPT Research groups.',
+        'riset-advisori': isId
+          ? 'Kajian teknis, rekomendasi kebijakan tata kelola AI, dan advisori keamanan sistem cerdas dari tim peneliti kami.'
+          : 'Technical advisories, AI governance recommendations, and intelligent system security reports published by our researchers.',
+        'riset-bimbingan': isId
+          ? 'Program pembimbingan penelitian tugas akhir (Skripsi, Tesis Magister, dan Disertasi Doktor) bersama peneliti utama IPT Research.'
+          : 'Research supervision opportunities for Bachelor, Master, and PhD theses mentored by IPT Research principal investigators.',
+        'riset-konferensi': isId
+          ? 'Penyelenggaraan dan partisipasi aktif dalam konferensi ilmiah internasional seperti International Conference on AI-driven Image Recognition and Data Science (ICIIRDS).'
+          : 'Organization and active scientific committee participation in international conferences such as ICIIRDS.'
+      };
+
+      const dynamicListHtml = renderDynamicRisetItemsList(
         sheetRisetRows,
         'Belum ada entri Riset aktif pada Google Spreadsheets (Kategori: Riset).',
         'No active Research entries found in Google Spreadsheets (Category: Riset).',
@@ -1884,256 +2330,211 @@
 
       container.innerHTML = `
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 bg-white animate-view">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
             <div class="lg:col-span-8">
-              <h2 class="text-[18px] font-bold text-[#1F2937] pb-2.5 border-b border-gray-200 mb-6">
-                ${isId ? 'Bidang Fokus Riset Utama:' : 'Core Research Focus Areas:'}
-              </h2>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-                ${clusters
-                  .map(
-                    (c) => `
-                  <div class="p-4 rounded-lg border border-gray-200 bg-white hover:border-[#0077B6] transition-colors">
-                    <span class="text-[11px] font-semibold text-[#0077B6] uppercase">${c.code}</span>
-                    <h3 class="text-[15px] font-bold text-[#1F2937] mt-1 mb-1.5">${c.title}</h3>
-                    <p class="text-[13px] text-[#4B5563] leading-relaxed">${c.desc}</p>
-                  </div>`
-                  )
-                  .join('')}
-              </div>
+              <p class="text-[15px] text-[#374151] leading-[1.72] pb-6 mb-6 border-b border-gray-200">
+                ${escapeHtmlSafe(introBySub[routeKey] || introBySub['riset-publikasi'])}
+              </p>
 
-              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2.5 border-b border-gray-200 mb-6">
-                <h2 class="text-[18px] font-bold text-[#1F2937]">
-                  ${isId ? 'Publikasi & Agenda Riset Terpilih:' : 'Selected Research & Publications:'}
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+                <h2 class="text-[17px] font-bold text-[#1F2937]">
+                  ${isId ? 'Daftar Publikasi, Proyek & Agenda Riset:' : 'Publications, Projects & Research Agenda:'}
                 </h2>
                 <input
                   type="text"
-                  oninput="filterRisetPubs(this.value)"
+                  oninput="filterDynamicRisetCards(this.value)"
                   placeholder="${isId ? 'Cari judul, peneliti, tahun...' : 'Search title, researcher, year...'}"
                   class="px-3 py-1.5 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6] sm:w-64"
                 />
               </div>
-              <div id="riset-pub-container">
-                ${dynamicRisetHtml}
+
+              <div id="dynamic-riset-list-wrap">
+                ${dynamicListHtml}
               </div>
             </div>
 
             <aside class="lg:col-span-4">
-              <div class="p-5 rounded-lg bg-[#F3F4F6] border border-gray-200">
-                <h3 class="text-[16px] font-bold text-[#1F2937] mb-2">
-                  ${isId ? 'Kolaborasi Akademik' : 'Academic Collaboration'}
-                </h3>
-                <p class="text-[13px] text-[#4B5563] leading-relaxed mb-4">
-                  ${
-                    isId
-                      ? 'IPT Research terbuka untuk penulisan makalah bersama, hibah penelitian kompetitif, serta pertukaran data riset.'
-                      : 'IPT Research welcomes joint paper authorship, competitive research grants, and open dataset benchmarks.'
-                  }
-                </p>
-                <button type="button" onclick="switchTab('tentang')" class="text-xs font-semibold text-[#0077B6] hover:underline">
-                  ${isId ? 'Hubungi Tim Peneliti →' : 'Contact Research Team →'}
-                </button>
-              </div>
+              ${renderRisetSubSidebarHtml(routeKey)}
             </aside>
           </div>
         </div>
       `;
     }
 
-    function filterRisetPubs(q) {
-      const term = q.trim().toLowerCase();
-      document.querySelectorAll('#riset-pub-container .dynamic-riset-card').forEach((card) => {
-        const text = card.getAttribute('data-search') || '';
-        card.style.display = !term || text.includes(term) ? '' : 'none';
-      });
-    }
-
-    // TAB 3: PENELITIAN TERAPAN (Live Sheet: Riset [Kategori = Penelitian Terapan])
+    // VIEW 5: PENELITIAN TERAPAN
     function renderTerapanView(container) {
       const isId = currentLang === 'id';
-      const items = getFilteredRisetItemsForTab('terapan');
-      const listHtml = renderDynamicRisetItemsList(
+      const items = risetItems.filter(
+        (item) => isVisibleStatus(item.status) && matchesRisetCategory(item.kategori, 'terapan')
+      );
+
+      const dynamicListHtml = renderDynamicRisetItemsList(
         items,
         'Belum ada program Penelitian Terapan aktif pada database.',
         'No active Applied Research programs found in the database.',
-        'PENELITIAN TERAPAN // APPLIED AI & DATA SCIENCE'
+        'PENELITIAN TERAPAN // APPLIED RESEARCH'
       );
 
       container.innerHTML = `
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 bg-white animate-view">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
             <div class="lg:col-span-8">
-              <h2 class="text-[18px] font-bold text-[#1F2937] pb-2.5 border-b border-gray-200 mb-6">
-                ${isId ? 'Program Penelitian Terapan & Prototipe:' : 'Applied Research & Prototype Programs:'}
+              <p class="text-[17px] sm:text-[18.5px] italic text-[#1F2937] leading-[1.62] mb-6">
+                ${
+                  isId
+                    ? 'Di IPT Research, Penelitian Terapan dibangun di atas satu keyakinan utama: banyak tantangan kecerdasan buatan dan analitik data paling mendesak saat ini tidak dapat diselesaikan hanya dengan perangkat lunak siap pakai. Organisasi menghadapi evolusi teknologi yang cepat, ekosistem data kompleks, serta tuntutan akurasi tinggi—sehingga membutuhkan fondasi teknologi berkelanjutan yang teruji secara ilmiah.'
+                    : 'At IPT Research, Applied Research is built on one core conviction: many of today’s most pressing AI and data science challenges cannot be solved by off-the-shelf products or standard templates alone. Organizations are confronted with rapidly evolving technological demands and complex data ecosystems, requiring sustainable, scientifically validated foundations.'
+                }
+              </p>
+
+              <p class="text-[13.5px] text-[#374151] leading-[1.72] pb-7 mb-7 border-b border-gray-200">
+                ${
+                  isId
+                    ? 'Misi kami adalah <strong>mentransformasikan riset mutakhir menjadi solusi nyata</strong>. Dengan memadukan perangkat analitik terbaru, evaluasi prototipe berbasis bukti, dan transfer pengetahuan terstruktur, kami mendampingi institusi membangun kapabilitas AI yang andal.'
+                    : 'Our mission is to <strong>transform cutting-edge research into practical impact</strong>. By combining novel analytical toolsets, evidence-based prototyping, and structured knowledge transfer, we support organizations in building enduring AI capabilities.'
+                }
+              </p>
+
+              <h2 class="text-[17px] font-bold text-[#1F2937] mb-5">
+                ${isId ? 'Program Penelitian Terapan & Hilirisasi:' : 'Applied Research & Technology Transfer Programs:'}
               </h2>
-              <div>
-                ${listHtml}
-              </div>
+              <div>${dynamicListHtml}</div>
             </div>
+
             <aside class="lg:col-span-4">
-              <div class="p-5 rounded-lg bg-[#F3F4F6] border border-gray-200">
-                <h3 class="text-[16px] font-bold text-[#1F2937] mb-2">
-                  ${isId ? 'Skema Kemitraan Industri' : 'Industry Partnership Scheme'}
-                </h3>
-                <p class="text-[13px] text-[#4B5563] leading-relaxed mb-4">
-                  ${
-                    isId
-                      ? 'Kami membantu organisasi merancang Proof-of-Concept (PoC) berbasis riset sebelum skala produksi penuh.'
-                      : 'We partner with enterprises to validate research-backed Proof-of-Concepts (PoCs) prior to full production rollout.'
-                  }
-                </p>
-                <button type="button" onclick="switchTab('layanan')" class="text-xs font-semibold text-[#0077B6] hover:underline">
-                  ${isId ? 'Lihat Layanan Profesional →' : 'Explore Professional Services →'}
-                </button>
-              </div>
+              ${renderEventsAndGlanceSidebarHtml()}
             </aside>
           </div>
         </div>
       `;
     }
 
-    // TAB 4: LAYANAN PROFESIONAL (Live Sheet: Riset [Kategori = Layanan Profesional])
+    // VIEW 6: LAYANAN PROFESIONAL
     function renderLayananView(container) {
       const isId = currentLang === 'id';
-      const items = getFilteredRisetItemsForTab('layanan');
-      const listHtml = renderDynamicRisetItemsList(
-        items,
-        'Belum ada daftar Layanan Profesional aktif pada database.',
-        'No active Professional Services entries found in the database.',
-        'LAYANAN PROFESIONAL // ADVISORY & CONSULTING'
+      const items = risetItems.filter(
+        (item) => isVisibleStatus(item.status) && matchesRisetCategory(item.kategori, 'layanan')
       );
 
       container.innerHTML = `
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 bg-white animate-view">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
             <div class="lg:col-span-8">
               <h2 class="text-[18px] font-bold text-[#1F2937] pb-2.5 border-b border-gray-200 mb-6">
-                ${isId ? 'Layanan Profesional & Pendampingan Teknis:' : 'Professional Services & Technical Advisory:'}
+                ${isId ? 'Layanan Profesional & Konsultasi Pakar:' : 'Professional Services & Expert Advisory:'}
               </h2>
               <div>
-                ${listHtml}
+                ${renderDynamicRisetItemsList(
+                  items,
+                  'Belum ada daftar Layanan Profesional aktif pada database.',
+                  'No active Professional Services entries found in the database.',
+                  'LAYANAN PROFESIONAL // ADVISORY & CONSULTING'
+                )}
               </div>
             </div>
             <aside class="lg:col-span-4">
-              <div class="p-5 rounded-lg bg-[#F3F4F6] border border-gray-200">
-                <h3 class="text-[16px] font-bold text-[#1F2937] mb-2">
-                  ${isId ? 'Konsultasi Awal' : 'Initial Consultation'}
-                </h3>
-                <p class="text-[13px] text-[#4B5563] leading-relaxed mb-4">
-                  ${
-                    isId
-                      ? 'Diskusikan kebutuhan proyek AI atau Data Science organisasi Anda bersama tim pakar kami.'
-                      : 'Discuss your organization’s AI or Data Science objectives directly with our senior specialists.'
-                  }
-                </p>
-                <button type="button" onclick="switchTab('tentang')" class="px-4 py-2 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold transition-colors">
-                  ${isId ? 'Hubungi Kami' : 'Contact Us'}
-                </button>
-              </div>
+              ${renderEventsAndGlanceSidebarHtml()}
             </aside>
           </div>
         </div>
       `;
     }
 
-    // TAB 5: PELATIHAN (Live Sheet: Riset [Kategori = Pelatihan Keamanan / Pelatihan])
+    // VIEW 7: PELATIHAN
     function renderPelatihanView(container) {
       const isId = currentLang === 'id';
-      const items = getFilteredRisetItemsForTab('pelatihan');
-      const listHtml = renderDynamicRisetItemsList(
-        items,
-        'Belum ada modul Pelatihan aktif pada database.',
-        'No active Training modules found in the database.',
-        'PELATIHAN // SECURITY & AI WORKSHOPS'
+      const items = risetItems.filter(
+        (item) => isVisibleStatus(item.status) && matchesRisetCategory(item.kategori, 'pelatihan')
       );
 
       container.innerHTML = `
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 bg-white animate-view">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
             <div class="lg:col-span-8">
               <h2 class="text-[18px] font-bold text-[#1F2937] pb-2.5 border-b border-gray-200 mb-6">
-                ${isId ? 'Program Pelatihan Keamanan Informasi & AI:' : 'Information Security & AI Training Programs:'}
+                ${isId ? 'Program Pelatihan Keamanan & Kecerdasan Buatan:' : 'Security & Artificial Intelligence Training Programs:'}
               </h2>
               <div>
-                ${listHtml}
+                ${renderDynamicRisetItemsList(
+                  items,
+                  'Belum ada modul Pelatihan aktif pada database.',
+                  'No active Training modules found in the database.',
+                  'PELATIHAN // SECURITY & AI WORKSHOPS'
+                )}
               </div>
             </div>
             <aside class="lg:col-span-4">
-              <div class="p-5 rounded-lg bg-[#F3F4F6] border border-gray-200">
-                <h3 class="text-[16px] font-bold text-[#1F2937] mb-2">
-                  ${isId ? 'Pelatihan In-House' : 'In-House Corporate Training'}
-                </h3>
-                <p class="text-[13px] text-[#4B5563] leading-relaxed mb-4">
-                  ${
-                    isId
-                      ? 'Seluruh modul pelatihan keamanan dapat disesuaikan untuk kebutuhan tim IT maupun karyawan umum di instansi Anda.'
-                      : 'All security training modules can be tailored for both technical engineering teams and general corporate staff.'
-                  }
-                </p>
-                <button type="button" onclick="switchTab('tentang')" class="text-xs font-semibold text-[#0077B6] hover:underline">
-                  ${isId ? 'Ajukan Jadwal Pelatihan →' : 'Request Training Schedule →'}
-                </button>
-              </div>
+              ${renderEventsAndGlanceSidebarHtml()}
             </aside>
           </div>
         </div>
       `;
     }
 
-    // TAB 6: ACARA (Full Events Directory)
+    // VIEW 8: ACARA
     function renderAcaraView(container) {
       const isId = currentLang === 'id';
       container.innerHTML = `
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 bg-white animate-view">
-          <h2 class="text-[18px] font-bold text-[#1F2937] pb-2.5 border-b border-gray-200 mb-6">
-            ${isId ? 'Jadwal Konferensi & Acara Mendatang @ IPT:' : 'Upcoming Conferences & Events @ IPT:'}
-          </h2>
-          <div class="space-y-6">
-            ${upcomingEvents
-              .map(
-                (evt) => `
-              <div class="p-6 rounded-lg border border-gray-200 bg-white flex flex-col md:flex-row md:items-center justify-between gap-6">
-                <div class="space-y-1.5 max-w-3xl">
-                  <span class="text-xs font-semibold text-[#0077B6]">${escapeHtmlSafe(evt.dateRange)}</span>
-                  <h3 class="text-[17px] font-bold text-[#0077B6] leading-snug">${escapeHtmlSafe(evt.title[currentLang] || evt.title.id)}</h3>
-                  <p class="text-xs text-gray-500">${escapeHtmlSafe(evt.location)}</p>
-                  <p class="text-[13.5px] text-[#4B5563] leading-relaxed pt-1">${escapeHtmlSafe(evt.description[currentLang] || evt.description.id)}</p>
-                </div>
-                <button type="button" onclick="openEventModal('${escapeHtmlSafe(evt.id)}')" class="px-5 py-2.5 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold shrink-0 transition-colors">
-                  ${isId ? 'Daftar Peserta' : 'Register Now'}
-                </button>
-              </div>`
-              )
-              .join('')}
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+            <div class="lg:col-span-8">
+              <h2 class="text-[18px] font-bold text-[#1F2937] pb-2.5 border-b border-gray-200 mb-6">
+                ${isId ? 'Konferensi, Seminar & Kolokium Mendatang @ IPT:' : 'Upcoming Conferences, Seminars & Colloquia @ IPT:'}
+              </h2>
+              <div class="space-y-6">
+                ${upcomingEvents
+                  .map(
+                    (evt) => `
+                  <div class="border-b border-gray-200 pb-6 last:border-b-0">
+                    <div class="text-xs font-semibold text-[#0077B6] mb-1">${escapeHtmlSafe(evt.dateRange)}</div>
+                    <h3 class="text-[17px] font-bold text-[#0077B6] leading-snug mb-1.5">
+                      <button type="button" onclick="openEventModal('${escapeHtmlSafe(evt.id)}')" class="text-left hover:underline">
+                        ${escapeHtmlSafe(evt.title[currentLang] || evt.title.id)}
+                      </button>
+                    </h3>
+                    <div class="text-xs text-gray-500 mb-2">${escapeHtmlSafe(evt.location)}</div>
+                    <p class="text-[13.5px] text-[#4B5563] leading-relaxed mb-3">${escapeHtmlSafe(evt.description[currentLang] || evt.description.id)}</p>
+                    <button type="button" onclick="openEventModal('${escapeHtmlSafe(evt.id)}')" class="px-4 py-2 bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold transition-colors">
+                      ${isId ? 'Daftar Peserta' : 'Register Now'}
+                    </button>
+                  </div>`
+                  )
+                  .join('')}
+              </div>
+            </div>
+            <aside class="lg:col-span-4">
+              ${renderEventsAndGlanceSidebarHtml()}
+            </aside>
           </div>
         </div>
       `;
     }
 
-    // TAB 7: BEKERJA DI IPT (Live Sheet: Riset [Kategori = Bekerja di IPT])
+    // VIEW 9: BEKERJA DI IPT
     function renderKarirView(container) {
       const isId = currentLang === 'id';
-      const items = getFilteredRisetItemsForTab('karir');
-      const listHtml = renderDynamicRisetItemsList(
-        items,
-        'Belum ada lowongan atau fellowship aktif saat ini.',
-        'No active fellowships or career openings at the moment.',
-        'BEKERJA DI IPT // FELLOWSHIP & RESEARCH CAREERS'
+      const items = risetItems.filter(
+        (item) => isVisibleStatus(item.status) && matchesRisetCategory(item.kategori, 'karir')
       );
 
       container.innerHTML = `
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 bg-white animate-view">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
             <div class="lg:col-span-8">
               <h2 class="text-[18px] font-bold text-[#1F2937] pb-2.5 border-b border-gray-200 mb-6">
                 ${isId ? 'Peluang Riset & Karier di IPT Research:' : 'Research & Career Opportunities at IPT Research:'}
               </h2>
               <div>
-                ${listHtml}
+                ${renderDynamicRisetItemsList(
+                  items,
+                  'Belum ada lowongan atau fellowship aktif saat ini.',
+                  'No active fellowships or career openings at the moment.',
+                  'BEKERJA DI IPT // FELLOWSHIP & CAREERS'
+                )}
               </div>
             </div>
             <aside class="lg:col-span-4">
-              <div class="p-5 rounded-lg bg-[#F3F4F6] border border-gray-200">
+              <div class="p-5 bg-[#F3F4F6] border border-gray-200">
                 <h3 class="text-[16px] font-bold text-[#1F2937] mb-2">
                   ${isId ? 'Cara Melamar' : 'How to Apply'}
                 </h3>
@@ -2154,7 +2555,7 @@
       `;
     }
 
-    // TAB 8: TIM (Dedicated SBA-Style Team Directory with Sticky Accordion Sidebar)
+    // VIEW 10: TIM (SBA Research Team Directory + Sticky Right Accordion Sidebar)
     function renderTimView(container) {
       const isId = currentLang === 'id';
       const activeMembers = teamMembers
@@ -2196,8 +2597,7 @@
               <div class="text-[11px] text-[#6B7280] mt-0.5 line-clamp-1 px-0.5">
                 ${escapeHtmlSafe(m.role[currentLang] || m.role.id)}
               </div>
-            </button>
-          `
+            </button>`
           )
           .join('');
 
@@ -2209,14 +2609,13 @@
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-x-5 gap-y-7">
               ${cardsHtml}
             </div>
-          </section>
-        `;
+          </section>`;
       }).join('');
 
       const sidebarAccordionHtml = TEAM_CATEGORY_ORDER.map((categoryName) => {
         const membersInCat = activeMembers.filter((m) => m.category === categoryName);
         if (membersInCat.length === 0) return '';
-        const isOpen = openAccordionCategories[categoryName] !== false;
+        const isOpen = openTeamAccordions[categoryName] !== false;
 
         return `
           <div class="border-b border-gray-200">
@@ -2246,25 +2645,13 @@
                 )
                 .join('')}
             </ul>
-          </div>
-        `;
+          </div>`;
       }).join('');
 
       container.innerHTML = `
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10 bg-white animate-view">
-          <!-- Breadcrumb -->
-          <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs text-[#6B7280] mb-6">
-            <button type="button" onclick="switchTab('home')" class="hover:text-[#0077B6] hover:underline">Home</button>
-            <span>/</span>
-            <button type="button" onclick="switchTab('tentang')" class="hover:text-[#0077B6] hover:underline">${isId ? 'Tentang' : 'About'}</button>
-            <span>/</span>
-            <span class="font-semibold text-[#1F2937]">${isId ? 'Tim' : 'Team'}</span>
-          </nav>
-
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 bg-white animate-view">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
-            <!-- Left Main Column (8 of 12 cols) -->
             <div class="lg:col-span-8">
-              <!-- Wide Group Team Photo Banner -->
               <div class="w-full overflow-hidden border border-gray-200 bg-slate-100 mb-7">
                 <img
                   src="${escapeHtmlSafe(groupImgSrc)}"
@@ -2274,26 +2661,21 @@
                 />
               </div>
 
-              <!-- 3 Narrative Paragraphs -->
               <div class="space-y-4 text-[13.5px] sm:text-[14px] text-[#334155] leading-[1.72] mb-8">
                 ${intros.map((p) => `<p>${escapeHtmlSafe(p)}</p>`).join('')}
               </div>
 
-              <!-- Categorized 4-Column Portrait Grids -->
               <div class="divide-y divide-gray-100">
                 ${categorySectionsHtml}
               </div>
             </div>
 
-            <!-- Right Sticky Accordion Directory Sidebar (4 of 12 cols) -->
             <aside class="lg:col-span-4 lg:sticky lg:top-24">
               <div class="border-t-2 border-[#0077B6] pt-3">
                 <h2 class="text-[15px] font-bold text-[#1F2937] px-2 pb-2.5 border-b border-gray-200">
                   ${isId ? 'Tim' : 'Team'}
                 </h2>
-                <div>
-                  ${sidebarAccordionHtml}
-                </div>
+                <div>${sidebarAccordionHtml}</div>
               </div>
             </aside>
           </div>
@@ -2302,79 +2684,20 @@
     }
 
     function toggleTeamAccordion(categoryName) {
-      openAccordionCategories[categoryName] = !(openAccordionCategories[categoryName] !== false);
-      renderTabContent('tim');
+      openTeamAccordions[categoryName] = !(openTeamAccordions[categoryName] !== false);
+      renderRouteView('tim');
     }
 
     function focusTeamMember(memberId) {
       const card = document.getElementById(`member-card-${memberId}`);
       if (!card) return;
       card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      card.classList.remove('member-card-focused');
+      card.classList.remove('card-focused-pulse');
       void card.offsetWidth;
-      card.classList.add('member-card-focused');
+      card.classList.add('card-focused-pulse');
     }
 
-    function openMemberModal(memberId) {
-      const m = teamMembers.find((item) => item.id === memberId);
-      if (!m) return;
-
-      document.getElementById('member-modal-category').textContent = m.category;
-      document.getElementById('member-modal-name').textContent = m.name;
-      document.getElementById('member-modal-role').textContent = m.role[currentLang] || m.role.id;
-      document.getElementById('member-modal-bio').textContent = m.bio[currentLang] || m.bio.id;
-
-      const photoEl = document.getElementById('member-modal-photo');
-      photoEl.src = m.photo && m.photo.trim() ? m.photo.trim() : FALLBACK_TEAM_AVATAR;
-      photoEl.onerror = function () {
-        this.onerror = null;
-        this.src = FALLBACK_TEAM_AVATAR;
-      };
-
-      const expWrap = document.getElementById('member-modal-expertise-wrap');
-      const expContainer = document.getElementById('member-modal-expertise');
-      if (Array.isArray(m.expertise) && m.expertise.length > 0) {
-        expWrap.classList.remove('hidden');
-        expContainer.innerHTML = m.expertise
-          .map(
-            (tag) =>
-              `<span class="px-2.5 py-1 rounded-md bg-gray-100 text-gray-700 text-[11.5px] font-medium">${escapeHtmlSafe(tag)}</span>`
-          )
-          .join('');
-      } else {
-        expWrap.classList.add('hidden');
-      }
-
-      const links = [];
-      if (m.email) {
-        links.push(
-          `<a href="mailto:${escapeHtmlSafe(m.email)}" class="inline-flex items-center gap-1.5 text-[#0077B6] hover:underline font-medium"><span>✉</span><span>${escapeHtmlSafe(m.email)}</span></a>`
-        );
-      }
-      if (m.scholar) {
-        links.push(
-          `<a href="${escapeHtmlSafe(m.scholar)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[#0077B6] hover:underline font-medium"><span>Google Scholar</span><span>↗</span></a>`
-        );
-      }
-      if (m.linkedin) {
-        links.push(
-          `<a href="${escapeHtmlSafe(m.linkedin)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[#0077B6] hover:underline font-medium"><span>LinkedIn</span><span>↗</span></a>`
-        );
-      }
-      document.getElementById('member-modal-links').innerHTML = links.join('');
-
-      const modal = document.getElementById('member-modal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    }
-
-    function closeMemberModal() {
-      const modal = document.getElementById('member-modal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-    }
-
-    // TAB 9: TENTANG (Institutional Profile, Partners, Standards & Contact Form)
+    // VIEW 11: TENTANG (Institutional Profile & Contact Form)
     function renderTentangView(container) {
       const isId = currentLang === 'id';
       container.innerHTML = `
@@ -2399,7 +2722,7 @@
                       : 'Based in Jakarta, we bridge peer-reviewed academic inquiry with practical intelligent analytics for public institutions and industry.'
                   }
                 </p>
-                <button type="button" onclick="switchTab('tim')" class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0077B6] hover:underline">
+                <button type="button" onclick="navigateTo('tim')" class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0077B6] hover:underline">
                   <span>${isId ? 'Lihat Profil Lengkap Tim & Peneliti IPT Research →' : 'Meet the Full IPT Research Team →'}</span>
                 </button>
               </section>
@@ -2456,7 +2779,7 @@
                 </p>
               </section>
 
-              <div class="p-5 rounded-lg bg-[#F3F4F6] border border-gray-200 text-xs space-y-1.5">
+              <div class="p-5 bg-[#F3F4F6] border border-gray-200 text-xs space-y-1.5">
                 <div class="font-bold text-[#0077B6] text-sm">Sekretariat IPT Research</div>
                 <p>Alamat: Jakarta – lantai 2, 12640 Indonesia</p>
                 <p>Email: <a href="mailto:imanparyudi@gmail.com" class="text-[#0077B6] underline">imanparyudi@gmail.com</a></p>
@@ -2465,7 +2788,7 @@
             </div>
 
             <div id="tentang-kontak" class="lg:col-span-5 scroll-mt-24">
-              <div class="p-6 rounded-lg border border-gray-200 bg-white shadow-2xs">
+              <div class="p-6 border border-gray-200 bg-white shadow-2xs">
                 <h3 class="text-[16px] font-bold text-[#1F2937] mb-1">
                   ${isId ? 'Kirim Pesan / Pertanyaan Riset' : 'Send an Inquiry'}
                 </h3>
@@ -2475,17 +2798,17 @@
                 <form onsubmit="handleContactSubmit(event)" class="space-y-3">
                   <div>
                     <label class="block text-xs font-medium text-gray-700 mb-1">${isId ? 'Nama Lengkap' : 'Full Name'}</label>
-                    <input type="text" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+                    <input type="text" required class="w-full px-3 py-2 border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
                   </div>
                   <div>
                     <label class="block text-xs font-medium text-gray-700 mb-1">Email</label>
-                    <input type="email" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
+                    <input type="email" required class="w-full px-3 py-2 border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]" />
                   </div>
                   <div>
                     <label class="block text-xs font-medium text-gray-700 mb-1">${isId ? 'Pesan / Topik Kolaborasi' : 'Message / Topic'}</label>
-                    <textarea rows="4" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]"></textarea>
+                    <textarea rows="4" required class="w-full px-3 py-2 border border-gray-300 text-xs focus:outline-none focus:border-[#0077B6]"></textarea>
                   </div>
-                  <button type="submit" class="w-full py-2.5 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold transition-colors">
+                  <button type="submit" class="w-full py-2.5 bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold transition-colors">
                     ${isId ? 'Kirim Pesan' : 'Submit Message'}
                   </button>
                 </form>
@@ -2497,8 +2820,88 @@
     }
 
     // -------------------------------------------------------------------------
-    // 6. MODALS, GOOGLE SHEETS SYNC & INTERACTION HANDLERS
+    // 7. DYNAMIC LIST RENDERER FOR SHEET: RISET ITEMS
     // -------------------------------------------------------------------------
+    function renderDynamicRisetItemsList(items, emptyTextId, emptyTextEn, badgePrefix) {
+      const isId = currentLang === 'id';
+      if (!items || items.length === 0) {
+        return `
+          <div class="p-6 border border-dashed border-gray-300 bg-gray-50/70 text-center text-xs text-[#6B7280]">
+            ${isId ? emptyTextId : emptyTextEn}
+          </div>`;
+      }
+
+      return items
+        .map((item) => {
+          const title = isId ? item.judul_id : (item.judul_en || item.judul_id);
+          const summary = isId ? item.ringkasan_id : (item.ringkasan_en || item.ringkasan_id);
+          const author = isId ? item.penulis_id : (item.penulis_en || item.penulis_id);
+          const searchStr = `${title} ${summary} ${author} ${item.tahun} ${item.kategori}`.toLowerCase();
+
+          return `
+            <article
+              onclick="openProgramDetailModal('${escapeHtmlSafe(item.id)}')"
+              data-search="${escapeHtmlSafe(searchStr)}"
+              class="dynamic-riset-card group cursor-pointer border-b border-gray-200 pb-6 mb-6 last:border-b-0 last:pb-0 last:mb-0 hover:bg-gray-50/60 transition-colors p-2 -mx-2"
+            >
+              <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                <span class="text-[11px] font-semibold text-[#0077B6] uppercase tracking-wide">
+                  ${escapeHtmlSafe(badgePrefix || item.kategori)}
+                </span>
+                ${item.tahun ? `<span class="px-2 py-0.5 bg-gray-100 text-gray-600 text-[10.5px] font-medium">${escapeHtmlSafe(item.tahun)}</span>` : ''}
+                <span class="font-mono text-[10.5px] text-gray-400">${escapeHtmlSafe(item.id)}</span>
+              </div>
+              <h3 class="text-[16.5px] font-bold text-[#0077B6] group-hover:underline leading-snug mb-1.5">
+                ${escapeHtmlSafe(title)}
+              </h3>
+              ${
+                author
+                  ? `<div class="text-xs font-medium text-[#374151] mb-2">${escapeHtmlSafe(author)}${item.tahun ? ` • ${escapeHtmlSafe(item.tahun)}` : ''}</div>`
+                  : ''
+              }
+              <p class="text-[13.5px] text-[#4B5563] leading-relaxed">
+                ${escapeHtmlSafe(summary)}
+                <span class="text-[#0077B6] underline font-medium ml-1">${isId ? 'Detail →' : 'Details →'}</span>
+              </p>
+            </article>`;
+        })
+        .join('');
+    }
+
+    function filterDynamicRisetCards(q) {
+      const term = q.trim().toLowerCase();
+      document.querySelectorAll('#dynamic-riset-list-wrap .dynamic-riset-card').forEach((card) => {
+        const text = card.getAttribute('data-search') || '';
+        card.style.display = !term || text.includes(term) ? '' : 'none';
+      });
+    }
+
+    // -------------------------------------------------------------------------
+    // 8. MODALS, HELPERS & GOOGLE SPREADSHEETS LIVE SYNC
+    // -------------------------------------------------------------------------
+    function escapeHtmlSafe(str) {
+      return String(str ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function openModalById(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.remove('hidden');
+      el.classList.add('flex');
+    }
+
+    function closeModalById(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.add('hidden');
+      el.classList.remove('flex');
+    }
+
     function openArticleModal(articleId) {
       const article = newsArticles.find((a) => a.id === articleId);
       if (!article) return;
@@ -2518,15 +2921,7 @@
         .join('');
       document.getElementById('article-modal-body').innerHTML = paragraphs;
 
-      const modal = document.getElementById('article-modal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    }
-
-    function closeArticleModal() {
-      const modal = document.getElementById('article-modal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
+      openModalById('article-modal');
     }
 
     function openEventModal(eventId) {
@@ -2537,21 +2932,117 @@
       document.getElementById('event-modal-date').textContent = `${evt.dateRange} • ${evt.location}`;
       document.getElementById('event-modal-desc').textContent = evt.description[currentLang] || evt.description.id;
 
-      const modal = document.getElementById('event-modal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
+      openModalById('event-modal');
     }
 
-    function closeEventModal() {
-      const modal = document.getElementById('event-modal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
+    function openMemberModal(memberId) {
+      const m = teamMembers.find((item) => item.id === memberId);
+      if (!m) return;
+
+      document.getElementById('member-modal-category').textContent = m.category;
+      document.getElementById('member-modal-name').textContent = m.name;
+      document.getElementById('member-modal-role').textContent = m.role[currentLang] || m.role.id;
+      document.getElementById('member-modal-bio').textContent = m.bio[currentLang] || m.bio.id;
+
+      const photoEl = document.getElementById('member-modal-photo');
+      photoEl.src = m.photo && m.photo.trim() ? m.photo.trim() : FALLBACK_TEAM_AVATAR;
+      photoEl.onerror = function () {
+        this.onerror = null;
+        this.src = FALLBACK_TEAM_AVATAR;
+      };
+
+      const expWrap = document.getElementById('member-modal-expertise-wrap');
+      const expContainer = document.getElementById('member-modal-expertise');
+      if (Array.isArray(m.expertise) && m.expertise.length > 0) {
+        expWrap.classList.remove('hidden');
+        expContainer.innerHTML = m.expertise
+          .map((tag) => `<span class="px-2.5 py-1 rounded-md bg-gray-100 text-gray-700 text-[11.5px] font-medium">${escapeHtmlSafe(tag)}</span>`)
+          .join('');
+      } else {
+        expWrap.classList.add('hidden');
+      }
+
+      const links = [];
+      if (m.email) {
+        links.push(`<a href="mailto:${escapeHtmlSafe(m.email)}" class="inline-flex items-center gap-1.5 text-[#0077B6] hover:underline font-medium"><span>✉</span><span>${escapeHtmlSafe(m.email)}</span></a>`);
+      }
+      if (m.scholar) {
+        links.push(`<a href="${escapeHtmlSafe(m.scholar)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[#0077B6] hover:underline font-medium"><span>Google Scholar</span><span>↗</span></a>`);
+      }
+      if (m.linkedin) {
+        links.push(`<a href="${escapeHtmlSafe(m.linkedin)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[#0077B6] hover:underline font-medium"><span>LinkedIn</span><span>↗</span></a>`);
+      }
+      document.getElementById('member-modal-links').innerHTML = links.join('');
+
+      openModalById('member-modal');
+    }
+
+    function openResearchGroupModal(rgId) {
+      const rg = researchGroupsData.find((g) => g.id === rgId);
+      if (!rg) return;
+
+      const isId = currentLang === 'id';
+      document.getElementById('program-modal-category').textContent = isId ? 'Kelompok Riset' : 'Research Group';
+      document.getElementById('program-modal-id').textContent = rg.id.toUpperCase();
+      document.getElementById('program-modal-title').textContent = rg.title[currentLang] || rg.title.id;
+      document.getElementById('program-modal-meta').innerHTML = `<strong>${isId ? 'Ketua Kelompok Riset:' : 'Research Group Lead:'}</strong> ${escapeHtmlSafe(rg.leadName)}`;
+
+      const p1 = rg.p1[currentLang] || rg.p1.id;
+      const p2 = rg.p2[currentLang] || rg.p2.id;
+      document.getElementById('program-modal-body').innerHTML = `<p>${escapeHtmlSafe(p1)}</p><p>${escapeHtmlSafe(p2)}</p>`;
+
+      const linkBox = document.getElementById('program-modal-link-box');
+      linkBox.classList.remove('hidden');
+      linkBox.innerHTML = `<button type="button" onclick="closeModalById('program-detail-modal'); openMemberModal('${escapeHtmlSafe(rg.leadId)}');" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold"><span>${isId ? 'Lihat Profil Ketua Kelompok' : 'View Research Group Lead Profile'}</span><span>→</span></button>`;
+
+      openModalById('program-detail-modal');
+    }
+
+    function openProgramDetailModal(itemId) {
+      const item = risetItems.find((r) => r.id === itemId);
+      if (!item) return;
+
+      const isId = currentLang === 'id';
+      const title = isId ? item.judul_id : (item.judul_en || item.judul_id);
+      const desc = isId ? item.ringkasan_id : (item.ringkasan_en || item.ringkasan_id);
+      const author = isId ? item.penulis_id : (item.penulis_en || item.penulis_id);
+
+      document.getElementById('program-modal-category').textContent = item.kategori || 'Riset';
+      document.getElementById('program-modal-id').textContent = item.id || '';
+      document.getElementById('program-modal-title').textContent = title;
+
+      const metaParts = [];
+      if (author) metaParts.push(`<strong>${isId ? 'Koordinator / Penulis:' : 'Coordinator / Authors:'}</strong> ${escapeHtmlSafe(author)}`);
+      if (item.tahun) metaParts.push(`<strong>${isId ? 'Tahun:' : 'Year:'}</strong> ${escapeHtmlSafe(item.tahun)}`);
+      document.getElementById('program-modal-meta').innerHTML = metaParts.join(' &nbsp;•&nbsp; ');
+
+      const paragraphs = String(desc || '').split(/\n+/).filter(Boolean);
+      document.getElementById('program-modal-body').innerHTML =
+        paragraphs.length > 0
+          ? paragraphs.map((p) => `<p>${escapeHtmlSafe(p)}</p>`).join('')
+          : `<p class="text-gray-400 italic">${isId ? 'Tidak ada deskripsi tambahan.' : 'No additional description provided.'}</p>`;
+
+      const linkBox = document.getElementById('program-modal-link-box');
+      const linkVal = String(item.link || '').trim();
+      if (linkVal) {
+        linkBox.classList.remove('hidden');
+        if (/^(https?:\/\/|mailto:)/i.test(linkVal)) {
+          linkBox.innerHTML = `<a href="${escapeHtmlSafe(linkVal)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#0077B6] hover:bg-[#0082C8] text-white text-xs font-semibold"><span>${isId ? 'Buka Tautan / Referensi Terkait' : 'Open Related Link / Reference'}</span><span>↗</span></a>`;
+        } else {
+          linkBox.innerHTML = `<div class="text-xs text-[#4B5563]"><strong class="text-[#1F2937]">${isId ? 'Referensi / Kode Publikasi:' : 'Reference / Publication Code:'}</strong> <span class="ml-1 px-2 py-0.5 rounded bg-gray-100 font-mono text-[#0077B6]">${escapeHtmlSafe(linkVal)}</span></div>`;
+        }
+      } else {
+        linkBox.classList.add('hidden');
+        linkBox.innerHTML = '';
+      }
+
+      openModalById('program-detail-modal');
     }
 
     function handleEventRegistration(e) {
       e.preventDefault();
       const name = document.getElementById('evt-reg-name').value.trim();
-      closeEventModal();
+      closeModalById('event-modal');
       e.target.reset();
       showToast(
         currentLang === 'id'
@@ -2574,25 +3065,18 @@
       const toast = document.getElementById('toast-notification');
       toast.textContent = msg;
       toast.classList.remove('hidden');
-      setTimeout(() => {
-        toast.classList.add('hidden');
-      }, 3600);
+      setTimeout(() => toast.classList.add('hidden'), 3600);
     }
 
     function updateFooterSyncBadge(statusText, isConnected = true) {
       const labelEl = document.getElementById('footer-sync-label');
       const dotEl = document.getElementById('footer-sync-dot');
-      if (labelEl && statusText) {
-        labelEl.textContent = statusText;
-      }
+      if (labelEl && statusText) labelEl.textContent = statusText;
       if (dotEl) {
-        dotEl.className = isConnected
-          ? 'w-1.5 h-1.5 rounded-full bg-emerald-500'
-          : 'w-1.5 h-1.5 rounded-full bg-[#0077B6]';
+        dotEl.className = isConnected ? 'w-1.5 h-1.5 rounded-full bg-emerald-500' : 'w-1.5 h-1.5 rounded-full bg-[#0077B6]';
       }
     }
 
-    // Sinkronisasi langsung dengan Google Sheets System (Code.gs)
     async function syncGoogleSheetsData(silent = true) {
       const apiUrl = getSheetsApiUrl();
       if (!apiUrl || isFetchingSheets) return false;
@@ -2604,10 +3088,7 @@
       try {
         const sep = apiUrl.includes('?') ? '&' : '?';
         const endpoint = `${apiUrl}${sep}action=getAll&_t=${Date.now()}`;
-        const res = await fetch(endpoint, {
-          method: 'GET',
-          cache: 'no-store'
-        });
+        const res = await fetch(endpoint, { method: 'GET', cache: 'no-store' });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
         const rawJson = await res.json();
@@ -2618,7 +3099,6 @@
           localCache = JSON.parse(localStorage.getItem(CMS_STORAGE_KEY) || '{}');
         } catch (e) {}
 
-        // 1. Sync Berita
         const rawNews = payload.berita || payload.news;
         if (Array.isArray(rawNews)) {
           localCache.berita = rawNews;
@@ -2626,7 +3106,6 @@
           if (normalizedNews.length > 0) newsArticles = normalizedNews;
         }
 
-        // 2. Sync Acara
         const rawEvents = payload.acara || payload.events;
         if (Array.isArray(rawEvents)) {
           localCache.acara = rawEvents;
@@ -2634,7 +3113,6 @@
           if (normalizedEvents.length > 0) upcomingEvents = normalizedEvents;
         }
 
-        // 3. Sync Tim
         const rawTeam = payload.tim || payload.team;
         if (Array.isArray(rawTeam)) {
           localCache.tim = rawTeam;
@@ -2642,14 +3120,12 @@
           if (normalizedTeam.length > 0) teamMembers = normalizedTeam;
         }
 
-        // 4. Sync Riset, Penelitian Terapan, Layanan Profesional, Pelatihan, Bekerja di IPT
         const rawRiset = payload.riset || payload.programs || payload.research;
         if (Array.isArray(rawRiset)) {
           localCache.riset = rawRiset;
           risetItems = normalizeRisetRows(rawRiset);
         }
 
-        // 5. Sync Profil_Web
         const rawProfil = payload.profil || payload.profile;
         if (rawProfil) {
           localCache.profil = rawProfil;
@@ -2660,16 +3136,14 @@
           localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(localCache));
         } catch (e) {}
 
-        updateHeroForTab(activeTab);
-        renderTabContent(activeTab);
+        updateHeroBanner(activeRoute);
+        renderRouteView(activeRoute);
 
         const now = new Date();
         const hh = String(now.getHours()).padStart(2, '0');
         const mm = String(now.getMinutes()).padStart(2, '0');
         updateFooterSyncBadge(
-          currentLang === 'id'
-            ? `Sinkron Google Sheets (${hh}:${mm} WIB)`
-            : `Synced with Google Sheets (${hh}:${mm} WIB)`,
+          currentLang === 'id' ? `Sinkron Google Sheets (${hh}:${mm} WIB)` : `Synced with Google Sheets (${hh}:${mm} WIB)`,
           true
         );
 
@@ -2700,7 +3174,7 @@
       const apiUrl = getSheetsApiUrl();
       if (!apiUrl) {
         hydrateFromCmsLocalStorage();
-        renderTabContent(activeTab);
+        renderRouteView(activeRoute);
         showToast(
           currentLang === 'id'
             ? 'Data lokal diperbarui. Isi DEFAULT_SHEETS_API_URL atau simpan URL di Admin CMS untuk sinkronisasi cloud.'
@@ -2711,51 +3185,37 @@
       await syncGoogleSheetsData(false);
     }
 
-    // Close modals & dropdown on Escape key or outside click
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        closeArticleModal();
-        closeEventModal();
-        closeMemberModal();
-        closeProgramDetailModal();
-        closeAboutDropdown();
+        ['article-modal', 'event-modal', 'member-modal', 'program-detail-modal'].forEach(closeModalById);
+        closeAllNavDropdowns();
       }
     });
     document.addEventListener('click', (e) => {
-      const wrapper = document.getElementById('desktop-about-dropdown-wrapper');
-      if (wrapper && !wrapper.contains(e.target)) {
-        closeAboutDropdown();
+      if (!e.target.closest('.nav-dropdown-group')) {
+        closeAllNavDropdowns();
       }
     });
-    document.getElementById('article-modal')?.addEventListener('click', (e) => {
-      if (e.target.id === 'article-modal') closeArticleModal();
-    });
-    document.getElementById('event-modal')?.addEventListener('click', (e) => {
-      if (e.target.id === 'event-modal') closeEventModal();
-    });
-    document.getElementById('member-modal')?.addEventListener('click', (e) => {
-      if (e.target.id === 'member-modal') closeMemberModal();
-    });
-    document.getElementById('program-detail-modal')?.addEventListener('click', (e) => {
-      if (e.target.id === 'program-detail-modal') closeProgramDetailModal();
+    ['article-modal', 'event-modal', 'member-modal', 'program-detail-modal'].forEach((id) => {
+      document.getElementById(id)?.addEventListener('click', (e) => {
+        if (e.target.id === id) closeModalById(id);
+      });
     });
 
-    // Dengarkan perubahan langsung dari admin.html di tab browser lain
     window.addEventListener('storage', (e) => {
       if (e.key === CMS_STORAGE_KEY || e.key === CMS_CONFIG_KEY || e.key === 'ipt_sheets_api_url') {
         hydrateFromCmsLocalStorage();
-        updateHeroForTab(activeTab);
-        renderTabContent(activeTab);
+        updateHeroBanner(activeRoute);
+        renderRouteView(activeRoute);
         syncGoogleSheetsData(true);
       }
     });
 
-    // Inisialisasi saat halaman dimuat
     window.onload = function () {
       hydrateFromCmsLocalStorage();
       setLanguage('id');
       if (window.location.hash === '#tim' || window.location.hash === '#team') {
-        navigateToAboutSub('tim');
+        navigateTo('tim');
       }
       syncGoogleSheetsData(true);
     };
