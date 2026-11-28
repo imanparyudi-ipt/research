@@ -43,7 +43,6 @@
       overflow-x: hidden;
     }
 
-    /* Exact Dotted Blue Matrix Pattern from imanparyudi.com/research */
     .ipt-hero-matrix {
       background-color: #007EC6;
       background-image:
@@ -68,7 +67,6 @@
       animation: fadeSlideIn 0.2s ease-out forwards;
     }
 
-    /* Custom subtle scrollbar for code viewer and wide tables */
     .custom-scroll::-webkit-scrollbar {
       width: 6px;
       height: 6px;
@@ -89,14 +87,12 @@
 <body class="min-h-screen flex flex-col bg-[#F8FAFC] text-[#1F2937] antialiased selection:bg-[#0077B6] selection:text-white">
 
   <!-- =====================================================================
-       1. ADMIN LOGIN GATE (Institutional Security Screen)
+       1. ADMIN LOGIN GATE
        ===================================================================== -->
   <div id="login-gate" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#F3F4F6]">
     <div class="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden animate-panel">
-      <!-- Top Dotted Cerulean Header Strip -->
       <div class="ipt-hero-matrix px-6 py-6 text-white">
         <div class="flex items-center gap-3.5">
-          <!-- Exact 44px x 44px #0077B6 / White Framed IPT Monogram -->
           <div class="w-[44px] h-[44px] rounded-xl bg-white/15 border border-white/30 flex items-center justify-center shrink-0">
             <svg class="w-7 h-7" viewBox="0 0 36 36" fill="none" aria-hidden="true">
               <circle cx="9" cy="9" r="1.8" fill="#BAE6FD"/>
@@ -116,7 +112,6 @@
         </div>
       </div>
 
-      <!-- Login Form -->
       <form onsubmit="handleAdminLogin(event)" class="p-6 sm:p-7 space-y-5">
         <div>
           <label for="login-pin-input" class="block text-xs font-semibold text-[#1F2937] mb-1.5">
@@ -144,7 +139,7 @@
             PIN administrator tidak sesuai. Silakan periksa kembali.
           </p>
           <p class="text-[11.5px] text-[#6B7280] mt-2 bg-blue-50/70 border border-blue-100 rounded-lg px-3 py-2">
-            Info Pratinjau: PIN default adalah <strong class="text-[#0077B6] font-mono">2026</strong> (dapat diubah kapan saja pada tab <em>Koneksi Google Sheets</em>).
+            Info Pratinjau: PIN default adalah <strong class="text-[#0077B6] font-mono">2026</strong> (dapat diubah kapan saja pada tab <em>6. Koneksi Google Sheets</em>).
           </p>
         </div>
 
@@ -179,7 +174,7 @@
   </div>
 
   <!-- =====================================================================
-       2. MAIN CMS APPLICATION SHELL (Hidden until authenticated)
+       2. MAIN CMS APPLICATION SHELL
        ===================================================================== -->
   <div id="cms-app-shell" class="hidden min-h-screen flex flex-col">
 
@@ -224,7 +219,6 @@
 
         <!-- Right Action Controls & Live Spreadsheet Connection Pill -->
         <div class="flex flex-wrap items-center gap-2 sm:gap-2.5">
-          <!-- Connection Status Pill -->
           <button
             type="button"
             id="connection-status-pill"
@@ -236,7 +230,6 @@
             <span id="connection-status-text">Mode Sandbox Lokal</span>
           </button>
 
-          <!-- Pull / Sync Button -->
           <button
             type="button"
             id="btn-pull-sync"
@@ -251,7 +244,6 @@
             <span class="sm:hidden">Sync</span>
           </button>
 
-          <!-- Live Public Homepage Preview Button -->
           <button
             type="button"
             onclick="openPublicPreviewModal()"
@@ -264,7 +256,18 @@
             <span>Pratinjau Halaman Publik</span>
           </button>
 
-          <!-- Logout Button -->
+          <a
+            href="index.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-gray-300 bg-white hover:bg-blue-50 hover:text-[#0077B6] hover:border-[#0077B6] text-xs font-semibold text-[#1F2937] transition-colors"
+            title="Buka halaman publik index.html di tab baru"
+          >
+            <span class="hidden sm:inline">Buka Web Publik</span>
+            <span class="sm:hidden">Web</span>
+            <span>↗</span>
+          </a>
+
           <button
             type="button"
             onclick="handleAdminLogout()"
@@ -287,7 +290,6 @@
            3. KPI SUMMARY CARDS (4 Institutional Metric Cards)
            ===================================================================== -->
       <section aria-label="Ringkasan Data CMS" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <!-- KPI 1 -->
         <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-2xs flex items-start justify-between">
           <div>
             <p class="text-xs font-medium text-[#6B7280]">Total Berita Terkini</p>
@@ -301,7 +303,6 @@
           </div>
         </div>
 
-        <!-- KPI 2 -->
         <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-2xs flex items-start justify-between">
           <div>
             <p class="text-xs font-medium text-[#6B7280]">Acara Mendatang @ IPT</p>
@@ -315,7 +316,6 @@
           </div>
         </div>
 
-        <!-- KPI 3 -->
         <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-2xs flex items-start justify-between">
           <div>
             <p class="text-xs font-medium text-[#6B7280]">Total Tim &amp; Peneliti</p>
@@ -329,7 +329,6 @@
           </div>
         </div>
 
-        <!-- KPI 4 -->
         <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-2xs flex items-start justify-between">
           <div class="min-w-0 pr-2">
             <p class="text-xs font-medium text-[#6B7280]">Status Sinkronisasi Terakhir</p>
@@ -345,11 +344,10 @@
       </section>
 
       <!-- =====================================================================
-           4. WORKSPACE: SIDEBAR NAVIGATION (5 MODULES) + ACTIVE MODULE PANEL
+           4. WORKSPACE: SIDEBAR NAVIGATION (6 MODULES) + ACTIVE MODULE PANEL
            ===================================================================== -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
-        <!-- Left Sidebar Navigation (Desktop Vertical / Mobile Scrollable Tabs) -->
         <aside class="lg:col-span-3 bg-white rounded-xl border border-gray-200 p-2.5 shadow-2xs">
           <div class="px-3 py-2 hidden lg:block">
             <span class="text-[11px] font-bold uppercase tracking-wider text-[#6B7280]">Modul Database Sheets</span>
@@ -428,7 +426,6 @@
             </button>
           </nav>
 
-          <!-- Helper Info Card inside Sidebar -->
           <div class="hidden lg:block mt-4 pt-3 border-t border-gray-100 px-3 pb-1 text-[11.5px] text-[#6B7280] space-y-1.5">
             <p class="font-semibold text-[#1F2937]">Struktur Tab Spreadsheets:</p>
             <ul class="space-y-1 font-mono text-[11px] text-[#0077B6]">
@@ -441,7 +438,6 @@
           </div>
         </aside>
 
-        <!-- Right Main Workspace Area -->
         <main id="admin-workspace" class="lg:col-span-9 min-w-0">
           <!-- Rendered dynamically per active tab -->
         </main>
@@ -449,7 +445,6 @@
       </div>
     </div>
 
-    <!-- Footer (Identical 3-Column Identity) -->
     <footer class="bg-[#F3F4F6] border-t border-gray-200 py-6 mt-12">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-600">
         <div>
@@ -531,7 +526,6 @@
           </div>
         </div>
 
-        <!-- Thumbnail URL + Live Preview -->
         <div class="p-3.5 rounded-xl bg-gray-50 border border-gray-200 flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <div class="flex-1 w-full">
             <label class="block text-xs font-semibold text-[#1F2937] mb-1">URL Gambar Thumbnail (165px × 105px)</label>
@@ -657,10 +651,18 @@
           <div>
             <label class="block text-xs font-semibold text-[#1F2937] mb-1">Kategori Menu *</label>
             <select id="riset-kategori" class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-white text-xs font-medium focus:outline-none focus:border-[#0077B6]">
-              <option value="Riset">Riset</option>
+              <option value="Riset">Riset (Umum &amp; Publikasi)</option>
+              <option value="Riset - Publikasi Ilmiah">Riset → Publikasi Ilmiah</option>
+              <option value="Riset - Pusat Riset AI & Data Science">Riset → Pusat Riset AI &amp; Data Science</option>
+              <option value="Riset - Proyek Riset">Riset → Proyek Riset</option>
+              <option value="Riset - Kelompok Riset">Riset → Kelompok Riset</option>
+              <option value="Riset - Kajian & Advisori AI">Riset → Kajian &amp; Advisori AI</option>
+              <option value="Riset - Pengajaran & Mata Kuliah">Riset → Pengajaran &amp; Mata Kuliah</option>
+              <option value="Riset - Bimbingan Tugas Akhir">Riset → Bimbingan Skripsi | Tesis | Disertasi</option>
+              <option value="Riset - Konferensi Ilmiah">Riset → Konferensi Ilmiah</option>
               <option value="Penelitian Terapan">Penelitian Terapan</option>
               <option value="Layanan Profesional">Layanan Profesional</option>
-              <option value="Pelatihan Keamanan">Pelatihan Keamanan</option>
+              <option value="Pelatihan Keamanan">Pelatihan (Pelatihan Keamanan)</option>
               <option value="Bekerja di IPT">Bekerja di IPT</option>
             </select>
           </div>
@@ -807,7 +809,6 @@
           </div>
         </div>
 
-        <!-- Portrait Photo URL + Live 4:5 Preview -->
         <div class="p-3.5 rounded-xl bg-gray-50 border border-gray-200 flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <div class="flex-1 w-full">
             <label class="block text-xs font-semibold text-[#1F2937] mb-1">URL Foto Profil Potret (Rasio 4:5)</label>
@@ -842,7 +843,6 @@
        ===================================================================== -->
   <div id="modal-public-preview" class="fixed inset-0 z-50 hidden items-center justify-center p-2 sm:p-5 bg-gray-900/75 backdrop-blur-xs" role="dialog" aria-modal="true">
     <div class="bg-white rounded-2xl max-w-6xl w-full max-h-[92vh] flex flex-col shadow-2xl border border-gray-300 overflow-hidden animate-panel">
-      <!-- Simulated Browser Toolbar -->
       <div class="bg-[#F3F4F6] border-b border-gray-200 px-4 py-2.5 flex items-center justify-between gap-3">
         <div class="flex items-center gap-2">
           <span class="w-3 h-3 rounded-full bg-red-400"></span>
@@ -854,13 +854,25 @@
           </div>
         </div>
         <div class="flex flex-wrap items-center gap-2">
+          <select
+            id="preview-page-select"
+            onchange="setPreviewPage(this.value)"
+            aria-label="Pilih Halaman Pratinjau"
+            class="px-2.5 py-1 rounded-lg border border-gray-300 bg-white text-[11px] font-semibold text-[#0077B6] focus:outline-none"
+          >
+            <option value="home">Halaman: Home</option>
+            <option value="riset">Halaman: Riset &amp; Publikasi</option>
+            <option value="terapan">Halaman: Penelitian Terapan</option>
+            <option value="layanan">Halaman: Layanan Profesional</option>
+            <option value="pelatihan">Halaman: Pelatihan</option>
+            <option value="acara">Halaman: Acara</option>
+            <option value="karir">Halaman: Bekerja di IPT</option>
+            <option value="tim">Halaman: Tentang → Tim</option>
+            <option value="tentang">Halaman: Tentang</option>
+          </select>
           <div class="inline-flex rounded-lg border border-gray-300 bg-white p-0.5 text-[11px] font-semibold">
-            <button type="button" id="preview-page-home" onclick="setPreviewPage('home')" class="px-2.5 py-0.5 rounded bg-[#0077B6] text-white">Halaman Home</button>
-            <button type="button" id="preview-page-tim" onclick="setPreviewPage('tim')" class="px-2.5 py-0.5 rounded text-gray-600">Halaman Tim</button>
-          </div>
-          <div class="inline-flex rounded-lg border border-gray-300 bg-white p-0.5 text-[11px] font-semibold">
-            <button type="button" id="preview-lang-id" onclick="setPreviewLang('id')" class="px-2 py-0.5 rounded bg-[#0077B6] text-white">ID</button>
-            <button type="button" id="preview-lang-en" onclick="setPreviewLang('en')" class="px-2 py-0.5 rounded text-gray-600">EN</button>
+            <button type="button" id="preview-lang-id" onclick="setPreviewLang('id')" class="px-2.5 py-0.5 rounded bg-[#0077B6] text-white">ID</button>
+            <button type="button" id="preview-lang-en" onclick="setPreviewLang('en')" class="px-2.5 py-0.5 rounded text-gray-600">EN</button>
           </div>
           <button type="button" onclick="closeModal('modal-public-preview')" class="px-3 py-1 rounded-lg bg-gray-800 hover:bg-gray-900 text-white text-xs font-semibold">
             Tutup Pratinjau
@@ -868,7 +880,6 @@
         </div>
       </div>
 
-      <!-- Rendered Live Public Page Body -->
       <div id="public-preview-canvas" class="overflow-y-auto custom-scroll bg-white flex-1">
         <!-- Populated dynamically from live CMS state -->
       </div>
@@ -876,7 +887,7 @@
   </div>
 
   <!-- =====================================================================
-       MODAL E: CUSTOM CONFIRMATION DIALOG (Replaces window.confirm())
+       MODAL E: CUSTOM CONFIRMATION DIALOG
        ===================================================================== -->
   <div id="modal-confirm" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-gray-900/60" role="dialog" aria-modal="true">
     <div class="bg-white rounded-xl max-w-md w-full p-6 shadow-2xl border border-gray-200 animate-panel">
@@ -921,11 +932,6 @@
        APPLICATION JAVASCRIPT: SHEETS API ENGINE, CRUD & STATE MANAGEMENT
        ===================================================================== -->
   <script>
-    /**
-     * =========================================================================
-     * 1. STORAGE KEYS & DEFAULT INSTITUTIONAL SEED DATA
-     * =========================================================================
-     */
     const STORAGE_KEYS = {
       DATA: 'ipt_research_cms_data_v1',
       CONFIG: 'ipt_research_cms_config_v1',
@@ -1325,16 +1331,16 @@
     function persistCmsConfig() {
       try {
         localStorage.setItem(STORAGE_KEYS.CONFIG, JSON.stringify(cmsConfig));
+        if (cmsConfig.sheetsUrl && cmsConfig.sheetsUrl.trim().startsWith('https://')) {
+          localStorage.setItem('ipt_sheets_api_url', cmsConfig.sheetsUrl.trim());
+        } else {
+          localStorage.removeItem('ipt_sheets_api_url');
+        }
       } catch (e) {}
       updateConnectionStatusUI();
       updateKpiCards();
     }
 
-    /**
-     * =========================================================================
-     * 2. SPREADSHEET API SYNC ENGINE (GET & POST via text/plain for GAS CORS)
-     * =========================================================================
-     */
     const SheetsAPI = {
       isConnected() {
         return Boolean(cmsConfig.sheetsUrl && cmsConfig.sheetsUrl.trim().startsWith('https://'));
@@ -1358,7 +1364,6 @@
 
       async mutate(sheet, action, data) {
         if (!this.isConnected()) {
-          // Local sandbox mode: immediately succeed and persist locally
           cmsConfig.lastSyncText = formatTimestampWIB() + ' (Lokal)';
           cmsConfig.lastSyncMode = 'local';
           persistCmsConfig();
@@ -1447,15 +1452,10 @@
       }
       const res = await SheetsAPI.mutate('ALL', 'syncAll', cmsData);
       if (res.ok && res.mode === 'sheets') {
-        showToast('Seluruh data Berita, Acara, Riset & Profil berhasil didorong ke Google Spreadsheets!', 'success');
+        showToast('Seluruh data Berita, Acara, Tim, Riset & Profil berhasil didorong ke Google Spreadsheets!', 'success');
       }
     }
 
-    /**
-     * =========================================================================
-     * 3. AUTHENTICATION & SESSION GATE
-     * =========================================================================
-     */
     function checkAuthOnLoad() {
       const isAuthed =
         sessionStorage.getItem(STORAGE_KEYS.AUTH) === 'true' ||
@@ -1518,11 +1518,6 @@
       renderActiveWorkspace();
     }
 
-    /**
-     * =========================================================================
-     * 4. HEADER STATUS, KPI CARDS & NAVIGATION TABS
-     * =========================================================================
-     */
     function updateConnectionStatusUI() {
       const pill = document.getElementById('connection-status-pill');
       const dot = document.getElementById('connection-status-dot');
@@ -1585,11 +1580,9 @@
       else if (activeAdminTab === 'koneksi') renderKoneksiModule(container);
     }
 
-    /**
-     * =========================================================================
-     * 5. MODULE 1: BERITA TERKINI (CRUD TABLE + MODAL)
-     * =========================================================================
-     */
+    // -------------------------------------------------------------------------
+    // MODULE 1: BERITA TERKINI
+    // -------------------------------------------------------------------------
     function renderBeritaModule(container) {
       const filtered = cmsData.berita.filter((item) => {
         const matchStatus = beritaStatusFilter === 'ALL' || item.status === beritaStatusFilter;
@@ -1658,7 +1651,6 @@
 
       container.innerHTML = `
         <div class="bg-white rounded-xl border border-gray-200 shadow-2xs overflow-hidden animate-panel">
-          <!-- Module Header -->
           <div class="p-5 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <h2 class="text-base font-bold text-[#1F2937]">Manajemen Berita Terkini</h2>
@@ -1674,7 +1666,6 @@
             </button>
           </div>
 
-          <!-- Filter & Search Bar -->
           <div class="px-5 py-3 bg-gray-50 border-b border-gray-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
             <input
               type="text"
@@ -1696,7 +1687,6 @@
             </div>
           </div>
 
-          <!-- Responsive Table -->
           <div class="overflow-x-auto custom-scroll">
             <table class="w-full text-left border-collapse">
               <thead>
@@ -1802,11 +1792,9 @@
       }
     }
 
-    /**
-     * =========================================================================
-     * 6. MODULE 2: ACARA MENDATANG @ IPT (CRUD TABLE + MODAL)
-     * =========================================================================
-     */
+    // -------------------------------------------------------------------------
+    // MODULE 2: ACARA MENDATANG @ IPT
+    // -------------------------------------------------------------------------
     function renderAcaraModule(container) {
       const rowsHtml =
         cmsData.acara.length === 0
@@ -1953,11 +1941,9 @@
       }
     }
 
-    /**
-     * =========================================================================
-     * 6B. MODULE 2B: TIM & PENELITI (Sheet: Tim + Intro Narrative Editor)
-     * =========================================================================
-     */
+    // -------------------------------------------------------------------------
+    // MODULE 3: TIM & PENELITI
+    // -------------------------------------------------------------------------
     function renderTimModule(container) {
       const sorted = [...cmsData.tim].sort((a, b) => (Number(a.order) || 99) - (Number(b.order) || 99));
       const filtered = sorted.filter((m) => {
@@ -2037,7 +2023,6 @@
       const p = cmsData.profil;
       container.innerHTML = `
         <div class="space-y-6 animate-panel">
-          <!-- Card 1: Researcher Directory CRUD Table -->
           <div class="bg-white rounded-xl border border-gray-200 shadow-2xs overflow-hidden">
             <div class="p-5 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
@@ -2054,7 +2039,6 @@
               </button>
             </div>
 
-            <!-- Filter & Search Bar -->
             <div class="px-5 py-3 bg-gray-50 border-b border-gray-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
               <input
                 type="text"
@@ -2097,7 +2081,6 @@
             </div>
           </div>
 
-          <!-- Card 2: Group Team Photo & 3 Narrative Paragraphs Editor -->
           <div class="bg-white rounded-xl border border-gray-200 shadow-2xs overflow-hidden">
             <div class="p-5 border-b border-gray-200 flex items-center justify-between">
               <div>
@@ -2255,11 +2238,9 @@
       }
     }
 
-    /**
-     * =========================================================================
-     * 7. MODULE 3: RISET, LAYANAN & PELATIHAN (Sheet: Riset)
-     * =========================================================================
-     */
+    // -------------------------------------------------------------------------
+    // MODULE 4: RISET, LAYANAN & PELATIHAN
+    // -------------------------------------------------------------------------
     function renderRisetModule(container) {
       const filtered = cmsData.riset.filter((item) => {
         const matchCat = risetCategoryFilter === 'ALL' || item.kategori === risetCategoryFilter;
@@ -2351,8 +2332,16 @@
                 onchange="risetCategoryFilter = this.value; renderActiveWorkspace();"
                 class="px-2.5 py-1.5 rounded-lg border border-gray-300 bg-white text-xs font-medium focus:outline-none focus:border-[#0077B6]"
               >
-                <option value="ALL" ${risetCategoryFilter === 'ALL' ? 'selected' : ''}>Semua Kategori</option>
-                <option value="Riset" ${risetCategoryFilter === 'Riset' ? 'selected' : ''}>Riset</option>
+                <option value="ALL" ${risetCategoryFilter === 'ALL' ? 'selected' : ''}>Semua Kategori (${cmsData.riset.length})</option>
+                <option value="Riset" ${risetCategoryFilter === 'Riset' ? 'selected' : ''}>Riset (Umum)</option>
+                <option value="Riset - Publikasi Ilmiah" ${risetCategoryFilter === 'Riset - Publikasi Ilmiah' ? 'selected' : ''}>Riset → Publikasi Ilmiah</option>
+                <option value="Riset - Pusat Riset AI & Data Science" ${risetCategoryFilter === 'Riset - Pusat Riset AI & Data Science' ? 'selected' : ''}>Riset → Pusat Riset</option>
+                <option value="Riset - Proyek Riset" ${risetCategoryFilter === 'Riset - Proyek Riset' ? 'selected' : ''}>Riset → Proyek Riset</option>
+                <option value="Riset - Kelompok Riset" ${risetCategoryFilter === 'Riset - Kelompok Riset' ? 'selected' : ''}>Riset → Kelompok Riset</option>
+                <option value="Riset - Kajian & Advisori AI" ${risetCategoryFilter === 'Riset - Kajian & Advisori AI' ? 'selected' : ''}>Riset → Kajian &amp; Advisori AI</option>
+                <option value="Riset - Pengajaran & Mata Kuliah" ${risetCategoryFilter === 'Riset - Pengajaran & Mata Kuliah' ? 'selected' : ''}>Riset → Pengajaran &amp; Mata Kuliah</option>
+                <option value="Riset - Bimbingan Tugas Akhir" ${risetCategoryFilter === 'Riset - Bimbingan Tugas Akhir' ? 'selected' : ''}>Riset → Bimbingan Tugas Akhir</option>
+                <option value="Riset - Konferensi Ilmiah" ${risetCategoryFilter === 'Riset - Konferensi Ilmiah' ? 'selected' : ''}>Riset → Konferensi Ilmiah</option>
                 <option value="Penelitian Terapan" ${risetCategoryFilter === 'Penelitian Terapan' ? 'selected' : ''}>Penelitian Terapan</option>
                 <option value="Layanan Profesional" ${risetCategoryFilter === 'Layanan Profesional' ? 'selected' : ''}>Layanan Profesional</option>
                 <option value="Pelatihan Keamanan" ${risetCategoryFilter === 'Pelatihan Keamanan' ? 'selected' : ''}>Pelatihan Keamanan</option>
@@ -2451,11 +2440,9 @@
       }
     }
 
-    /**
-     * =========================================================================
-     * 8. MODULE 4: PENGATURAN PROFIL & KONTEN UTAMA (Profil_Web)
-     * =========================================================================
-     */
+    // -------------------------------------------------------------------------
+    // MODULE 5: PENGATURAN PROFIL & KONTEN UTAMA
+    // -------------------------------------------------------------------------
     function renderProfilModule(container) {
       const p = cmsData.profil;
       container.innerHTML = `
@@ -2466,7 +2453,6 @@
           </div>
 
           <form onsubmit="saveProfilForm(event)" class="p-5 sm:p-6 space-y-6">
-            <!-- Hero Banner Section -->
             <div class="space-y-4">
               <h3 class="text-xs font-bold uppercase tracking-wider text-[#0077B6] border-b border-gray-100 pb-1.5">
                 1. Teks Hero Banner (Kotak Biru Matriks)
@@ -2491,7 +2477,6 @@
               </div>
             </div>
 
-            <!-- IPT Research Sekilas -->
             <div class="space-y-4">
               <h3 class="text-xs font-bold uppercase tracking-wider text-[#0077B6] border-b border-gray-100 pb-1.5">
                 2. Kotak Sidebar "IPT Research sekilas"
@@ -2508,7 +2493,6 @@
               </div>
             </div>
 
-            <!-- Secretariat & Footer Contact -->
             <div class="space-y-4">
               <h3 class="text-xs font-bold uppercase tracking-wider text-[#0077B6] border-b border-gray-100 pb-1.5">
                 3. Alamat Kantor, Kontak &amp; Tautan Akademik
@@ -2587,12 +2571,10 @@
       }
     }
 
-    /**
-     * =========================================================================
-     * 9. MODULE 5: KONEKSI GOOGLE SPREADSHEETS & APPS SCRIPT (Code.gs)
-     * =========================================================================
-     */
-    const GOOGLE_APPS_SCRIPT_CODE = `/**
+    // -------------------------------------------------------------------------
+    // MODULE 6: KONEKSI GOOGLE SPREADSHEETS & APPS SCRIPT (Code.gs)
+    // -------------------------------------------------------------------------
+    const GOOGLE_APPS_SCRIPT_CODE = https://script.google.com/macros/s/AKfycbw6i9CuqAMD82O-EPMonVYZ8-C_acvHu13yV7vdhfqbB-phzqcyp8zq3RpA0wSAuhkqyg/exec`/**
  * ============================================================================
  * IPT RESEARCH (imanparyudi.com/research) — GOOGLE SHEETS DATABASE BACKEND
  * Deploy sebagai Web App: Execute as "Me", Who has access: "Anyone"
@@ -2641,9 +2623,7 @@ function doPost(e) {
     }
 
     const targetSheet = getOrCreateSheet(ss, sheet);
-    if (action === "create") {
-      upsertRowById(targetSheet, data);
-    } else if (action === "update" || action === "edit") {
+    if (action === "create" || action === "update" || action === "edit") {
       upsertRowById(targetSheet, data);
     } else if (action === "delete") {
       deleteRowById(targetSheet, data.id);
@@ -2656,13 +2636,18 @@ function doPost(e) {
 }
 
 function getOrCreateSheet(ss, name) {
-  let sh = ss.getSheetByName(name);
-  if (!sh) sh = ss.insertSheet(name);
-  return sh;
+  const target = String(name || "").trim().toLowerCase();
+  const sheets = ss.getSheets();
+  for (let i = 0; i < sheets.length; i++) {
+    if (sheets[i].getName().trim().toLowerCase() === target) {
+      return sheets[i];
+    }
+  }
+  return ss.insertSheet(name);
 }
 
 function readSheetAsObjects(ss, name) {
-  const sh = ss.getSheetByName(name);
+  const sh = getOrCreateSheet(ss, name);
   if (!sh || sh.getLastRow() < 2) return [];
   const values = sh.getDataRange().getValues();
   const headers = values[0];
@@ -2679,10 +2664,12 @@ function upsertRowById(sh, obj) {
     sh.appendRow(keys);
   }
   const headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+  let idColIdx = headers.findIndex(h => String(h).trim().toLowerCase() === "id");
+  if (idColIdx === -1) idColIdx = 0;
   const rowValues = headers.map(h => obj[h] !== undefined ? obj[h] : "");
   const data = sh.getDataRange().getValues();
   for (let r = 1; r < data.length; r++) {
-    if (String(data[r][0]) === String(obj.id)) {
+    if (String(data[r][idColIdx]).trim() === String(obj.id).trim()) {
       sh.getRange(r + 1, 1, 1, headers.length).setValues([rowValues]);
       return;
     }
@@ -2691,9 +2678,13 @@ function upsertRowById(sh, obj) {
 }
 
 function deleteRowById(sh, id) {
+  if (sh.getLastRow() < 2) return;
+  const headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+  let idColIdx = headers.findIndex(h => String(h).trim().toLowerCase() === "id");
+  if (idColIdx === -1) idColIdx = 0;
   const data = sh.getDataRange().getValues();
   for (let r = data.length - 1; r >= 1; r--) {
-    if (String(data[r][0]) === String(id)) {
+    if (String(data[r][idColIdx]).trim() === String(id).trim()) {
       sh.deleteRow(r + 1);
     }
   }
@@ -2704,83 +2695,79 @@ function overwriteSheet(ss, name, items) {
   sh.clearContents();
   if (!items || items.length === 0) return;
   const headers = Object.keys(items[0]);
-  sh.appendRow(headers);
-  const rows = items.map(item => headers.map(h => item[h] !== undefined ? item[h] : ""));
-  sh.getRange(2, 1, rows.length, headers.length).setValues(rows);
-}
-
-function saveProfileObject(ss, name, prof) {
-  const sh = getOrCreateSheet(ss, name);
-  sh.clearContents();
-  sh.appendRow(["key", "value"]);
-  const rows = Object.keys(prof).map(k => [k, prof[k]]);
-  if (rows.length > 0) sh.getRange(2, 1, rows.length, 2).setValues(rows);
+  const rows = [headers].concat(items.map(obj => headers.map(h => obj[h] !== undefined ? obj[h] : "")));
+  sh.getRange(1, 1, rows.length, headers.length).setValues(rows);
 }
 
 function readProfileSheet(ss, name) {
-  const sh = ss.getSheetByName(name);
-  if (!sh || sh.getLastRow() < 2) return null;
-  const values = sh.getDataRange().getValues().slice(1);
-  const out = {};
-  values.forEach(([k, v]) => { if (k) out[k] = v; });
-  return out;
+  const sh = getOrCreateSheet(ss, name);
+  if (!sh || sh.getLastRow() < 2) return {};
+  const values = sh.getDataRange().getValues();
+  const obj = {};
+  values.slice(1).forEach(r => { if (r[0]) obj[String(r[0]).trim()] = r[1]; });
+  return obj;
 }
 
-function jsonResponse(obj) {
+function saveProfileObject(ss, name, obj) {
+  const sh = getOrCreateSheet(ss, name);
+  sh.clearContents();
+  const rows = [["key", "value"]].concat(Object.keys(obj).map(k => [k, obj[k]]));
+  sh.getRange(1, 1, rows.length, 2).setValues(rows);
+}
+
+function jsonResponse(data) {
   return ContentService
-    .createTextOutput(JSON.stringify(obj))
+    .createTextOutput(JSON.stringify(data))
     .setMimeType(ContentService.MimeType.JSON);
 }`;
 
     function renderKoneksiModule(container) {
       container.innerHTML = `
         <div class="space-y-6 animate-panel">
-          <!-- Card 1: Web App Endpoint & Credentials -->
+          <!-- Card 1: Web App Endpoint & Security PIN Config -->
           <div class="bg-white rounded-xl border border-gray-200 shadow-2xs overflow-hidden">
             <div class="p-5 border-b border-gray-200">
-              <h2 class="text-base font-bold text-[#1F2937]">Koneksi Database Google Spreadsheets</h2>
-              <p class="text-xs text-[#6B7280] mt-0.5">Hubungkan halaman Admin CMS ini dengan Google Spreadsheets Anda melalui Google Apps Script Web App URL.</p>
+              <h2 class="text-base font-bold text-[#1F2937]">Koneksi Google Spreadsheets &amp; Keamanan Admin</h2>
+              <p class="text-xs text-[#6B7280] mt-0.5">Hubungkan panel CMS ini dengan Google Sheets Anda melalui Google Apps Script Web App (<code class="font-mono text-[#0077B6]">/exec</code>).</p>
             </div>
 
             <form onsubmit="saveConnectionSettings(event)" class="p-5 sm:p-6 space-y-4">
               <div>
-                <label class="block text-xs font-semibold text-[#1F2937] mb-1">
-                  Google Apps Script Web App URL (<code class="text-[#0077B6]">/exec</code>)
-                </label>
+                <label class="block text-xs font-semibold text-[#1F2937] mb-1">URL Web App Google Apps Script (/exec)</label>
                 <input
                   type="url"
                   id="cfg-sheets-url"
                   value="${escapeHtml(cmsConfig.sheetsUrl)}"
                   placeholder="https://script.google.com/macros/s/AKfycbx.../exec"
-                  class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-xs font-mono focus:outline-none focus:border-[#0077B6]"
+                  class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 font-mono text-xs focus:outline-none focus:border-[#0077B6]"
                 />
-                <p class="text-[11px] text-[#6B7280] mt-1">Kosongkan jika Anda masih menguji CMS dalam Mode Sandbox Lokal.</p>
               </div>
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label class="block text-xs font-semibold text-[#1F2937] mb-1">Admin Secret Token (Keamanan Penulisan)</label>
+                  <label class="block text-xs font-semibold text-[#1F2937] mb-1">Secret Token API (Harus cocok dengan Code.gs)</label>
                   <input
                     type="text"
                     id="cfg-secret-token"
                     required
                     value="${escapeHtml(cmsConfig.secretToken)}"
-                    class="w-full px-3.5 py-2 rounded-lg border border-gray-300 text-xs font-mono focus:outline-none focus:border-[#0077B6]"
+                    class="w-full px-3.5 py-2 rounded-lg border border-gray-300 font-mono text-xs focus:outline-none focus:border-[#0077B6]"
                   />
                 </div>
                 <div>
-                  <label class="block text-xs font-semibold text-[#1F2937] mb-1">PIN Login Admin Lokal</label>
+                  <label class="block text-xs font-semibold text-[#1F2937] mb-1">PIN Login Administrator CMS</label>
                   <input
                     type="text"
                     id="cfg-admin-pin"
                     required
                     value="${escapeHtml(cmsConfig.adminPin)}"
-                    class="w-full px-3.5 py-2 rounded-lg border border-gray-300 text-xs font-mono focus:outline-none focus:border-[#0077B6]"
+                    class="w-full px-3.5 py-2 rounded-lg border border-gray-300 font-mono text-xs focus:outline-none focus:border-[#0077B6]"
                   />
                 </div>
               </div>
 
-              <!-- Action Buttons -->
+              <div id="connection-diagnostic-box" class="hidden"></div>
+
               <div class="pt-3 border-t border-gray-100 flex flex-wrap items-center gap-2.5">
                 <button
                   type="submit"
@@ -2791,39 +2778,33 @@ function jsonResponse(obj) {
                 <button
                   type="button"
                   onclick="runConnectionDiagnostics()"
-                  class="px-4 py-2 rounded-lg border border-[#0077B6] text-[#0077B6] hover:bg-blue-50 text-xs font-semibold transition-colors"
+                  class="px-4 py-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 text-xs font-semibold text-[#1F2937] transition-colors"
                 >
-                  Tes Koneksi &amp; Tarik Data (GET)
+                  Uji Koneksi &amp; Tarik Data (Test GET)
                 </button>
                 <button
                   type="button"
                   onclick="pushAllToSheets()"
-                  class="px-4 py-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 text-xs font-semibold text-[#1F2937] transition-colors"
+                  class="px-4 py-2 rounded-lg border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-xs font-semibold text-emerald-800 transition-colors"
                 >
                   Kirim Semua Data Awal ke Sheets (Push All)
                 </button>
               </div>
-
-              <!-- Live Diagnostic Box -->
-              <div id="connection-diagnostic-box" class="hidden rounded-xl p-3.5 text-xs border"></div>
             </form>
           </div>
 
-          <!-- Card 2: Step-by-Step Google Apps Script Deployment Guide + Code.gs -->
+          <!-- Card 2: Google Apps Script Code.gs Setup Guide -->
           <div class="bg-white rounded-xl border border-gray-200 shadow-2xs overflow-hidden">
             <div class="p-5 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <h3 class="text-sm font-bold text-[#1F2937]">Panduan &amp; Kode Backend Google Apps Script (<code class="text-[#0077B6]">Code.gs</code>)</h3>
-                <p class="text-xs text-[#6B7280] mt-0.5">Salin kode ini ke Google Spreadsheet Anda agar seluruh CRUD otomatis tersimpan ke baris Spreadsheet.</p>
+                <h3 class="text-sm font-bold text-[#1F2937]">Kode Backend Google Apps Script (<code class="font-mono text-[#0077B6]">Code.gs</code>)</h3>
+                <p class="text-xs text-[#6B7280] mt-0.5">Salin kode berikut ke editor Apps Script pada Google Spreadsheet Anda.</p>
               </div>
               <button
                 type="button"
                 onclick="copyAppsScriptCode()"
-                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-gray-900 hover:bg-gray-800 text-white text-xs font-semibold shrink-0 transition-colors"
+                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-gray-900 hover:bg-gray-800 text-white text-xs font-semibold shrink-0"
               >
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                </svg>
                 <span>Salin Kode Code.gs</span>
               </button>
             </div>
@@ -2833,7 +2814,7 @@ function jsonResponse(obj) {
                 <li>Buka <strong>Google Sheets</strong> baru (beri nama misal: <code class="font-mono text-[#0077B6]">DB_IPT_Research</code>).</li>
                 <li>Klik menu <strong>Ekstensi (Extensions) → Apps Script</strong>, hapus kode bawaan, lalu tempel kode <code class="font-mono text-[#0077B6]">Code.gs</code> di bawah ini.</li>
                 <li>Klik <strong>Terapkan (Deploy) → Deployment baru</strong>, pilih jenis <strong>Aplikasi web (Web app)</strong>, atur <em>Jalankan sebagai: Saya (Me)</em> dan <em>Yang memiliki akses: Siapa saja (Anyone)</em>.</li>
-                <li>Salin <strong>URL Aplikasi Web (<code class="font-mono">/exec</code>)</strong>, tempel pada kolom di atas, lalu klik <strong>Kirim Semua Data Awal ke Sheets (Push All)</strong> untuk membuat tab <code class="font-mono">Berita</code>, <code class="font-mono">Acara</code>, <code class="font-mono">Riset</code>, dan <code class="font-mono">Profil_Web</code> secara otomatis!</li>
+                <li>Salin <strong>URL Aplikasi Web (<code class="font-mono">/exec</code>)</strong>, tempel pada kolom di atas, lalu klik <strong>Kirim Semua Data Awal ke Sheets (Push All)</strong> untuk membuat tab <code class="font-mono">Berita</code>, <code class="font-mono">Acara</code>, <code class="font-mono">Tim</code>, <code class="font-mono">Riset</code>, dan <code class="font-mono">Profil_Web</code> secara otomatis!</li>
               </ol>
 
               <pre class="bg-[#0F172A] text-slate-100 p-4 rounded-xl text-[11.5px] font-mono overflow-x-auto max-h-72 custom-scroll leading-relaxed"><code>${escapeHtml(GOOGLE_APPS_SCRIPT_CODE)}</code></pre>
@@ -2950,7 +2931,7 @@ function jsonResponse(obj) {
     function confirmResetDemoData() {
       openConfirmDialog(
         'Reset Data ke Pengaturan Awal?',
-        'Seluruh perubahan lokal akan dikembalikan ke data awal IPT Research (2 Berita Terkini, 1 Acara ICIIRDS, 5 Item Riset, dan Profil Standar).',
+        'Seluruh perubahan lokal akan dikembalikan ke data awal IPT Research (2 Berita Terkini, 1 Acara ICIIRDS, 11 Anggota Tim, 5 Item Riset, dan Profil Standar).',
         () => {
           cmsData = JSON.parse(JSON.stringify(DEFAULT_SEED_DATA));
           persistCmsData();
@@ -2960,11 +2941,9 @@ function jsonResponse(obj) {
       );
     }
 
-    /**
-     * =========================================================================
-     * 10. DELETE CONFIRMATION & LIVE PUBLIC HOMEPAGE PREVIEW MODAL
-     * =========================================================================
-     */
+    // -------------------------------------------------------------------------
+    // DELETE CONFIRMATION & LIVE PUBLIC HOMEPAGE PREVIEW MODAL
+    // -------------------------------------------------------------------------
     function confirmDeleteItem(collection, id, label) {
       openConfirmDialog(
         `Hapus Item (${id})?`,
@@ -3003,17 +2982,13 @@ function jsonResponse(obj) {
 
     function setPreviewPage(page) {
       previewPage = page;
-      const btnHome = document.getElementById('preview-page-home');
-      const btnTim = document.getElementById('preview-page-tim');
+      const selectEl = document.getElementById('preview-page-select');
       const urlEl = document.getElementById('preview-browser-url');
-      if (page === 'tim') {
-        btnTim.className = 'px-2.5 py-0.5 rounded bg-[#0077B6] text-white';
-        btnHome.className = 'px-2.5 py-0.5 rounded text-gray-600';
-        if (urlEl) urlEl.textContent = 'https://imanparyudi.com/research#tim';
-      } else {
-        btnHome.className = 'px-2.5 py-0.5 rounded bg-[#0077B6] text-white';
-        btnTim.className = 'px-2.5 py-0.5 rounded text-gray-600';
-        if (urlEl) urlEl.textContent = 'https://imanparyudi.com/research';
+      if (selectEl) selectEl.value = page;
+      if (urlEl) {
+        urlEl.textContent = page === 'home'
+          ? 'https://imanparyudi.com/research'
+          : `https://imanparyudi.com/research#${page}`;
       }
       renderPublicPreviewCanvas();
     }
@@ -3023,11 +2998,11 @@ function jsonResponse(obj) {
       const btnId = document.getElementById('preview-lang-id');
       const btnEn = document.getElementById('preview-lang-en');
       if (lang === 'id') {
-        btnId.className = 'px-2 py-0.5 rounded bg-[#0077B6] text-white';
-        btnEn.className = 'px-2 py-0.5 rounded text-gray-600';
+        btnId.className = 'px-2.5 py-0.5 rounded bg-[#0077B6] text-white';
+        btnEn.className = 'px-2.5 py-0.5 rounded text-gray-600';
       } else {
-        btnEn.className = 'px-2 py-0.5 rounded bg-[#0077B6] text-white';
-        btnId.className = 'px-2 py-0.5 rounded text-gray-600';
+        btnEn.className = 'px-2.5 py-0.5 rounded bg-[#0077B6] text-white';
+        btnId.className = 'px-2.5 py-0.5 rounded text-gray-600';
       }
       renderPublicPreviewCanvas();
     }
@@ -3043,6 +3018,7 @@ function jsonResponse(obj) {
       const activeTeam = cmsData.tim
         .filter((m) => (m.status || 'Active') === 'Active')
         .sort((a, b) => (Number(a.order) || 99) - (Number(b.order) || 99));
+      const activeRiset = cmsData.riset.filter((r) => (r.status || 'Active') === 'Active');
 
       const newsHtml =
         publishedNews.length === 0
@@ -3079,6 +3055,32 @@ function jsonResponse(obj) {
               )
               .join('');
 
+      const filterRisetForPreview = (pageKey) => {
+        if (pageKey === 'riset') return activeRiset.filter((r) => String(r.kategori).toLowerCase().startsWith('riset'));
+        if (pageKey === 'terapan') return activeRiset.filter((r) => r.kategori === 'Penelitian Terapan');
+        if (pageKey === 'layanan') return activeRiset.filter((r) => r.kategori === 'Layanan Profesional');
+        if (pageKey === 'pelatihan') return activeRiset.filter((r) => r.kategori === 'Pelatihan Keamanan');
+        if (pageKey === 'karir') return activeRiset.filter((r) => r.kategori === 'Bekerja di IPT');
+        return activeRiset;
+      };
+
+      const renderPreviewRisetCards = (items) => {
+        if (items.length === 0) {
+          return `<div class="p-4 border border-dashed border-gray-300 text-xs text-gray-500">${isId ? 'Belum ada data aktif pada kategori ini.' : 'No active items in this category yet.'}</div>`;
+        }
+        return items
+          .map(
+            (r) => `
+          <div class="border-b border-gray-200 pb-4 mb-4 last:border-b-0 last:pb-0 last:mb-0">
+            <div class="text-[10.5px] font-semibold text-[#0077B6] uppercase">${escapeHtml(r.kategori)} • ${escapeHtml(r.tahun || '2026')}</div>
+            <div class="text-[14.5px] font-bold text-[#0077B6] mt-0.5">${escapeHtml(isId ? r.judul_id : r.judul_en || r.judul_id)}</div>
+            <div class="text-[11px] text-gray-500 mt-0.5">${escapeHtml(r.koordinator || '')}</div>
+            <p class="text-xs text-[#4B5563] mt-1.5 leading-relaxed">${escapeHtml(r.deskripsi || '')}</p>
+          </div>`
+          )
+          .join('');
+      };
+
       const teamCategories = ['Management', 'Scientific & Innovation Board', 'Key Researchers', 'Senior Staff'];
       const teamSectionsHtml = teamCategories
         .map((cat) => {
@@ -3105,12 +3107,22 @@ function jsonResponse(obj) {
         })
         .join('');
 
-      const bodySectionHtml =
-        previewPage === 'tim'
-          ? `
+      const pageTitles = {
+        riset: isId ? 'Riset & Publikasi Ilmiah' : 'Research & Publications',
+        terapan: isId ? 'Penelitian Terapan' : 'Applied Research',
+        layanan: isId ? 'Layanan Profesional' : 'Professional Services',
+        pelatihan: isId ? 'Pelatihan Keamanan & AI' : 'Security & AI Trainings',
+        acara: isId ? 'Acara @ IPT' : 'Events @ IPT',
+        karir: isId ? 'Bekerja di IPT' : 'Working at IPT',
+        tim: isId ? 'Tim' : 'Team',
+        tentang: isId ? 'Tentang IPT Research' : 'About IPT Research'
+      };
+
+      let bodySectionHtml = '';
+      if (previewPage === 'tim') {
+        bodySectionHtml = `
           <div class="px-6 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8 bg-white">
             <div class="lg:col-span-8">
-              <div class="text-xs text-gray-500 mb-4">Home / ${isId ? 'Tentang' : 'About'} / <strong class="text-gray-800">${isId ? 'Tim' : 'Team'}</strong></div>
               <div class="space-y-3 text-xs text-[#334155] leading-relaxed mb-6">
                 <p>${escapeHtml(isId ? p.team_intro_1_id : p.team_intro_1_en || p.team_intro_1_id)}</p>
                 <p>${escapeHtml(isId ? p.team_intro_2_id : p.team_intro_2_en || p.team_intro_2_id)}</p>
@@ -3136,9 +3148,51 @@ function jsonResponse(obj) {
                   .join('')}
               </div>
             </div>
-          </div>`
-          : `
-          <!-- Two-Column Public Content -->
+          </div>`;
+      } else if (['riset', 'terapan', 'layanan', 'pelatihan', 'karir'].includes(previewPage)) {
+        const matchedItems = filterRisetForPreview(previewPage);
+        bodySectionHtml = `
+          <div class="px-6 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8 bg-white">
+            <div class="lg:col-span-8">
+              <h3 class="text-[17px] font-bold text-[#1F2937] pb-2 border-b border-gray-200 mb-5">
+                ${escapeHtml(pageTitles[previewPage])} (${matchedItems.length})
+              </h3>
+              ${renderPreviewRisetCards(matchedItems)}
+            </div>
+            <div class="lg:col-span-4">
+              <h3 class="text-[16px] font-bold text-[#1F2937] pb-2 border-b border-gray-200 mb-4">
+                ${isId ? 'Acara mendatang @ IPT' : 'Upcoming Events @ IPT'}
+              </h3>
+              ${eventsHtml}
+              <div class="mt-7 pt-5 border-t border-gray-200">
+                <h3 class="text-[15px] font-bold text-[#1F2937] mb-2">${isId ? 'IPT Research sekilas' : 'IPT Research at a Glance'}</h3>
+                <p class="text-[12.5px] text-[#4B5563] leading-relaxed">${escapeHtml(isId ? p.sekilas_id : p.sekilas_en)}</p>
+              </div>
+            </div>
+          </div>`;
+      } else if (previewPage === 'acara') {
+        bodySectionHtml = `
+          <div class="px-6 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8 bg-white">
+            <div class="lg:col-span-8">
+              <h3 class="text-[17px] font-bold text-[#1F2937] pb-2 border-b border-gray-200 mb-5">${escapeHtml(pageTitles.acara)}</h3>
+              ${eventsHtml}
+            </div>
+            <div class="lg:col-span-4">
+              <h3 class="text-[15px] font-bold text-[#1F2937] mb-2">${isId ? 'IPT Research sekilas' : 'IPT Research at a Glance'}</h3>
+              <p class="text-[12.5px] text-[#4B5563] leading-relaxed">${escapeHtml(isId ? p.sekilas_id : p.sekilas_en)}</p>
+            </div>
+          </div>`;
+      } else if (previewPage === 'tentang') {
+        bodySectionHtml = `
+          <div class="px-6 py-8 bg-white space-y-4">
+            <h3 class="text-[17px] font-bold text-[#1F2937] pb-2 border-b border-gray-200">${escapeHtml(pageTitles.tentang)}</h3>
+            <p class="text-xs text-[#4B5563] leading-relaxed">${escapeHtml(isId ? p.sekilas_id : p.sekilas_en)}</p>
+            <button type="button" onclick="setPreviewPage('tim')" class="px-3.5 py-2 bg-[#0077B6] text-white text-xs font-semibold">
+              ${isId ? 'Lihat Direktori Tim & Peneliti →' : 'View Team Directory →'}
+            </button>
+          </div>`;
+      } else {
+        bodySectionHtml = `
           <div class="px-6 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8 bg-white">
             <div class="lg:col-span-8">
               <h3 class="text-[17px] font-bold text-[#1F2937] pb-2 border-b border-gray-200 mb-5">
@@ -3162,66 +3216,53 @@ function jsonResponse(obj) {
               </div>
             </div>
           </div>`;
+      }
+
+      const heroBannerHtml =
+        previewPage === 'home'
+          ? `
+          <div class="max-w-2xl">
+            <h2 class="text-2xl font-bold leading-snug">${escapeHtml(isId ? p.hero_title_id : p.hero_title_en)}</h2>
+            <p class="text-sm text-[#F0F9FF] mt-2">${escapeHtml(isId ? p.hero_sub_id : p.hero_sub_en)}</p>
+          </div>`
+          : `
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <h2 class="text-xl font-bold">${escapeHtml(pageTitles[previewPage] || '')}</h2>
+            <div class="text-xs text-white/90">🏠 » ${escapeHtml(pageTitles[previewPage] || '')}</div>
+          </div>`;
 
       canvas.innerHTML = `
-        <!-- Top Utility Bar -->
         <div class="bg-white border-b border-gray-100 px-6 py-1.5 flex items-center justify-between text-[11px] text-gray-500">
           <span>${escapeHtml(p.alamat)}</span>
-          <span class="font-semibold text-[#0077B6]">Pratinjau Langsung CMS</span>
+          <span class="font-semibold text-[#0077B6]">Pratinjau Interaktif CMS (Klik Menu untuk Uji Tautan)</span>
         </div>
 
-        <!-- Header -->
         <div class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
-          <div class="flex items-center gap-3">
+          <button type="button" onclick="setPreviewPage('home')" class="flex items-center gap-3 text-left">
             <div class="w-10 h-10 rounded-xl bg-[#0077B6] flex items-center justify-center text-white font-bold text-xs">IPT</div>
             <div>
               <div class="text-base font-bold text-[#0077B6] leading-tight">Iman Paryudi Team</div>
               <div class="text-xs text-[#0077B6]">Research</div>
             </div>
-          </div>
+          </button>
           <div class="hidden md:flex items-center gap-4 text-xs text-gray-600">
-            <span class="${previewPage === 'home' ? 'font-bold text-[#0077B6] underline underline-offset-4' : ''}">Home</span>
-            <span>Riset</span>
-            <span>Penelitian Terapan</span>
-            <span>Layanan Profesional</span>
-            <span>Pelatihan Keamanan</span>
-            <span>Acara</span>
-            <span>Bekerja di IPT</span>
-            <span class="${previewPage === 'tim' ? 'font-bold text-[#0077B6] underline underline-offset-4' : ''}">Tentang ▾</span>
+            <button type="button" onclick="setPreviewPage('home')" class="${previewPage === 'home' ? 'font-bold text-[#0077B6]' : 'hover:text-[#0077B6]'}">Home</button>
+            <button type="button" onclick="setPreviewPage('riset')" class="${previewPage === 'riset' ? 'font-bold text-[#0077B6]' : 'hover:text-[#0077B6]'}">Riset</button>
+            <button type="button" onclick="setPreviewPage('terapan')" class="${previewPage === 'terapan' ? 'font-bold text-[#0077B6]' : 'hover:text-[#0077B6]'}">Penelitian Terapan</button>
+            <button type="button" onclick="setPreviewPage('layanan')" class="${previewPage === 'layanan' ? 'font-bold text-[#0077B6]' : 'hover:text-[#0077B6]'}">Layanan Profesional</button>
+            <button type="button" onclick="setPreviewPage('pelatihan')" class="${previewPage === 'pelatihan' ? 'font-bold text-[#0077B6]' : 'hover:text-[#0077B6]'}">Pelatihan</button>
+            <button type="button" onclick="setPreviewPage('acara')" class="${previewPage === 'acara' ? 'font-bold text-[#0077B6]' : 'hover:text-[#0077B6]'}">Acara</button>
+            <button type="button" onclick="setPreviewPage('karir')" class="${previewPage === 'karir' ? 'font-bold text-[#0077B6]' : 'hover:text-[#0077B6]'}">Bekerja di IPT</button>
+            <button type="button" onclick="setPreviewPage('tim')" class="${previewPage === 'tim' || previewPage === 'tentang' ? 'font-bold text-[#0077B6]' : 'hover:text-[#0077B6]'}">Tim / Tentang</button>
           </div>
         </div>
 
-        <!-- Dotted Blue Matrix Hero Banner -->
-        <div class="ipt-hero-matrix px-6 py-10 text-white">
-          <div class="max-w-2xl">
-            <h2 class="text-2xl font-bold leading-snug">
-              ${escapeHtml(
-                previewPage === 'tim'
-                  ? isId
-                    ? 'Tim Peneliti & Manajemen IPT Research'
-                    : 'IPT Research Team & Leadership'
-                  : isId
-                    ? p.hero_title_id
-                    : p.hero_title_en
-              )}
-            </h2>
-            <p class="text-sm text-[#F0F9FF] mt-2">
-              ${escapeHtml(
-                previewPage === 'tim'
-                  ? isId
-                    ? 'Para peneliti, dewan ilmiah, dan tenaga ahli di balik inovasi AI dan Data Science di Iman Paryudi Team.'
-                    : 'Meet the researchers, scientific board, and specialists driving AI and Data Science innovation.'
-                  : isId
-                    ? p.hero_sub_id
-                    : p.hero_sub_en
-              )}
-            </p>
-          </div>
+        <div class="ipt-hero-matrix px-6 py-9 text-white">
+          ${heroBannerHtml}
         </div>
 
         ${bodySectionHtml}
 
-        <!-- 3-Column Footer -->
         <div class="bg-[#F3F4F6] border-t border-gray-200 px-6 py-6 grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-gray-600">
           <div>
             <div class="font-bold text-[#0077B6] mb-1">IPT Research</div>
@@ -3240,11 +3281,9 @@ function jsonResponse(obj) {
       `;
     }
 
-    /**
-     * =========================================================================
-     * 11. UTILITY HELPERS (Modals, Toasts, ID Generator, Escaping)
-     * =========================================================================
-     */
+    // -------------------------------------------------------------------------
+    // UTILITY HELPERS
+    // -------------------------------------------------------------------------
     function openModal(id) {
       const el = document.getElementById(id);
       if (!el) return;
@@ -3335,7 +3374,6 @@ function jsonResponse(obj) {
         .replace(/'/g, '&#39;');
     }
 
-    // Close open modals on Escape key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         ['modal-berita', 'modal-acara', 'modal-tim', 'modal-riset', 'modal-public-preview', 'modal-confirm'].forEach(closeModal);
